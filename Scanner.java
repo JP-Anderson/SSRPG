@@ -4,15 +4,13 @@ public class Scanner {
 
   public final static int SMALL = 3;
 
-  public static final int width = 11;
-  public static final int height = 7;
   public static final int blockSize = SMALL;
   private static final String xCoOrdinates = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   public void scan(GridMap gridMap) {
     String blocks = "0123456789abcdefghijklmnopqrstuvwxyz/.,<>\\:;''\"";
     System.out.print("  ");
-    for (int w = 0; w < width; w++) {
+    for (int w = 0; w < gridMap.getWidth(); w++) {
       for (int bw = 0; bw < blockSize; bw++) {
         if (bw == blockSize/2) {
           System.out.print(" " + xCoOrdinates.charAt(w) + " ");
@@ -21,14 +19,14 @@ public class Scanner {
     }
 
     System.out.println("");
-    for (int w = 0; w < width; w++) {
+    for (int w = 0; w < gridMap.getWidth(); w++) {
       printCharacterXTimes('_',blockSize*3);
     }
     System.out.println("");
 
-    for (int h = 0; h < height; h++) {
+    for (int h = 0; h < gridMap.getHeight(); h++) {
       for (int bh = 0; bh < blockSize; bh++) {
-        for (int w = 0; w < width; w++) {
+        for (int w = 0; w < gridMap.getWidth(); w++) {
           if (w == 0) {
             if (bh == blockSize/2) {
               System.out.print(h + "|");
