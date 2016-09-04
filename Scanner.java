@@ -8,7 +8,6 @@ public class Scanner {
   private static final String xCoOrdinates = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   public void scan(GridMap gridMap) {
-    String blocks = "0123456789abcdefghijklmnopqrstuvwxyz/.,<>\\:;''\"";
     System.out.print("  ");
     for (int w = 0; w < gridMap.getWidth(); w++) {
       for (int bw = 0; bw < blockSize; bw++) {
@@ -17,8 +16,9 @@ public class Scanner {
         } else System.out.print("   ");
       }
     }
+	System.out.println("");
 
-    System.out.println("");
+    System.out.print("  ");
     for (int w = 0; w < gridMap.getWidth(); w++) {
       printCharacterXTimes('_',blockSize*3);
     }
