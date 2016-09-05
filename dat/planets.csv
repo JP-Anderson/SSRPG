@@ -1,4 +1,4 @@
-name,gridX,gridY,marketSize
-Earth,2,3,9
-Jupiter,6,6,5
-Epsilon-5,3,6,8
+id,name,gridX,gridY,marketSize
+0,Earth,2,3,9
+1,Jupiter,6,6,5
+2,Epsilon-5,3,6,8
