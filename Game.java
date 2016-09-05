@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class Game {
 
@@ -24,6 +26,31 @@ public class Game {
       map.placePlayer(p1);
       GridPoint l = p1.getLocation();
       System.out.println(p1.name + "is at " + l.x + "," + l.y);
+
+      System.out.println("Select a square to travel to: ('X','Y'):");
+      System.out.print("X = ");
+      int x = 2;
+      int y = 2;
+      try {
+          BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+          x = Integer.parseInt(br.readLine());
+
+      } catch (Exception io) {
+          io.printStackTrace();
+      }
+      try {
+          System.out.println("Y = ");
+          BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+          y = Integer.parseInt(br.readLine());
+      } catch (Exception io) {
+          io.printStackTrace();
+      }
+
+      GridPoint destination = new GridPoint(x,y);
+      int distance = p1.getLocation().comparePoints(destination);
+
+      System.out.println("Distance of " + distance);
+
       scanner.scan(map);
   }
     // System.out.println("Making planet Earth");
