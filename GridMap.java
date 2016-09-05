@@ -12,8 +12,14 @@ public class GridMap {
     return map;
   }
 
+  public void placePlayer(Ship playerShip) {
+      int randomX = RNG.randInt(0, width);
+      int randomY = RNG.randInt(0,height);
+      playerShip.setLocation(new GridPoint(randomX,randomY));
+  }
+
   public GridSquare getSquareAt(GridPoint searchPoint) {
-    return rows.get(searchPoint.y).get(searchPoint.x);
+      return rows.get(searchPoint.y).get(searchPoint.x);
   }
 
   public void populateGridSquare(GridSquare gridSquare) {

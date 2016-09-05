@@ -4,29 +4,28 @@ public class Game {
 
   public static void main(String[] args) {
 
-    System.out.println("Initialising scanner");
-    Scanner scanner = new Scanner();
+      Ship p1 = new Ship("Jp",15,3);
+      System.out.println("Initialising scanner");
+      Scanner scanner = new Scanner();
 
-    GridMap map = GridMap.generateGridMap(11,7);
-
-    CSV planets = CSVReader.readCSV("planets");
-    for (int i = 1; i < planets.rows; i++) {
-      ArrayList<String> planet = planets.getZeroIndexedRow(i);
-      String name = planet.get(0);
-      int gridX = Integer.parseInt(planet.get(1));
-      int gridY = Integer.parseInt(planet.get(2));
-      int marketSize = Integer.parseInt(planet.get(3));
-
-      map.populateGridSquare(new Planet(
-                              name,
-                              new GridPoint(gridX, gridY),
-                              marketSize
-      ));
-      System.out.println("added " + name);
-    }
-
-    scanner.scan(map);
-
+      GridMap map = GridMap.generateGridMap(11,7);
+      CSV planets = CSVReader.readCSV("planets");
+      for (int i = 1; i < planets.rows; i++) {
+          ArrayList<String> planet = planets.getZeroIndexedRow(i);
+          String name = planet.get(0);
+          int gridX = Integer.parseInt(planet.get(1));
+          int gridY = Integer.parseInt(planet.get(2));
+          int marketSize = Integer.parseInt(planet.get(3));
+          map.populateGridSquare(new Planet(name,
+          new GridPoint(gridX, gridY),
+          marketSize));
+          System.out.println("added " + name);
+      }
+      map.placePlayer(p1);
+      GridPoint l = p1.getLocation();
+      System.out.println(p1.name + "is at " + l.x + "," + l.y);
+      scanner.scan(map);
+  }
     // System.out.println("Making planet Earth");
     // Planet earth = new Planet("Earth", new GridPoint(2,3),9);
     //
@@ -43,7 +42,4 @@ public class Game {
     // map.populateGridSquare(jupiter);
     //
 
-
-
-  }
 }

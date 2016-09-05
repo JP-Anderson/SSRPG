@@ -7,6 +7,7 @@ public class Ship {
   private int remainingFuel;
   private int crewCapacity;
   private ArrayList<Crewmember> crew;
+  private GridPoint location;
 
   public Ship(String pName, int fuel, int crew) {
     name = pName;
@@ -14,5 +15,12 @@ public class Ship {
     crewCapacity = crew;
   }
 
+  public GridPoint getLocation() {
+      return location;
+  }
+
+  public void setLocation(GridPoint gridPoint) {
+      location = gridPoint;
+  }
 
 }

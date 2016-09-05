@@ -38,7 +38,7 @@ public class Scanner {
               GridSquare currentSquare = gridMap.getSquareAt(new GridPoint(w,h));
               if ( ! (currentSquare instanceof EmptyGridSquare) ) {
                   System.out.print("-" + currentSquare.symbol + "-");
-              } else System.out.print("-+-");
+              } else System.out.print("   ");
             } else if (bw == centre) {
               System.out.print(" | ");
             } else if (bh == centre) {
