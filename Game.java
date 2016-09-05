@@ -12,13 +12,26 @@ public class Game {
 
       GridMap map = GridMap.generateGridMap(11,7);
       CSV planets = CSVReader.readCSV("planets");
+      CSV goodsCSV = CSVReader.readCSV("goods");
+      ArrayList<Goods> goods = new ArrayList<Goods>();
+      for (int i = 1; i < goodsCSV.rows; i++) {
+          ArrayList<String> values = goodsCSV.getZeroIndexedRow(i);
+          goods.add(new Goods(Integer.parseInt(values.get(0)),
+            values.get(1),
+            Goods.Legality.values()[Integer.parseInt(values.get(2))],
+            Integer.parseInt(values.get(3))
+          ));
+          System.out.println("goods:" + values.toString());
+      }
       for (int i = 1; i < planets.rows; i++) {
           ArrayList<String> planet = planets.getZeroIndexedRow(i);
-          String name = planet.get(0);
-          int gridX = Integer.parseInt(planet.get(1));
-          int gridY = Integer.parseInt(planet.get(2));
-          int marketSize = Integer.parseInt(planet.get(3));
-          map.populateGridSquare(new Planet(name,
+          int id = Integer.parseInt(planet.get(0));
+          String name = planet.get(1);
+          int gridX = Integer.parseInt(planet.get(2));
+          int gridY = Integer.parseInt(planet.get(3));
+          int marketSize = Integer.parseInt(planet.get(4));
+          map.populateGridSquare(new Planet(id,
+          name,
           new GridPoint(gridX, gridY),
           marketSize));
           System.out.println("added " + name);
