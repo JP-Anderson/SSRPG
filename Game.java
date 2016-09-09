@@ -21,65 +21,80 @@ public class Game {
             Goods.Legality.values()[Integer.parseInt(values.get(2))],
             Integer.parseInt(values.get(3))
           ));
-          System.out.println("goods:" + values.toString());
+          //System.out.println("goods:" + values.toString());
       }
       for (int i = 1; i < planets.rows; i++) {
-          ArrayList<String> planet = planets.getZeroIndexedRow(i);
-          int id = Integer.parseInt(planet.get(0));
-          String name = planet.get(1);
-          int gridX = Integer.parseInt(planet.get(2));
-          int gridY = Integer.parseInt(planet.get(3));
-          int marketSize = Integer.parseInt(planet.get(4));
-          map.populateGridSquare(new Planet(id,
-          name,
-          new GridPoint(gridX, gridY),
-          marketSize));
-          System.out.println("added " + name);
+        ArrayList<String> planet = planets.getZeroIndexedRow(i);
+        int id = Integer.parseInt(planet.get(0));
+        String name = planet.get(1);
+        int gridX = Integer.parseInt(planet.get(2));
+        int gridY = Integer.parseInt(planet.get(3));
+        int marketSize = Integer.parseInt(planet.get(4));
+        map.populateGridSquare(new Planet(id,
+        name,
+        new GridPoint(gridX, gridY),
+        marketSize));
+        //System.out.println("added " + name);
       }
+
       map.placePlayer(p1);
-      GridPoint l = p1.getLocation();
-      System.out.println(p1.name + "is at " + l.x + "," + l.y);
 
-      System.out.println("Select a square to travel to: ('X','Y'):");
-      System.out.print("X = ");
-      int x = 2;
-      int y = 2;
-      try {
-          BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-          x = Integer.parseInt(br.readLine());
+      while (true) {
+          GridPoint l = p1.getLocation();
 
-      } catch (Exception io) {
-          io.printStackTrace();
+          String xLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+          System.out.println(p1.name + "is at " + xLetters.charAt(l.x) + "," + l.y);
+
+          scanner.scan(map);
+
+          System.out.println("Select a square to travel to: ('A-Z','0-9'):");
+          System.out.print("X = ");
+          char xChar = 'B';
+          int y = 2;
+          try {
+              BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+              xChar = br.readLine().charAt(0);
+
+          } catch (Exception io) {
+              io.printStackTrace();
+          }
+          try {
+              System.out.print("Y = ");
+              BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+              y = Integer.parseInt(br.readLine());
+          } catch (Exception io) {
+              io.printStackTrace();
+          }
+
+          int x = xLetters.indexOf(xChar);
+
+          GridPoint destination = new GridPoint(x,y);
+          GridSquare destinationSquare = map.getSquareAt(destination);
+          int distance = p1.getLocation().comparePoints(destination);
+
+          boolean destinationIsAPlanet = destinationSquare instanceof Planet;
+
+          String destinationString;
+          if (destinationIsAPlanet) {
+              Planet planet = (Planet) destinationSquare;
+              destinationString = planet.name;
+          } else {
+              destinationString = "nowhere";
+          }
+
+          System.out.println("You travel " + distance + " to reach " + destinationString);
+          p1.setLocation(destination);
+          if (destinationIsAPlanet) {
+              Planet planet = (Planet) destinationSquare;
+              ArrayList<Goods> availableGoods = planet.market.availableGoods;
+              System.out.println("GOODS:");
+              for (Goods g : availableGoods) {
+                  System.out.println(" - " + g.name + " : " + g.getActualValue() + " CREDS   ");
+              }
+          }
+          System.out.println("");
       }
-      try {
-          System.out.println("Y = ");
-          BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-          y = Integer.parseInt(br.readLine());
-      } catch (Exception io) {
-          io.printStackTrace();
-      }
 
-      GridPoint destination = new GridPoint(x,y);
-      int distance = p1.getLocation().comparePoints(destination);
-
-      System.out.println("Distance of " + distance);
-
-      scanner.scan(map);
   }
-    // System.out.println("Making planet Earth");
-    // Planet earth = new Planet("Earth", new GridPoint(2,3),9);
-    //
-    // System.out.println("Making planet Jupiter");
-    // Planet jupiter = new Planet("Jupiter", new GridPoint(6,6),9);
-    //
-    // System.out.println("Goods available at planet " + earth.name);
-    // for (Goods g : earth.market.availableGoods) {
-    //   System.out.println(g.name + " " + g.getActualValue());
-    // }
-    //
-    // System.out.println("");
-    // map.populateGridSquare(earth);
-    // map.populateGridSquare(jupiter);
-    //
 
 }
