@@ -57,9 +57,7 @@ public class Market {
 
     private int getProbabilityTotal() {
         int probabilityTotal = 0;
-        for (Integer i : probabilities) {
-            probabilityTotal += i;
-        }
+        for (Integer i : probabilities) probabilityTotal += i;
         return probabilityTotal;
     }
 
