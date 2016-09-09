@@ -27,21 +27,12 @@ public class Market {
         CSV planetMarket = CSVReader.readCSV("planet_markets");
         ArrayList<String> values = planetMarket.getZeroIndexedRow(planetID+1);
         for (int i = 1; i < values.size(); i++) {
-            int prob = Integer.parseInt(values.get(i));
-
-            probabilities.add(prob);
-            System.out.println(planetID + " " + prob);
+            probabilities.add(Integer.parseInt(values.get(i)));
         }
-        System.out.println("Probability number = " + probabilities.size());
     }
 
     private void generateGoods() {
-        int probabilityTotal = 0;
-        for (Integer i : probabilities) {
-            probabilityTotal += i;
-            System.out.println(probabilityTotal);
-        }
-        System.out.println(probabilityTotal);
+        int probabilityTotal = getProbabilityTotal();
         boolean[] selectedGoods = new boolean[probabilities.size()];
         Arrays.fill(selectedGoods,false);
         for (int i = 0; i < marketSize; i++) {
@@ -62,6 +53,14 @@ public class Market {
             }
         //System.out.println(cycles);
         }
+    }
+
+    private int getProbabilityTotal() {
+        int probabilityTotal = 0;
+        for (Integer i : probabilities) {
+            probabilityTotal += i;
+        }
+        return probabilityTotal;
     }
 
     private int getGood(int random, int totalProb) {
