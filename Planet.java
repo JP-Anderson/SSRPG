@@ -9,7 +9,7 @@ public class Planet extends GridSquare {
         id = pId;
         name = pName;
         marketSize = pMarketSize;
-        market = Market.getMarket(marketSize);
+        market = Market.getMarket(marketSize,pId);
     }
 
 }
