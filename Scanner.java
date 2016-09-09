@@ -22,17 +22,17 @@ public class Scanner {
 
     public void scan() {
         printHeading();
-        for (int yPoint = 0; yPoint < gridMap.getHeight(); yPoint++) {
-            printRow(yPoint);
+        for (int yIndex = 0; yIndex < gridMap.getHeight(); yIndex++) {
+            printRow(yIndex);
         }
     }
 
     private void printHeading() {
         System.out.print("  ");
-        for (int xPoint = 0; xPoint < gridMap.getWidth(); xPoint++) {
-            for (int blockXPoint = 0; blockXPoint < blockSize; blockXPoint++) {
-                if (indexIsInCentre(blockXPoint)) {
-                    System.out.print(" " + xCoOrdinates.charAt(xPoint) + " ");
+        for (int xIndex = 0; xIndex < gridMap.getWidth(); xIndex++) {
+            for (int blockXIndex = 0; blockXIndex < blockSize; blockXIndex++) {
+                if (indexIsInCentre(blockXIndex)) {
+                    System.out.print(" " + xCoOrdinates.charAt(xIndex) + " ");
                 } else System.out.print("   ");
             }
         }
@@ -42,35 +42,53 @@ public class Scanner {
 
     private void printHeadingUnderline() {
         System.out.print("  ");
-        for (int xPoint = 0; xPoint < gridMap.getWidth(); xPoint++) {
+        for (int xIndex = 0; xIndex < gridMap.getWidth(); xIndex++) {
             printCharacterXTimes('_',blockSize*3);
         }
         System.out.println("");
     }
 
-    private void printRow(int yPoint) {
-        for (int blockYPoint = 0; blockYPoint < blockSize; blockYPoint++) {
-            for (int xPoint = 0; xPoint < gridMap.getWidth(); xPoint++) {
-                if (xPoint == 0) {
-                    if (indexIsInCentre(blockYPoint)) {
-                        System.out.print(yPoint + "|");
-                    } else System.out.print(" |");
-                }
-                for (int blockXPoint = 0; blockXPoint < blockSize; blockXPoint++ ) {
-                    if (indexIsInCentre(blockXPoint) && indexIsInCentre(blockYPoint)) {
-                        GridSquare currentSquare = gridMap.getSquareAt(new GridPoint(xPoint,yPoint));
-                        if ( ! (currentSquare instanceof EmptyGridSquare) ) {
-                            System.out.print("-" + currentSquare.symbol + "-");
-                        } else System.out.print("   ");
-                    } else if (indexIsInCentre(blockXPoint)) {
-                        System.out.print(" | ");
-                    } else if (indexIsInCentre(blockYPoint)) {
-                        System.out.print("---");
-                    } else System.out.print("   ");
+    private void printRow(int yIndex) {
+        for (int blockYIndex = 0; blockYIndex < blockSize; blockYIndex++) {
+            printBlockRow(yIndex, blockYIndex);
+        }
+    }
+
+    private void printBlockRow(int yIndex, int blockYIndex) {
+        for (int xIndex = 0; xIndex < gridMap.getWidth(); xIndex++) {
+            if (xIndex == 0) {
+                printLeftBorder(yIndex, blockYIndex);
+            }
+            for (int blockXIndex = 0; blockXIndex < blockSize; blockXIndex++ ) {
+                if (indexIsInCentre(blockXIndex) && indexIsInCentre(blockYIndex)) {
+                    printBlockCentreRow(yIndex, blockYIndex, xIndex);
+                } else {
+                    printBlockOuterRow(blockXIndex, blockYIndex);
                 }
             }
-            System.out.println("");
         }
+        System.out.println("");
+    }
+
+    private void printLeftBorder(int yIndex, int blockYIndex) {
+        if (indexIsInCentre(blockYIndex)) {
+            System.out.print(yIndex + "|");
+        } else System.out.print(" |");
+    }
+
+    private void printBlockCentreRow(int yIndex, int blockYIndex, int xIndex) {
+        GridSquare currentSquare = gridMap.getSquareAt(new GridPoint(xIndex,yIndex));
+        if ( ! (currentSquare instanceof EmptyGridSquare) ) {
+            System.out.print("-" + currentSquare.symbol + "-");
+        } else System.out.print("   ");
+    }
+
+    private void printBlockOuterRow(int blockXIndex, int blockYIndex) {
+        if (indexIsInCentre(blockXIndex)) {
+            System.out.print(" | ");
+        } else if (indexIsInCentre(blockYIndex)) {
+            System.out.print("---");
+        } else System.out.print("   ");
     }
 
     private boolean indexIsInCentre(int index) {
