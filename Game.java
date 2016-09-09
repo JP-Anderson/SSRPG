@@ -7,10 +7,11 @@ public class Game {
   public static void main(String[] args) {
 
       Ship p1 = new Ship("Jp",15,3);
-      System.out.println("Initialising scanner");
-      Scanner scanner = new Scanner();
 
       GridMap map = GridMap.generateGridMap(11,7);
+      System.out.println("Initialising scanner");
+      Scanner scanner = Scanner.getScanner(map);
+
       CSV planets = CSVReader.readCSV("planets");
       CSV goodsCSV = CSVReader.readCSV("goods");
       ArrayList<Goods> goods = new ArrayList<Goods>();
@@ -45,7 +46,7 @@ public class Game {
           String xLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
           System.out.println(p1.name + "is at " + xLetters.charAt(l.x) + "," + l.y);
 
-          scanner.scan(map);
+          scanner.scan();
 
           System.out.println("Select a square to travel to: ('A-Z','0-9'):");
           System.out.print("X = ");
