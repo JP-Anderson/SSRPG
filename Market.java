@@ -11,7 +11,7 @@ public class Market {
     public final int planetID;
 
     public static Market getMarket(int marketSize, int planetID) {
-    return new Market(marketSize, planetID);
+        return new Market(marketSize, planetID);
     }
 
     private Market(int pMarketSize, int planetId) {

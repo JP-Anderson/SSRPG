@@ -18,7 +18,7 @@ public class Goods {
     multiplier = multiplier - (double)marketProbability/10.0;
     actualValue = (int) (baseValue * multiplier);
 
-    System.out.println("Market value for " + name + " is " + actualValue + " from " + baseValue);
+    //System.out.println("Market value for " + name + " is " + actualValue + " from " + baseValue);
     return this;
   }
 
