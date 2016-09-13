@@ -6,11 +6,11 @@ public class Game {
 
   public static void main(String[] args) {
 
-      Ship p1 = new Ship("Jp",15,3);
+        GridMap map = GridMap.generateGridMap(11,7);
+        System.out.println("Initialising scanner");
 
-      GridMap map = GridMap.generateGridMap(11,7);
-      System.out.println("Initialising scanner");
-      Scanner scanner = Scanner.getScanner(map);
+        GridPoint start = new GridPoint(1,2);
+        Ship p1 = new Ship("Jp",15,3,map,start);
 
       CSV planets = CSVReader.readCSV("planets");
       CSV goodsCSV = CSVReader.readCSV("goods");
@@ -38,15 +38,13 @@ public class Game {
         //System.out.println("added " + name);
       }
 
-      map.placePlayer(p1);
-
       while (true) {
           GridPoint l = p1.getLocation();
 
           String xLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-          System.out.println(p1.name + "is at " + xLetters.charAt(l.x) + "," + l.y);
+          System.out.println(p1.name + " is at " + xLetters.charAt(l.x) + "," + l.y);
 
-          scanner.scan();
+          p1.scan();
 
           System.out.println("Select a square to travel to: ('A-Z','0-9'):");
           System.out.print("X = ");
