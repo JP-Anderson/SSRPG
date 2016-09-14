@@ -24,6 +24,7 @@ public class Ship {
 
     public void setLocation(GridPoint gridPoint) {
         location = gridPoint;
+        scanner.setShipLocation(gridPoint);
     }
 
     public void scan() {

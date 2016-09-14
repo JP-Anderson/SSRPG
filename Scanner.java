@@ -20,6 +20,11 @@ public class Scanner {
         return scanner;
     }
 
+    public void setShipLocation(GridPoint newLocation) {
+        shipLocation = newLocation;
+        getGridIndexesInScannerRange();
+    }
+
     private Scanner (int scannerSize, GridMap map, GridPoint shipGridPoint) {
         scannerGridSize = scannerSize;
         gridMap = map;
@@ -35,8 +40,8 @@ public class Scanner {
         for (int i = 0; i < scannerGridSize; i++) {
             gridPointsInRange.add(new ArrayList<GridPoint>());
             for (int j = 0; j < scannerGridSize; j++) {
-                System.out.println("i " + i + "   j " + j);
-                System.out.println("new GridPoint("+xIndex+","+yIndex+")");
+                //System.out.println("i " + i + "   j " + j);
+                //System.out.println("new GridPoint("+xIndex+","+yIndex+")");
                 gridPointsInRange.get(i).add(new GridPoint(xIndex, yIndex));
                 xIndex++;
             }
@@ -57,7 +62,10 @@ public class Scanner {
         for (int colIndex = 0; colIndex < scannerGridSize; colIndex++) {
             for (int blockColIndex = 0; blockColIndex < blockSize; blockColIndex++) {
                 if (indexIsInCentre(blockColIndex)) {
-                    System.out.print(" " + xCoOrdinates.charAt(colIndex) + " ");
+                    int scannerCol = gridPointsInRange.get(0).get(colIndex).x;
+                    if (scannerCol >= 0) {
+                        System.out.print(" " + xCoOrdinates.charAt(scannerCol) + " ");
+                    } else System.out.print("   ");
                 } else System.out.print("   ");
             }
         }
@@ -89,7 +97,7 @@ public class Scanner {
                 //System.out.println(p.x + "," + p.y);
                 if (p.isValidSquare(gridMap.getWidth(), gridMap.getHeight())) {
                     if (indexIsInCentre(blockColIndex) && indexIsInCentre(blockRowIndex)) {
-                        printBlockCentreRow(p.x, blockRowIndex, p.y);
+                        printBlockCentreRow(p.y, blockRowIndex,p.x );
                     } else {
                         printBlockOuterRow(blockColIndex, blockRowIndex);
                     }
@@ -103,14 +111,19 @@ public class Scanner {
 
     private void printLeftBorder(int rowIndex, int blockRowIndex) {
         if (indexIsInCentre(blockRowIndex)) {
-            System.out.print(rowIndex + "|");
-        } else System.out.print(" |");
+            int scannerRow = gridPointsInRange.get(rowIndex).get(0).y;
+            if (scannerRow >= 0) {
+                if (scannerRow > 9) System.out.print(scannerRow + "|");
+                else System.out.print(scannerRow + " |");
+            }
+        } else System.out.print("  |");
     }
 
     private void printBlockCentreRow(int rowIndex, int blockRowIndex, int colIndex) {
-        GridPoint point = new GridPoint(colIndex,rowIndex);
+        GridPoint point = new GridPoint(colIndex, rowIndex);
         GridSquare currentSquare = gridMap.getSquareAt(point);
-        if (point == shipLocation) {
+        //System.out.print("POINT " + point.x + "," + point.y + "   SHIP " + shipLocation.x + "," + shipLocation.y);
+        if (point.x == shipLocation.x && point.y == shipLocation.y) {
             System.out.print("-X-");
         } else {
             if ( ! (currentSquare instanceof EmptyGridSquare) ) {
