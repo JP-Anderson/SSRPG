@@ -103,7 +103,7 @@ public class Game {
               }
 
               System.out.println("You travel " + distance + " to reach " + destinationString);
-              p1.setLocation(destination);
+              p1.travel(destination, distance);
               if (destinationIsAPlanet) {
                   Planet planet = (Planet) destinationSquare;
                   ArrayList<Goods> availableGoods = planet.market.availableGoods;
@@ -112,9 +112,12 @@ public class Game {
                       System.out.println(" - " + g.name + " : " + g.getActualValue() + " CREDS   ");
                   }
               }
+          } else if (input.equalsIgnoreCase("ship")) {
+              p1.shipStatus();
           } else {
               System.out.println("Command \"" + input + "\" not recognised.");
-              System.out.println("Available commands: [scan] [trade] [travel]");
+              System.out.println("Available commands: [scan] [trade] [travel] [ship]");
+              System.out.println("Un-installed tools: [cargo] [crew]");
           }
 
           try { Thread.sleep(2000); } catch (Exception e) { e.printStackTrace(); }
