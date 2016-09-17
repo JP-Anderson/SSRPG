@@ -10,7 +10,7 @@ public class Game {
         System.out.println("Initialising scanner");
 
         GridPoint start = new GridPoint(1,2);
-        Ship p1 = new Ship("Jp",15,3,map,start);
+        Ship p1 = new Ship("Jp",100,3,map,start);
 
       CSV planets = CSVReader.readCSV("planets");
       CSV goodsCSV = CSVReader.readCSV("goods");
@@ -102,16 +102,15 @@ public class Game {
                   destinationString = "nowhere";
               }
 
-              System.out.println("You travel " + distance + " to reach " + destinationString);
-              p1.travel(destination, distance);
-              if (destinationIsAPlanet) {
-                  Planet planet = (Planet) destinationSquare;
-                  ArrayList<Goods> availableGoods = planet.market.availableGoods;
-                  System.out.println("GOODS:");
-                  for (Goods g : availableGoods) {
-                      System.out.println(" - " + g.name + " : " + g.getActualValue() + " CREDS   ");
-                  }
+
+              boolean canTravel = p1.travel(destination, distance);
+              if (canTravel) {
+                  System.out.println("You travel " + distance + " to reach " + destinationString);
               }
+              else {
+                  System.out.println("You do not have enough fuel.");
+              }
+
           } else if (input.equalsIgnoreCase("ship")) {
               p1.shipStatus();
           } else {

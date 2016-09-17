@@ -11,7 +11,7 @@ public class Ship {
     private GridPoint location;
 
     // todo: create getters/setters for this
-    private EngineModule engines = new EngineModule("Engines MK1",3);
+    private EngineModule engines = new EngineModule("Engines MK1",5);
 
     public Ship(String pName, int fuel, int crew, GridMap map, GridPoint startLocation) {
         name = pName;
@@ -33,15 +33,20 @@ public class Ship {
 
     public void shipStatus() {
         System.out.println("Ship status:");
+        System.out.println("Remaining Fuel: " + remainingFuel + "/" + fuelCapacity);
         engines.printInformation();
     }
 
-    public void travel(GridPoint gridPoint, int distance) {
+    public boolean travel(GridPoint gridPoint, int distance) {
         location = gridPoint;
         scanner.setShipLocation(gridPoint);
         int fuelCost = distance * engines.fuelEfficiency;
-        System.out.println("Used " + fuelCost + " fuel.");
-        remainingFuel = remainingFuel - fuelCost;
+        if (fuelCost <= remainingFuel) {
+            System.out.println("Used " + fuelCost + " fuel.");
+            remainingFuel = remainingFuel - fuelCost;
+            return true;
+        }
+        return false;
     }
 
     public void scan() {
