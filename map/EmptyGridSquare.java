@@ -1,3 +1,5 @@
+package map;
+
 public class EmptyGridSquare extends GridSquare {
 
   public static EmptyGridSquare generateEmptyGridSquare(GridPoint gridPoint) {

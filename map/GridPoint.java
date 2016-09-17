@@ -1,3 +1,5 @@
+package map;
+
 public class GridPoint {
 
     public final int x;

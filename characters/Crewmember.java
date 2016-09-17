@@ -1,3 +1,5 @@
+package characters;
+
 public class Crewmember {
     private String name;
     private final Skills skills;

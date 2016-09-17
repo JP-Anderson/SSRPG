@@ -1,3 +1,5 @@
+package goods;
+
 public class GoodsList {
 
   public static final Goods[] GOODS = {

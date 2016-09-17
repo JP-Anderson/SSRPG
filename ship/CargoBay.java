@@ -1,3 +1,6 @@
+package ship;
+
+import goods.Goods;
 import java.util.List;
 import java.util.ArrayList;
 

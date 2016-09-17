@@ -1,3 +1,9 @@
+package map;
+
+import goods.*;
+import util.RNG;
+import util.csv.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;

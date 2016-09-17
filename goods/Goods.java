@@ -1,3 +1,5 @@
+package goods;
+
 public class Goods {
 
   public final int id;

@@ -1,3 +1,9 @@
+package ship;
+
+import map.GridMap;
+import map.GridPoint;
+import characters.Crewmember;
+
 import java.util.ArrayList;
 
 public class Ship {

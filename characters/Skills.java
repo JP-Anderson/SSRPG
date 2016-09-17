@@ -1,3 +1,5 @@
+package characters;
+
 public class Skills {
 
     private int pilot;
@@ -5,5 +7,5 @@ public class Skills {
     private int engineering;
     private int trading;
     private int shields;
-    
+
 }

@@ -1,3 +1,5 @@
+package map;
+
 public class Planet extends GridSquare {
 
     public final int id;

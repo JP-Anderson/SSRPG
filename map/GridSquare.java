@@ -1,3 +1,5 @@
+package map;
+
 public abstract class GridSquare {
 
   public final GridPoint gridPoint;

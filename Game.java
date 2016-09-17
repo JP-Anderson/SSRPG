@@ -1,3 +1,8 @@
+import ship.*;
+import map.*;
+import util.csv.*;
+import goods.*;
+
 import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

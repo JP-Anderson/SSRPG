@@ -1,3 +1,8 @@
+package map;
+
+import ship.Ship;
+import util.RNG;
+
 import java.util.ArrayList;
 
 public class GridMap {

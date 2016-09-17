@@ -1,3 +1,5 @@
+package ship;
+
 public class EngineModule implements ShipModule {
 
     public final String name;
