@@ -19,7 +19,7 @@ public class Game {
           ArrayList<String> values = goodsCSV.getZeroIndexedRow(i);
           goods.add(new Goods(Integer.parseInt(values.get(0)),
             values.get(1),
-            Goods.Legality.values()[Integer.parseInt(values.get(2))],
+            Integer.parseInt(values.get(2)) == 0 ? false : true,
             Integer.parseInt(values.get(3))
           ));
           //System.out.println("goods:" + values.toString());
@@ -61,7 +61,8 @@ public class Game {
                   ArrayList<Goods> availableGoods = planet.market.availableGoods;
                   System.out.println("GOODS:");
                   for (Goods g : availableGoods) {
-                      System.out.println(" - " + g.name + " : " + g.getActualValue() + " CREDS   ");
+                      String legal = g.legal ? "" : "[ILLEGAL]";
+                      System.out.println(" - " + g.name + " : " + g.getActualValue() + " CREDS  "+legal);
                   }
               } else {
                   System.out.println("Cannot trade here.");

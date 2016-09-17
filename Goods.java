@@ -2,14 +2,14 @@ public class Goods {
 
   public final int id;
   public final String name;
-  public final Legality legality;
+  public final boolean legal;
   public final int baseValue;
   private int actualValue;
 
-  public Goods(int iD, String pName, Legality pLegality, int pBaseValue) {
+  public Goods(int iD, String pName, boolean areGoodsLegal, int pBaseValue) {
     id = iD;
     name = pName;
-    legality = pLegality;
+    legal = areGoodsLegal;
     baseValue = pBaseValue;
   }
 
@@ -23,10 +23,5 @@ public class Goods {
   }
 
   public int getActualValue() { return actualValue; }
-
-  public enum Legality {
-    LEGAL,
-    ILLEGAL
-  }
 
 }
