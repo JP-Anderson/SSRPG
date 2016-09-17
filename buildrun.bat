@@ -1,6 +1,4 @@
-del bin\*.class
-if not exist ".\bin" mkdir .\bin
-javac *.java -d bin
-cd bin
+del /s *.class
+dir /s /B *.java > sources.txt
+javac @sources.txt
 java Game
-cd ..
