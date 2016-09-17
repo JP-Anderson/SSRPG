@@ -10,6 +10,8 @@ public class Ship {
     private ArrayList<Crewmember> crew;
     private GridPoint location;
 
+    private CargoBay cargo;
+
     // todo: create getters/setters for this
     private EngineModule engines = new EngineModule("Engines MK1",5);
 
@@ -19,6 +21,7 @@ public class Ship {
         remainingFuel = fuel;
         crewCapacity = crew;
         location = startLocation;
+        cargo = new CargoBay(15);
         scanner = Scanner.getScanner(7,map,startLocation);
     }
 
@@ -33,7 +36,9 @@ public class Ship {
 
     public void shipStatus() {
         System.out.println("Ship status:");
-        System.out.println("Remaining Fuel: " + remainingFuel + "/" + fuelCapacity);
+        System.out.println(" Remaining Fuel: " + remainingFuel + "/" + fuelCapacity);
+        System.out.println(" Cargo Bay: " + cargo.getFilledCapacity() + " units out of " + cargo.getMaxCapacity());
+        System.out.println(" Modules: ");
         engines.printInformation();
     }
 

@@ -10,8 +10,8 @@ public class EngineModule implements ShipModule {
 
     @Override
     public void printInformation() {
-        System.out.println("> ENGINE MODULE ["+name+"]");
-        System.out.println(">> FUEL EFFICIENCY ["+fuelEfficiency+"]");
+        System.out.println(" - ENGINE MODULE ["+name+"]");
+        System.out.println("  + FUEL EFFICIENCY ["+fuelEfficiency+"]");
     }
 
 }
