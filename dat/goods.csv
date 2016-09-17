@@ -1,16 +1,16 @@
-ID,Name,Legality,BaseValue
-0,"Cheese",0,100
-1,"Guns",1,500
-2,"Pr0n",1,250
-3,"Scrap",0,170
-4,"Cigars",0,921
-5,"80's video games",1,1000
-6,"Industrial chems",0,700
-7,"Space Ganj",1,1200
-8,"Hoverboards",0,800
-9,"Partially fresh water",0,1100
-10,"Hooch",1,500
-11,"Electronics",0,1500
-12,"Beachtowels",0,900
-13,"Religious artifacts",0,5000
-14,"AI programs",1,15000
+ID,Name,Legal,BaseValue
+0,"Cheese",1,100
+1,"Guns",0,500
+2,"Pr0n",0,250
+3,"Scrap",1,170
+4,"Cigars",1,921
+5,"80's video games",0,1000
+6,"Industrial chems",1,700
+7,"Space Ganj",0,1200
+8,"Hoverboards",1,800
+9,"Partially fresh water",1,1100
+10,"Hooch",0,500
+11,"Electronics",1,1500
+12,"Beachtowels",1,900
+13,"Religious artifacts",1,5000
+14,"AI programs",0,15000
