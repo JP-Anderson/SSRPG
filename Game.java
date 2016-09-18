@@ -4,6 +4,7 @@ import util.csv.*;
 import goods.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
@@ -120,7 +121,7 @@ public class Game {
                         }
 
                         if (validIndex) {
-                            CargoBay playerCargo = p1.getCargo();
+                            CargoBay playerCargo = p1.getCargoBay();
                             int cargoSize = playerCargo.getFilledCapacity();
                             int cargoMaxSize = playerCargo.getMaxCapacity();
                             if (quantity <= numberCanAfford) {
@@ -138,7 +139,17 @@ public class Game {
                     }
 
                     if (tradeChoice == 's' || tradeChoice == 'S') {
-                        System.out.println("Selling");
+                        System.out.println("CARGO:");
+                        CargoBay playerCargo = p1.getCargoBay();
+                        List<Goods> cargo = playerCargo.getCargo();
+                        int goodsIndex = 0;
+                        for (Goods g : cargo) {
+                            int actualValueDiffFromBaseValue = g.baseValue - g.getActualValue();
+                            String legal = g.legal ? "" : "[ILLEGAL]";
+                            String profit = actualValueDiffFromBaseValue < 0 ? "[+]" : "[-]";
+                            System.out.println(" "+(goodsIndex++)+" - " + g.name + " : " + g.getActualValue() + " CREDS  "+ profit + legal);
+                        }
+
                     }
                 } else {
                     System.out.println("Cannot trade here.");

@@ -75,7 +75,7 @@ public class Ship {
         scanner.scan();
     }
 
-    public CargoBay getCargo() {
+    public CargoBay getCargoBay() {
         return cargo;
     }
 
