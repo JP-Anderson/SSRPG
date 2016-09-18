@@ -12,7 +12,7 @@ import java.util.stream.*;
 public class Market {
 
     public final int marketSize;
-    public final ArrayList<Goods> availableGoods;
+    public final ArrayList<GoodsForSale> availableGoods;
     public final ArrayList<Integer> probabilities;
     public final int planetID;
 
@@ -20,9 +20,13 @@ public class Market {
         return new Market(marketSize, planetID);
     }
 
+    public int getValueForSpecificGoods(PurchasedGoods g) {
+        return g.calculateGoodsLocalValue(probabilities.get(g.id));
+    }
+
     private Market(int pMarketSize, int planetId) {
         marketSize = pMarketSize;
-        availableGoods = new ArrayList<Goods>();
+        availableGoods = new ArrayList<GoodsForSale>();
         probabilities = new ArrayList<Integer>();
         planetID = planetId;
         setProbabilities();
