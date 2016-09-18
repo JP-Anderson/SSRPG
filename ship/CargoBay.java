@@ -1,6 +1,6 @@
 package ship;
 
-import goods.Goods;
+import goods.PurchasedGoods;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -8,31 +8,44 @@ public class CargoBay {
 
     private int capacity;
     private int filledCapacity;
-    private List<Goods> cargo;
+    private List<PurchasedGoods> cargo;
 
     public CargoBay(int newCapacity) {
         capacity = newCapacity;
         filledCapacity = 0;
-        cargo = new ArrayList<Goods>();
+        cargo = new ArrayList<PurchasedGoods>();
     }
 
-    public CargoBay(int newCapacity, List<Goods> newCargo) {
+    public CargoBay(int newCapacity, List<PurchasedGoods> newCargo) {
         capacity = newCapacity;
         filledCapacity = newCargo.size();
         cargo = newCargo;
     }
 
-    public List<Goods> getCargo() {
+    public List<PurchasedGoods> getCargo() {
         return cargo;
     }
 
-    public boolean addCargo(Goods newGoods) {
-        if (filledCapacity < capacity) {
+    public boolean addCargo(PurchasedGoods newGoods) {
+        int amountOfNewCargo = newGoods.getQuantity();
+        if (filledCapacity + amountOfNewCargo <= capacity) {
             cargo.add(newGoods);
-            filledCapacity++;
+            filledCapacity = filledCapacity + amountOfNewCargo;
             return true;
         }
         return false;
+    }
+
+    public void removeCargo(int cargoIndex, int unitsToRemove) {
+        PurchasedGoods goods = cargo.get(cargoIndex);
+        filledCapacity = filledCapacity - unitsToRemove;
+        goods.setQuantity(goods.getQuantity() - unitsToRemove);
+    }
+
+    public void removeCargo(int cargoIndex) {
+        PurchasedGoods goods = cargo.get(cargoIndex);
+        filledCapacity = filledCapacity - goods.getQuantity();
+        cargo.remove(cargoIndex);
     }
 
     public int getFilledCapacity() { return filledCapacity; }

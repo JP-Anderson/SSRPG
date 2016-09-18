@@ -21,11 +21,11 @@ public class Game {
 
         CSV planets = CSVReader.readCSV("planets");
         CSV goodsCSV = CSVReader.readCSV("goods");
-        ArrayList<Goods> goods = new ArrayList<Goods>();
+        ArrayList<GoodsForSale> goods = new ArrayList<GoodsForSale>();
 
         for (int i = 1; i < goodsCSV.rows; i++) {
             ArrayList<String> values = goodsCSV.getZeroIndexedRow(i);
-            goods.add(new Goods(Integer.parseInt(values.get(0)),
+            goods.add(new GoodsForSale(Integer.parseInt(values.get(0)),
             values.get(1),
             Integer.parseInt(values.get(2)) == 0 ? false : true,
             Integer.parseInt(values.get(3))
@@ -78,18 +78,79 @@ public class Game {
                         io.printStackTrace();
                     }
 
+                    Planet planet = (Planet) location;
+
                     if (tradeChoice == 'b' || tradeChoice == 'B') {
 
-                        Planet planet = (Planet) location;
-                        ArrayList<Goods> availableGoods = planet.market.availableGoods;
+                        //todo: refactor this into a function at Market
+                        ArrayList<GoodsForSale> availableGoods = planet.market.availableGoods;
                         System.out.println("GOODS:");
                         System.out.println(" Enter an index to buy Goods, or return");
                         int goodsIndex = 0;
-                        for (Goods g : availableGoods) {
-                            int actualValueDiffFromBaseValue = g.baseValue - g.getActualValue();
+                        for (GoodsForSale g : availableGoods) {
+                            int actualValueDiffFromBaseValue = g.baseValue - g.getPurchaseValue();
                             String legal = g.legal ? "" : "[ILLEGAL]";
                             String profit = actualValueDiffFromBaseValue < 0 ? "[+]" : "[-]";
-                            System.out.println(" "+(goodsIndex++)+" - " + g.name + " : " + g.getActualValue() + " CREDS  "+ profit + legal);
+                            System.out.println(" "+(goodsIndex++)+" - " + g.name + " : " + g.getPurchaseValue() + " CREDS  "+ profit + legal);
+                        }
+
+                        System.out.print(">> ");
+                        int choice = 0;
+                        try {
+                            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                            choice = Integer.parseInt(br.readLine());
+                        } catch (Exception io) {
+                            System.out.println("Enter an index.");
+                        }
+
+                        GoodsForSale selectedGoods = availableGoods.get(choice);
+                        int goodsValue = selectedGoods.getPurchaseValue();
+                        System.out.println(selectedGoods.name + " costs " + goodsValue + " per unit.");
+                        System.out.println("How many units would you like to buy?");
+                        int numberCanAfford = p1.getMoney() / goodsValue;
+                        System.out.println("--> You can afford " + numberCanAfford);
+                        System.out.print(">> ");
+
+
+                        int quantity = 0;
+                        try {
+                            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                            quantity = Integer.parseInt(br.readLine());
+                        } catch (Exception io) {
+                            System.out.println("Value not recognised, returning to menu.");
+                        }
+
+                        CargoBay playerCargo = p1.getCargoBay();
+                        int cargoSize = playerCargo.getFilledCapacity();
+                        int cargoMaxSize = playerCargo.getMaxCapacity();
+                        if (quantity <= numberCanAfford) {
+                            if (cargoSize + quantity <= cargoMaxSize) {
+                                int totalCost = goodsValue*quantity;
+                                playerCargo.addCargo(new PurchasedGoods(selectedGoods, quantity));
+                                p1.setMoney(p1.getMoney() - totalCost);
+                                System.out.println("Bought " + quantity + " " + selectedGoods.name + " for " +  totalCost + " CREDS.");
+                            } else {
+                                System.out.println("Not enough cargo space.");
+                            }
+                        }
+
+
+                    }
+
+                    if (tradeChoice == 's' || tradeChoice == 'S') {
+                        System.out.println("CARGO:");
+                        CargoBay playerCargo = p1.getCargoBay();
+                        List<PurchasedGoods> cargo = playerCargo.getCargo();
+                        int goodsIndex = 0;
+
+
+                        for (PurchasedGoods pg : cargo) {
+                            int localValueOfGoods = planet.market.getValueForSpecificGoods(pg);
+
+                            int profit = localValueOfGoods - pg.purchasedValue;
+                            String legal = pg.legal ? "" : "[ILLEGAL]";
+                            String profitString = profit == 0 ? "[=]" : profit < 0 ? "[-]" : "[+]";
+                            System.out.println(" "+(goodsIndex++)+" - " + pg.getQuantity() + "x +" + pg.name + " : " + localValueOfGoods + " CREDS  "+ profitString + legal);
                         }
 
                         System.out.print(">> ");
@@ -101,54 +162,42 @@ public class Game {
                             io.printStackTrace();
                         }
 
-                        Goods selectedGoods = availableGoods.get(choice);
-                        int goodsValue = selectedGoods.getActualValue();
-                        System.out.println(selectedGoods.name + " costs " + goodsValue + " per unit.");
-                        System.out.println("How many units would you like to buy?");
-                        int numberCanAfford = p1.getMoney() / goodsValue;
-                        System.out.println("--> You can afford " + numberCanAfford);
+                        PurchasedGoods selectedGoods = cargo.get(choice);
+                        int quantityOwned = selectedGoods.getQuantity();
+                        int localValueOfGoods = planet.market.getValueForSpecificGoods(selectedGoods);
+                        int profit = localValueOfGoods - selectedGoods.purchasedValue;
+
+                        System.out.println("How many units would you like to sell?");
+                        System.out.println("--> You can sell " + quantityOwned);
+
+                        if (profit > 0) {
+                            System.out.println("--> You will make a profit on this sale.");
+                        } else if (profit <= 0) {
+                            System.out.println("--> You will NOT profit on this sale.");
+                        }
+
                         System.out.print(">> ");
 
-                        boolean validIndex = false;
 
-                        int quantity = 0;
+                        int quantitySold = 0;
                         try {
                             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                            quantity = Integer.parseInt(br.readLine());
-                            validIndex = true;
+                            quantitySold = Integer.parseInt(br.readLine());
                         } catch (Exception io) {
                             System.out.println("Index not recognised, returning to menu.");
                         }
 
-                        if (validIndex) {
-                            CargoBay playerCargo = p1.getCargoBay();
-                            int cargoSize = playerCargo.getFilledCapacity();
-                            int cargoMaxSize = playerCargo.getMaxCapacity();
-                            if (quantity <= numberCanAfford) {
-                                if (cargoSize + quantity <= cargoMaxSize) {
-                                    for (int i = 0; i < quantity; i++) {
-                                        playerCargo.addCargo(selectedGoods);
-                                        p1.setMoney(p1.getMoney() - goodsValue);
-                                    }
-                                } else {
-                                    System.out.println("Not enough cargo space.");
-                                }
+                        if (quantitySold <= quantityOwned) {
+                            int totalMoneyMade = localValueOfGoods*quantitySold;
+                            p1.setMoney(p1.getMoney() + totalMoneyMade);
+                            if (quantitySold == quantityOwned) {
+                                playerCargo.removeCargo(choice);
+                            } else {
+                                playerCargo.removeCargo(choice, quantitySold);
                             }
-
+                            System.out.println("Sold " + quantitySold + " " + selectedGoods.name + " for " + totalMoneyMade + " CREDS.");
                         }
-                    }
 
-                    if (tradeChoice == 's' || tradeChoice == 'S') {
-                        System.out.println("CARGO:");
-                        CargoBay playerCargo = p1.getCargoBay();
-                        List<Goods> cargo = playerCargo.getCargo();
-                        int goodsIndex = 0;
-                        for (Goods g : cargo) {
-                            int actualValueDiffFromBaseValue = g.baseValue - g.getActualValue();
-                            String legal = g.legal ? "" : "[ILLEGAL]";
-                            String profit = actualValueDiffFromBaseValue < 0 ? "[+]" : "[-]";
-                            System.out.println(" "+(goodsIndex++)+" - " + g.name + " : " + g.getActualValue() + " CREDS  "+ profit + legal);
-                        }
 
                     }
                 } else {
