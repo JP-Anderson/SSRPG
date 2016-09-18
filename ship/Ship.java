@@ -16,6 +16,17 @@ public class Ship {
     private ArrayList<Crewmember> crew;
     private GridPoint location;
 
+    // todo: find a better place for this, player or crew class?
+    private int money;
+
+    public void setMoney (int m) {
+        money = m;
+    }
+    public int getMoney() {
+        return money;
+    }
+
+
     private CargoBay cargo;
 
     // todo: create getters/setters for this
@@ -62,6 +73,10 @@ public class Ship {
 
     public void scan() {
         scanner.scan();
+    }
+
+    public CargoBay getCargo() {
+        return cargo;
     }
 
 }
