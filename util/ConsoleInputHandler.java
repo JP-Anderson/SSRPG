@@ -37,5 +37,4 @@ public class ConsoleInputHandler {
         System.out.print(promptMessage + ">> ");
     }
 
-
 }
