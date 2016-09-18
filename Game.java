@@ -1,7 +1,8 @@
 import ship.*;
 import map.*;
-import util.csv.*;
 import goods.*;
+import util.csv.*;
+import util.ConsoleInputHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,6 @@ public class Game {
 
         GridMap map = GridMap.generateGridMap(11,7);
         System.out.println("Initialising scanner");
-
         GridPoint start = new GridPoint(2,3);
         Ship p1 = new Ship("Jp",100,3,map,start);
         p1.setMoney(20000);
@@ -52,14 +52,8 @@ public class Game {
 
             String xLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             System.out.println(p1.name + " is at " + xLetters.charAt(l.x) + "," + l.y);
-            String input = null;
-            System.out.print(">> ");
-            try {
-                BufferedReader commandReader = new BufferedReader(new InputStreamReader(System.in));
-                input = commandReader.readLine();
-            } catch (Exception io) {
-                io.printStackTrace();
-            }
+
+            String input = ConsoleInputHandler.getStringFromUser("");
 
             if (input.equalsIgnoreCase("scan")) {
                 p1.scan();
@@ -69,14 +63,7 @@ public class Game {
                 if (location instanceof Planet) {
 
                     System.out.print("Buying or selling?: ");
-                    char tradeChoice = 'a';
-                    try {
-                        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                        tradeChoice = br.readLine().charAt(0);
-
-                    } catch (Exception io) {
-                        io.printStackTrace();
-                    }
+                    char tradeChoice = ConsoleInputHandler.getCharFromUser("");
 
                     Planet planet = (Planet) location;
 
@@ -94,14 +81,7 @@ public class Game {
                             System.out.println(" "+(goodsIndex++)+" - " + g.name + " : " + g.getPurchaseValue() + " CREDS  "+ profit + legal);
                         }
 
-                        System.out.print(">> ");
-                        int choice = 0;
-                        try {
-                            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                            choice = Integer.parseInt(br.readLine());
-                        } catch (Exception io) {
-                            System.out.println("Enter an index.");
-                        }
+                        int choice = ConsoleInputHandler.getIntFromUser("");
 
                         GoodsForSale selectedGoods = availableGoods.get(choice);
                         int goodsValue = selectedGoods.getPurchaseValue();
@@ -112,13 +92,7 @@ public class Game {
                         System.out.print(">> ");
 
 
-                        int quantity = 0;
-                        try {
-                            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                            quantity = Integer.parseInt(br.readLine());
-                        } catch (Exception io) {
-                            System.out.println("Value not recognised, returning to menu.");
-                        }
+                        int quantity = ConsoleInputHandler.getIntFromUser("");
 
                         CargoBay playerCargo = p1.getCargoBay();
                         int cargoSize = playerCargo.getFilledCapacity();
@@ -133,8 +107,6 @@ public class Game {
                                 System.out.println("Not enough cargo space.");
                             }
                         }
-
-
                     }
 
                     if (tradeChoice == 's' || tradeChoice == 'S') {
@@ -143,10 +115,8 @@ public class Game {
                         List<PurchasedGoods> cargo = playerCargo.getCargo();
                         int goodsIndex = 0;
 
-
                         for (PurchasedGoods pg : cargo) {
                             int localValueOfGoods = planet.market.getValueForSpecificGoods(pg);
-
                             int profit = localValueOfGoods - pg.purchasedValue;
                             String legal = pg.legal ? "" : "[ILLEGAL]";
                             String profitString = profit == 0 ? "[=]" : profit < 0 ? "[-]" : "[+]";
@@ -154,13 +124,7 @@ public class Game {
                         }
 
                         System.out.print(">> ");
-                        int choice = 0;
-                        try {
-                            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                            choice = Integer.parseInt(br.readLine());
-                        } catch (Exception io) {
-                            io.printStackTrace();
-                        }
+                        int choice = ConsoleInputHandler.getIntFromUser("");
 
                         PurchasedGoods selectedGoods = cargo.get(choice);
                         int quantityOwned = selectedGoods.getQuantity();
@@ -176,16 +140,7 @@ public class Game {
                             System.out.println("--> You will NOT profit on this sale.");
                         }
 
-                        System.out.print(">> ");
-
-
-                        int quantitySold = 0;
-                        try {
-                            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                            quantitySold = Integer.parseInt(br.readLine());
-                        } catch (Exception io) {
-                            System.out.println("Index not recognised, returning to menu.");
-                        }
+                        int quantitySold = ConsoleInputHandler.getIntFromUser("");
 
                         if (quantitySold <= quantityOwned) {
                             int totalMoneyMade = localValueOfGoods*quantitySold;
@@ -197,30 +152,16 @@ public class Game {
                             }
                             System.out.println("Sold " + quantitySold + " " + selectedGoods.name + " for " + totalMoneyMade + " CREDS.");
                         }
-
-
                     }
                 } else {
                     System.out.println("Cannot trade here.");
                 }
             } else if (input.equalsIgnoreCase("travel")) {
                 System.out.println("Select a square to travel to: ('A-Z','0-9'):");
-                System.out.print("X = ");
                 char xChar = 'B';
                 int y = 2;
-                try {
-                    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                    xChar = br.readLine().charAt(0);
-                } catch (Exception io) {
-                    io.printStackTrace();
-                }
-                try {
-                    System.out.print("Y = ");
-                    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                    y = Integer.parseInt(br.readLine());
-                } catch (Exception io) {
-                    io.printStackTrace();
-                }
+                xChar = ConsoleInputHandler.getCharFromUser("x");
+                y = ConsoleInputHandler.getIntFromUser("y");
 
                 int x = xLetters.indexOf(xChar);
 
@@ -238,7 +179,6 @@ public class Game {
                     destinationString = "nowhere";
                 }
 
-
                 boolean canTravel = p1.travel(destination, distance);
                 if (canTravel) {
                     System.out.println("You travel " + distance + " to reach " + destinationString);
@@ -254,11 +194,9 @@ public class Game {
                 System.out.println("Available commands: [scan] [trade] [travel] [ship]");
                 System.out.println("Un-installed tools: [cargo] [crew]");
             }
-
-            try { Thread.sleep(2000); } catch (Exception e) { e.printStackTrace(); }
+            try { Thread.sleep(1000); } catch (Exception e) { e.printStackTrace(); }
             System.out.println("");
         }
-
     }
 
 }
