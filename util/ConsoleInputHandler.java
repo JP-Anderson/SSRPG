@@ -13,7 +13,15 @@ public class ConsoleInputHandler {
     // todo: need to handle empty string/char
     public static char getCharFromUser(String promptMessage) {
         String input = readFromBufferedReader(promptMessage);
-        return input.charAt(0);
+        System.out.println(input);
+        String upperInput = input.toUpperCase();
+        System.out.println(upperInput);
+        char specifiedChar = upperInput.charAt(0);
+        String allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        if (allowedChars.indexOf(specifiedChar) < 0) {
+            System.out.println("Enter a letter");
+            return '0';
+        }  else return specifiedChar;
     }
 
     public static int getIntFromUser(String promptMessage) {
