@@ -2,6 +2,8 @@ import ship.*;
 import map.*;
 import goods.*;
 import util.csv.*;
+import events.*;
+import characters.*;
 import util.ConsoleInputHandler;
 
 import java.util.ArrayList;
@@ -12,6 +14,9 @@ import java.io.InputStreamReader;
 public class Game {
 
     public static void main(String[] args) {
+
+        EventOutcome ev = new EventOutcome(200,new ArrayList<Crewmember>(), new ArrayList<Goods>());
+        System.out.println("event worth " + ev.getMoneyReward());
 
         GridMap map = GridMap.generateGridMap(11,7);
         System.out.println("Initialising scanner");
@@ -100,7 +105,7 @@ public class Game {
                         if (quantity <= numberCanAfford) {
                             if (cargoSize + quantity <= cargoMaxSize) {
                                 int totalCost = goodsValue*quantity;
-                                playerCargo.addCargo(new PurchasedGoods(selectedGoods, quantity));
+                                playerCargo.addCargo(new PurchasedGoods(selectedGoods, quantity, planet.gridPoint));
                                 p1.setMoney(p1.getMoney() - totalCost);
                                 System.out.println("Bought " + quantity + " " + selectedGoods.name + " for " +  totalCost + " CREDS.");
                             } else {
@@ -158,9 +163,13 @@ public class Game {
                 }
             } else if (input.equalsIgnoreCase("travel")) {
                 System.out.println("Select a square to travel to: ('A-Z','0-9'):");
-                char xChar = 'B';
                 int y = 2;
-                xChar = ConsoleInputHandler.getCharFromUser("x");
+                char xChar = ConsoleInputHandler.getCharFromUser("x");
+
+                while (xChar == '0') {
+                    xChar = ConsoleInputHandler.getCharFromUser("x");
+                }
+                System.out.println(xChar);
                 y = ConsoleInputHandler.getIntFromUser("y");
 
                 int x = xLetters.indexOf(xChar);
