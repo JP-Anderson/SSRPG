@@ -24,9 +24,17 @@ public class ConsoleInputHandler {
         }  else return specifiedChar;
     }
 
-    public static int getIntFromUser(String promptMessage) {
-        String input = readFromBufferedReader(promptMessage);
-        return Integer.parseInt(input);
+    public static Integer getIntFromUser(String promptMessage) {
+        while (true) {
+            String input = readFromBufferedReader(promptMessage);
+            try {
+                Integer inputInteger = Integer.parseInt(input);
+                return inputInteger;
+            } catch (NumberFormatException e) {
+                System.out.println("Enter a number");
+                continue;
+            }
+        }
     }
 
     private static String readFromBufferedReader(String promptMessage) {
