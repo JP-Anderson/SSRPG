@@ -1,7 +1,7 @@
 package characters;
 
 public class Crewmember {
-    private String name;
+    public final String name;
     private final Skills skills;
     private int level;
     public Crewmember(String pName, Skills newSkills) {
