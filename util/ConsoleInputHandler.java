@@ -13,9 +13,7 @@ public class ConsoleInputHandler {
     public static char getCharFromUser(String promptMessage) {
         while (true) {
             String input = readFromBufferedReader(promptMessage);
-            System.out.println(input);
             String upperInput = input.toUpperCase();
-            System.out.println(upperInput);
             char specifiedChar = upperInput.charAt(0);
             String allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
             if (allowedChars.indexOf(specifiedChar) < 0) {
