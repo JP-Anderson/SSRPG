@@ -192,13 +192,13 @@ public class Game {
 
                         boolean canTravel = p1.travel(destination, distance);
                         if (canTravel) {
-                            if (RNG.randZeroToOne() < 0.5) {
-                                System.out.println("You travel " + distance + " to reach " + destinationString);
-                            } else {
-                                ShipwreckEvent event = new ShipwreckEvent();
-                                event.transpire();
-                                System.out.println("You travel " + distance + " to reach " + destinationString);
+                            for (int jumps = 0; jumps < distance; jumps++ ) {
+                                if (RNG.randZeroToOne() <= 0.25) {
+                                    ShipwreckEvent event = new ShipwreckEvent();
+                                    event.transpire();
+                                }
                             }
+                            System.out.println("You travel " + distance + " to reach " + destinationString);
                         }
                         else {
                             System.out.println("You do not have enough fuel.");
