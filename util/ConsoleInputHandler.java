@@ -38,6 +38,14 @@ public class ConsoleInputHandler {
         }
     }
 
+    public static int getIntInRangeFromUser(int options) {
+        while (true) {
+            int input = getIntFromUser("");
+            if (input >= 0 && input < options) return input;
+            else if (input == 0) return input;
+            else System.out.println("Number out of range!");
+        }
+    }
 
     private static String readFromBufferedReader(String promptMessage) {
         prompt(promptMessage);
