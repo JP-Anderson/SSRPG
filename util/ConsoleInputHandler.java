@@ -10,18 +10,19 @@ public class ConsoleInputHandler {
         return input;
     }
 
-    // todo: need to handle empty string/char
     public static char getCharFromUser(String promptMessage) {
-        String input = readFromBufferedReader(promptMessage);
-        System.out.println(input);
-        String upperInput = input.toUpperCase();
-        System.out.println(upperInput);
-        char specifiedChar = upperInput.charAt(0);
-        String allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-        if (allowedChars.indexOf(specifiedChar) < 0) {
-            System.out.println("Enter a letter");
-            return '0';
-        }  else return specifiedChar;
+        while (true) {
+            String input = readFromBufferedReader(promptMessage);
+            System.out.println(input);
+            String upperInput = input.toUpperCase();
+            System.out.println(upperInput);
+            char specifiedChar = upperInput.charAt(0);
+            String allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            if (allowedChars.indexOf(specifiedChar) < 0) {
+                System.out.println("Enter a letter");
+                continue;
+            }  else return specifiedChar;
+        }
     }
 
     public static Integer getIntFromUser(String promptMessage) {
@@ -36,6 +37,7 @@ public class ConsoleInputHandler {
             }
         }
     }
+
 
     private static String readFromBufferedReader(String promptMessage) {
         prompt(promptMessage);

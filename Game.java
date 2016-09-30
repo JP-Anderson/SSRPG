@@ -162,38 +162,42 @@ public class Game {
                     System.out.println("Cannot trade here.");
                 }
             } else if (input.equalsIgnoreCase("travel")) {
-                System.out.println("Select a square to travel to: ('A-Z','0-9'):");
-                int y = 2;
-                char xChar = ConsoleInputHandler.getCharFromUser("x");
+                while (true) {
+                    System.out.println("Select a square to travel to: ('A-Z','0-9'):");
+                    int y = 2;
+                    char xChar = ConsoleInputHandler.getCharFromUser("x");
+                    System.out.println(xChar);
+                    y = ConsoleInputHandler.getIntFromUser("y");
 
-                while (xChar == '0') {
-                    xChar = ConsoleInputHandler.getCharFromUser("x");
-                }
-                System.out.println(xChar);
-                y = ConsoleInputHandler.getIntFromUser("y");
+                    int x = xLetters.indexOf(xChar);
 
-                int x = xLetters.indexOf(xChar);
 
-                GridPoint destination = new GridPoint(x,y);
-                GridSquare destinationSquare = map.getSquareAt(destination);
-                int distance = p1.getLocation().comparePoints(destination);
+                    GridPoint destination = new GridPoint(x,y);
+                    try {
+                        GridSquare destinationSquare = map.getSquareAt(destination);
+                        int distance = p1.getLocation().comparePoints(destination);
 
-                boolean destinationIsAPlanet = destinationSquare instanceof Planet;
+                        boolean destinationIsAPlanet = destinationSquare instanceof Planet;
 
-                String destinationString;
-                if (destinationIsAPlanet) {
-                    Planet planet = (Planet) destinationSquare;
-                    destinationString = planet.name;
-                } else {
-                    destinationString = "nowhere";
-                }
+                        String destinationString;
+                        if (destinationIsAPlanet) {
+                            Planet planet = (Planet) destinationSquare;
+                            destinationString = planet.name;
+                        } else {
+                            destinationString = "nowhere";
+                        }
 
-                boolean canTravel = p1.travel(destination, distance);
-                if (canTravel) {
-                    System.out.println("You travel " + distance + " to reach " + destinationString);
-                }
-                else {
-                    System.out.println("You do not have enough fuel.");
+                        boolean canTravel = p1.travel(destination, distance);
+                        if (canTravel) {
+                            System.out.println("You travel " + distance + " to reach " + destinationString);
+                        }
+                        else {
+                            System.out.println("You do not have enough fuel.");
+                        }
+                        break;
+                    } catch (IndexOutOfBoundsException ioobe) {
+                        System.out.println("Square out of bounds!");
+                    }
                 }
 
             } else if (input.equalsIgnoreCase("ship")) {
