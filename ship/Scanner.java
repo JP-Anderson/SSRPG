@@ -134,7 +134,7 @@ public class Scanner {
             System.out.print("-X-");
         } else {
             if ( ! (currentSquare instanceof EmptyGridSquare) ) {
-                System.out.print("-" + currentSquare.symbol + "-");
+                System.out.print("-O-");
             } else System.out.print("   ");
         }
     }
