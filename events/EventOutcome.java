@@ -22,4 +22,20 @@ public class EventOutcome {
         return moneyReward;
     }
 
+    public List<Crewmember> getCrewReward() {
+        return crewReward;
+    }
+
+    public void removeCrewReward() {
+        crewReward = new ArrayList<Crewmember>();
+    }
+
+    public List<Goods> getGoodsReward() {
+        return goodsReward;
+    }
+
+    public void removeGoodsReward() {
+        goodsReward = new ArrayList<Goods>();
+    }
+
 }
