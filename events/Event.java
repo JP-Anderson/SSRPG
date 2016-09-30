@@ -1,7 +1,17 @@
 package events;
 
-public interface Event {
+public abstract class Event {
 
-    EventOutcome transpire();
+    abstract void initialize();
+    abstract void displayEvent();
+    abstract EventOutcome generateOutcome();
+
+    protected EventOutcome outcome;
+
+    public final EventOutcome transpire(){
+            initialize();
+            displayEvent();
+            return generateOutcome();
+    }
 
 }
