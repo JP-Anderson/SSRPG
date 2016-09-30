@@ -23,4 +23,8 @@ public class RNG {
 
       return randomNum;
   }
+
+  public static double randZeroToOne() {
+      return random.nextDouble();
+  }
 }

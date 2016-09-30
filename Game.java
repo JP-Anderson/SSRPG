@@ -2,10 +2,9 @@ import ship.*;
 import map.*;
 import goods.*;
 import util.csv.*;
+import util.*;
 import events.*;
 import characters.*;
-import util.ConsoleInputHandler;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.io.BufferedReader;
@@ -193,7 +192,13 @@ public class Game {
 
                         boolean canTravel = p1.travel(destination, distance);
                         if (canTravel) {
-                            System.out.println("You travel " + distance + " to reach " + destinationString);
+                            if (RNG.randZeroToOne() < 0.5) {
+                                System.out.println("You travel " + distance + " to reach " + destinationString);
+                            } else {
+                                ShipwreckEvent event = new ShipwreckEvent();
+                                event.transpire();
+                                System.out.println("You travel " + distance + " to reach " + destinationString);
+                            }
                         }
                         else {
                             System.out.println("You do not have enough fuel.");
