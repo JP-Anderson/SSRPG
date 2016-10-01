@@ -14,9 +14,6 @@ public class Game {
 
     public static void main(String[] args) {
 
-        EventOutcome ev = new EventOutcome(200,new ArrayList<Crewmember>(), new ArrayList<GoodsForSale>());
-        System.out.println("event worth " + ev.getMoneyReward());
-
         GridMap map = GridMap.generateGridMap(11,7);
         System.out.println("Initialising scanner");
         GridPoint start = new GridPoint(3,6);
@@ -228,10 +225,26 @@ public class Game {
 
             } else if (input.equalsIgnoreCase("ship")) {
                 p1.shipStatus();
+            } else if (input.equalsIgnoreCase("cargo")) {
+
+                CargoBay playerCargo = p1.getCargoBay();
+                List<PurchasedGoods> cargo = playerCargo.getCargo();
+
+                if (cargo.size() > 0) {
+                    int goodsIndex = 0;
+
+                    for (PurchasedGoods pg : cargo) {
+                        String legal = pg.legal ? "" : "[ILLEGAL]";
+                        int purchasedValue = pg.purchasedValue;
+                        System.out.println(" "+(goodsIndex++)+" - " + pg.getQuantity() + "x +" + pg.name + " : bought for " + purchasedValue + " CREDS  " + legal);
+                    }
+                } else {
+                    System.out.println("Cargo hold is empty!");
+                }
             } else {
                 System.out.println("Command \"" + input + "\" not recognised.");
-                System.out.println("Available commands: [scan] [trade] [travel] [ship]");
-                System.out.println("Un-installed tools: [cargo] [crew]");
+                System.out.println("Available commands: [scan] [trade] [travel] [ship] [cargo]");
+                System.out.println("Un-installed tools: [crew]");
             }
             try { Thread.sleep(1000); } catch (Exception e) { e.printStackTrace(); }
             System.out.println("");
