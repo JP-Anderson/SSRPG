@@ -32,11 +32,12 @@ public class Ship {
     // todo: create getters/setters for this
     private EngineModule engines = new EngineModule("Engines MK1",5);
 
-    public Ship(String pName, int fuel, int crew, GridMap map, GridPoint startLocation) {
+    public Ship(String pName, int fuel, int crewCap, GridMap map, GridPoint startLocation) {
         name = pName;
         fuelCapacity = fuel;
         remainingFuel = fuel;
-        crewCapacity = crew;
+        crewCapacity = crewCap;
+        crew = new ArrayList<Crewmember>();
         location = startLocation;
         cargo = new CargoBay(15);
         scanner = Scanner.getScanner(7,map,startLocation);
@@ -77,6 +78,10 @@ public class Ship {
 
     public CargoBay getCargoBay() {
         return cargo;
+    }
+
+    public ArrayList<Crewmember> getCrew() {
+        return crew;
     }
 
 }
