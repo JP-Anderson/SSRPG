@@ -13,6 +13,10 @@ public class ConsoleInputHandler {
     public static char getCharFromUser(String promptMessage) {
         while (true) {
             String input = readFromBufferedReader(promptMessage);
+            if (input.equals("")) {
+                System.out.println("Enter a letter.");
+                continue;
+            }
             String upperInput = input.toUpperCase();
             char specifiedChar = upperInput.charAt(0);
             String allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
