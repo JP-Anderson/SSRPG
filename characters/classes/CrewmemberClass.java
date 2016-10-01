@@ -16,6 +16,6 @@ public abstract class CrewmemberClass {
 
     public abstract void buildAbilityTree();
 
-    public AbilityTree getAbilityTree() { return abilityTree; }
+    public AbilityTree getAbilityTree() { return abilities; }
 
 }
