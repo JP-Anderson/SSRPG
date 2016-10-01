@@ -14,7 +14,7 @@ public class Game {
 
     public static void main(String[] args) {
 
-        EventOutcome ev = new EventOutcome(200,new ArrayList<Crewmember>(), new ArrayList<Goods>());
+        EventOutcome ev = new EventOutcome(200,new ArrayList<Crewmember>(), new ArrayList<GoodsForSale>());
         System.out.println("event worth " + ev.getMoneyReward());
 
         GridMap map = GridMap.generateGridMap(11,7);
@@ -52,10 +52,19 @@ public class Game {
         }
         boolean firstRun = true;
         while (true) {
+
             GridPoint l = p1.getLocation();
+            GridSquare locationSquare = map.getSquareAt(l);
 
             String xLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            System.out.println(p1.name + " is at " + xLetters.charAt(l.x) + "," + l.y);
+
+            if (locationSquare instanceof Planet) {
+                Planet locationPlanet = (Planet) locationSquare;
+                String locationName = locationPlanet.name;
+                System.out.println(p1.name + " is at the planet " + locationName + " (" + xLetters.charAt(l.x) + "," + l.y + ")");
+            } else {
+                System.out.println(p1.name + " is at empty grid point " + xLetters.charAt(l.x) + "," + l.y);
+            }
 
             String input = ConsoleInputHandler.getStringFromUser("");
 
@@ -169,7 +178,6 @@ public class Game {
                     System.out.println("Select a square to travel to: ('A-Z','0-9'):");
                     int y = 2;
                     char xChar = ConsoleInputHandler.getCharFromUser("x");
-                    System.out.println(xChar);
                     y = ConsoleInputHandler.getIntFromUser("y");
 
                     int x = xLetters.indexOf(xChar);
@@ -195,7 +203,16 @@ public class Game {
                             for (int jumps = 0; jumps < distance; jumps++ ) {
                                 if (RNG.randZeroToOne() <= 0.25) {
                                     ShipwreckEvent event = new ShipwreckEvent();
-                                    event.transpire();
+                                    EventOutcome outcome = event.transpire();
+                                    for (GoodsForSale g : outcome.getGoodsReward()) {
+                                        //p1.getCargoBay().addCargo(g);
+                                        p1.getCargoBay().addCargo(new PurchasedGoods(g,1,null));
+                                        System.out.println("Adding " + g.name + ".");
+                                    }
+                                    for (Crewmember c : outcome.getCrewReward()) {
+                                        p1.getCrew().add(c);
+                                        System.out.println("Adding to crew.");
+                                    }
                                 }
                             }
                             System.out.println("You travel " + distance + " to reach " + destinationString);

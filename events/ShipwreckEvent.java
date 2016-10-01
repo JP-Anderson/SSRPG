@@ -2,7 +2,7 @@ package events;
 
 import characters.Crewmember;
 import characters.Skills;
-import goods.Goods;
+import goods.*;
 import goods.GoodsList;
 import util.RNG;
 import util.ConsoleInputHandler;
@@ -22,6 +22,13 @@ public class ShipwreckEvent extends Event {
         //TODO: move this into a UI/console output class
         System.out.println("You encounter a shipwreck.");
         System.out.println("There is " + outcome.getMoneyReward() + " money.");
+        if (outcome.getCrewReward().size() > 0) {
+            System.out.println("There is a survivor!");
+        }
+        if (outcome.getGoodsReward().size() > 0) {
+            Goods newGoods = outcome.getGoodsReward().get(0);
+            System.out.println("There is one unit of " + newGoods.name + " salvageable in the hold.");
+        }
     }
 
     @Override
@@ -54,18 +61,16 @@ public class ShipwreckEvent extends Event {
         if (RNG.randZeroToOne() <= 0.05) {
             Crewmember survivor = new Crewmember("Survivor", new Skills());
             survivors.add(survivor);
-            System.out.println("There is still a survivor aboard!");
         }
         return survivors;
     }
 
-    private ArrayList<Goods> generateGoods() {
-        ArrayList<Goods> goods = new ArrayList<Goods>();
+    private ArrayList<GoodsForSale> generateGoods() {
+        ArrayList<GoodsForSale> goods = new ArrayList<GoodsForSale>();
         if (RNG.randZeroToOne() <= 0.25) {
             int possibleGoods = GoodsList.GOODS.length;
-            Goods survivingGoods = GoodsList.GOODS[RNG.randInt(0,possibleGoods)];
+            GoodsForSale survivingGoods = GoodsList.GOODS[RNG.randInt(0,possibleGoods)];
             goods.add(survivingGoods);
-            System.out.println("There one unit of " + survivingGoods.name);
         }
         return goods;
     }
