@@ -54,6 +54,7 @@ public class Ship {
 
     public void shipStatus() {
         System.out.println("Ship status:");
+        System.out.println(" CREDS total: " + money);
         System.out.println(" Remaining Fuel: " + remainingFuel + "/" + fuelCapacity);
         System.out.println(" Cargo Bay: " + cargo.getFilledCapacity() + " units out of " + cargo.getMaxCapacity());
         System.out.println(" Modules: ");
@@ -83,5 +84,11 @@ public class Ship {
     public ArrayList<Crewmember> getCrew() {
         return crew;
     }
+
+    public int getFuelCapacity() { return fuelCapacity; }
+
+    public int getRemainingFuel() { return remainingFuel; }
+
+    public void setRemainingFuel(int newFuel) { remainingFuel = newFuel; }
 
 }
