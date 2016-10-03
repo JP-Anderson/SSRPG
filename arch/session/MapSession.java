@@ -31,11 +31,44 @@ public class MapSession extends Session {
     public void run() {
 
         map = GridMap.generateGridMap(11,7);
-        System.out.println("Initialising scanner");
+        generatePlayer();
+        initMapAndGoodsList();
+
+        while (true) {
+
+            printCurrentLocation();
+
+            String input = ConsoleInputHandler.getStringFromUser("");
+
+            if (input.equalsIgnoreCase("scan")) {
+                p1.scan();
+            } else if (input.equalsIgnoreCase("trade")) {
+                tradeSequence();
+            } else if (input.equalsIgnoreCase("travel")) {
+                travelSequence();
+            } else if (input.equalsIgnoreCase("ship")) {
+                p1.shipStatus();
+            } else if (input.equalsIgnoreCase("cargo")) {
+                printCargo();
+            } else if (input.equalsIgnoreCase("fuel")) {
+                fuelSequence();
+            } else if (input.equalsIgnoreCase("crew")) {
+                printCrew();
+            } else {
+                consoleInformation(input);
+            }
+            sleep(1);
+            System.out.println("");
+        }
+    }
+
+    private void generatePlayer() {
         GridPoint start = new GridPoint(3,6);
         p1 = new Ship("Jp",100,3,map,start);
         p1.setMoney(20000);
+    }
 
+    private void initMapAndGoodsList() {
         CSV planets = CSVReader.readCSV("planets");
         CSV goodsCSV = CSVReader.readCSV("goods");
         goods = new ArrayList<GoodsForSale>();
@@ -64,31 +97,6 @@ public class MapSession extends Session {
             //System.out.println("added " + name);
         }
 
-        boolean firstRun = true;
-        while (true) {
-
-            printCurrentLocation();
-
-            String input = ConsoleInputHandler.getStringFromUser("");
-
-            if (input.equalsIgnoreCase("scan")) {
-                p1.scan();
-            } else if (input.equalsIgnoreCase("trade")) {
-                tradeSequence();
-            } else if (input.equalsIgnoreCase("travel")) {
-                travelSequence();
-            } else if (input.equalsIgnoreCase("ship")) {
-                p1.shipStatus();
-            } else if (input.equalsIgnoreCase("cargo")) {
-                printCargo();
-            } else if (input.equalsIgnoreCase("fuel")) {
-                fuelSequence();
-            } else {
-                consoleInformation(input);
-            }
-            sleep(1);
-            System.out.println("");
-        }
     }
 
     private void printCurrentLocation() {
@@ -253,6 +261,8 @@ public class MapSession extends Session {
                             }
                             int newBalance = p1.getMoney() + outcome.getMoneyReward();
                             System.out.println("CREDS " + p1.getMoney() + " --> " + newBalance);
+                            sleep(2);
+
                             p1.setMoney(newBalance);
                             printTwoRows();
                         }
@@ -319,6 +329,13 @@ public class MapSession extends Session {
                 } else System.out.println("You don't have enough money.");
             } else System.out.println("You don't have space for that much fuel!");
         } else System.out.println("There is nowhere to refuel here.");
+    }
+
+    private void printCrew() {
+        ArrayList<Crewmember> playerCrew = p1.getCrew();
+        for (Crewmember member : playerCrew) {
+            System.out.println(member.name);
+        }
     }
 
     private void consoleInformation(String input) {
