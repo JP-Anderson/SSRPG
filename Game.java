@@ -206,8 +206,10 @@ public class Game {
                                     EventOutcome outcome = event.transpire();
                                     for (GoodsForSale g : outcome.getGoodsReward()) {
                                         //p1.getCargoBay().addCargo(g);
-                                        p1.getCargoBay().addCargo(new PurchasedGoods(g,1,null));
-                                        System.out.println("Adding " + g.name + ".");
+                                        if (!p1.getCargoBay().isFull()) {
+                                            p1.getCargoBay().addCargo(new PurchasedGoods(g,1,null));
+                                            System.out.println("Adding " + g.name + ".");
+                                        } else System.out.println("No space for " + g.name + ".");
                                     }
                                     for (Crewmember c : outcome.getCrewReward()) {
                                         p1.getCrew().add(c);
