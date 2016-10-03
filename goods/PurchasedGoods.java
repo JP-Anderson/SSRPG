@@ -10,7 +10,10 @@ public class PurchasedGoods extends Goods {
 
     public PurchasedGoods(GoodsForSale goods, int quantityPurchased, GridPoint purchaseOrigin) {
         super(goods.id,goods.name,goods.legal,goods.baseValue);
-        purchasedValue = goods.getPurchaseValue();
+        if (purchaseOrigin == null) {
+            purchasedValue = 0;
+        } else
+            purchasedValue = goods.getPurchaseValue();
         purchasedFrom = purchaseOrigin;
         quantity = quantityPurchased;
     }
