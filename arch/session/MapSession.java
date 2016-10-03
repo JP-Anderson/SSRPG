@@ -28,6 +28,7 @@ public class MapSession extends Session {
 
     private final String xLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
+    @Override
     public void run() {
 
         map = GridMap.generateGridMap(11,7);
