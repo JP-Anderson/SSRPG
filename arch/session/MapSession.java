@@ -26,6 +26,8 @@ public class MapSession extends Session {
     private Ship p1;
     private ArrayList<GoodsForSale> goods;
 
+    private final String xLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
     public void run() {
 
         map = GridMap.generateGridMap(11,7);
@@ -68,8 +70,6 @@ public class MapSession extends Session {
             GridPoint l = p1.getLocation();
             GridSquare locationSquare = map.getSquareAt(l);
 
-            String xLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
             if (locationSquare instanceof Planet) {
                 Planet locationPlanet = (Planet) locationSquare;
                 String locationName = locationPlanet.name;
@@ -85,63 +85,7 @@ public class MapSession extends Session {
             } else if (input.equalsIgnoreCase("trade")) {
                 tradeSequence();
             } else if (input.equalsIgnoreCase("travel")) {
-                while (true) {
-                    System.out.println("Select a square to travel to: ('A-Z','0-9'):");
-                    int y = 2;
-                    char xChar = ConsoleInputHandler.getCharFromUser("x");
-                    y = ConsoleInputHandler.getIntFromUser("y");
-
-                    int x = xLetters.indexOf(xChar);
-
-
-                    GridPoint destination = new GridPoint(x,y);
-                    try {
-                        GridSquare destinationSquare = map.getSquareAt(destination);
-                        int distance = p1.getLocation().comparePoints(destination);
-
-                        boolean destinationIsAPlanet = destinationSquare instanceof Planet;
-
-                        String destinationString;
-                        if (destinationIsAPlanet) {
-                            Planet planet = (Planet) destinationSquare;
-                            destinationString = planet.name;
-                        } else {
-                            destinationString = "nowhere";
-                        }
-
-                        boolean canTravel = p1.travel(destination, distance);
-                        if (canTravel) {
-                            for (int jumps = 0; jumps < distance; jumps++ ) {
-                                if (RNG.randZeroToOne() <= 0.25) {
-                                    ShipwreckEvent event = new ShipwreckEvent();
-                                    EventOutcome outcome = event.transpire();
-                                    for (GoodsForSale g : outcome.getGoodsReward()) {
-                                        //p1.getCargoBay().addCargo(g);
-                                        if (!p1.getCargoBay().isFull()) {
-                                            p1.getCargoBay().addCargo(new PurchasedGoods(g,1,null));
-                                            System.out.println("Adding " + g.name + ".");
-                                        } else System.out.println("No space for " + g.name + ".");
-                                    }
-                                    for (Crewmember c : outcome.getCrewReward()) {
-                                        p1.getCrew().add(c);
-                                        System.out.println("Adding to crew.");
-                                    }
-                                    int newBalance = p1.getMoney() + outcome.getMoneyReward();
-                                    System.out.println("CREDS " + p1.getMoney() + " --> " + newBalance);
-                                    p1.setMoney(newBalance);
-                                }
-                            }
-                            System.out.println("You travel " + distance + " to reach " + destinationString);
-                        }
-                        else {
-                            System.out.println("You do not have enough fuel.");
-                        }
-                        break;
-                    } catch (IndexOutOfBoundsException ioobe) {
-                        System.out.println("Square out of bounds!");
-                    }
-                }
-
+                travelSequence();
             } else if (input.equalsIgnoreCase("ship")) {
                 p1.shipStatus();
             } else if (input.equalsIgnoreCase("cargo")) {
@@ -302,6 +246,65 @@ public class MapSession extends Session {
             }
         } else {
             System.out.println("Cannot trade here.");
+        }
+    }
+
+    private void travelSequence() {
+        while (true) {
+            System.out.println("Select a square to travel to: ('A-Z','0-9'):");
+            int y = 2;
+            char xChar = ConsoleInputHandler.getCharFromUser("x");
+            y = ConsoleInputHandler.getIntFromUser("y");
+
+            int x = xLetters.indexOf(xChar);
+
+
+            GridPoint destination = new GridPoint(x,y);
+            try {
+                GridSquare destinationSquare = map.getSquareAt(destination);
+                int distance = p1.getLocation().comparePoints(destination);
+
+                boolean destinationIsAPlanet = destinationSquare instanceof Planet;
+
+                String destinationString;
+                if (destinationIsAPlanet) {
+                    Planet planet = (Planet) destinationSquare;
+                    destinationString = planet.name;
+                } else {
+                    destinationString = "nowhere";
+                }
+
+                boolean canTravel = p1.travel(destination, distance);
+                if (canTravel) {
+                    for (int jumps = 0; jumps < distance; jumps++ ) {
+                        if (RNG.randZeroToOne() <= 0.25) {
+                            ShipwreckEvent event = new ShipwreckEvent();
+                            EventOutcome outcome = event.transpire();
+                            for (GoodsForSale g : outcome.getGoodsReward()) {
+                                //p1.getCargoBay().addCargo(g);
+                                if (!p1.getCargoBay().isFull()) {
+                                    p1.getCargoBay().addCargo(new PurchasedGoods(g,1,null));
+                                    System.out.println("Adding " + g.name + ".");
+                                } else System.out.println("No space for " + g.name + ".");
+                            }
+                            for (Crewmember c : outcome.getCrewReward()) {
+                                p1.getCrew().add(c);
+                                System.out.println("Adding to crew.");
+                            }
+                            int newBalance = p1.getMoney() + outcome.getMoneyReward();
+                            System.out.println("CREDS " + p1.getMoney() + " --> " + newBalance);
+                            p1.setMoney(newBalance);
+                        }
+                    }
+                    System.out.println("You travel " + distance + " to reach " + destinationString);
+                }
+                else {
+                    System.out.println("You do not have enough fuel.");
+                }
+                break;
+            } catch (IndexOutOfBoundsException ioobe) {
+                System.out.println("Square out of bounds!");
+            }
         }
     }
 
