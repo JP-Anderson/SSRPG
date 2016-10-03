@@ -48,6 +48,10 @@ public class CargoBay {
         cargo.remove(cargoIndex);
     }
 
+    public boolean isFull() {
+        return capacity <= filledCapacity;
+    }
+
     public int getFilledCapacity() { return filledCapacity; }
 
     public int getMaxCapacity() { return capacity; }
