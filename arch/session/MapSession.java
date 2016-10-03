@@ -1,3 +1,6 @@
+package arch.session;
+
+import arch.view.*;
 import ship.*;
 import map.*;
 import goods.*;
@@ -9,28 +12,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import arch.session.MapSession;
 
-public class Game {
+
+public class MapSession extends Session {
+
+    public MapSession() {
+        super("MapSession");
+    }
 
     //todo: move this?
-    public final static int FUEL_COST = 180;
+    private final static int FUEL_COST = 180;
+    private GridMap map;
+    private Ship p1;
+    private ArrayList<GoodsForSale> goods;
 
-    public static void main(String[] args) {
+    public void run() {
 
-        MapSession mmm = new MapSession();
-        mmm.run();
-        /*
-
-        GridMap map = GridMap.generateGridMap(11,7);
+        map = GridMap.generateGridMap(11,7);
         System.out.println("Initialising scanner");
         GridPoint start = new GridPoint(3,6);
-        Ship p1 = new Ship("Jp",100,3,map,start);
+        p1 = new Ship("Jp",100,3,map,start);
         p1.setMoney(20000);
 
         CSV planets = CSVReader.readCSV("planets");
         CSV goodsCSV = CSVReader.readCSV("goods");
-        ArrayList<GoodsForSale> goods = new ArrayList<GoodsForSale>();
+        goods = new ArrayList<GoodsForSale>();
 
         for (int i = 1; i < goodsCSV.rows; i++) {
             ArrayList<String> values = goodsCSV.getZeroIndexedRow(i);
@@ -55,6 +61,7 @@ public class Game {
             marketSize));
             //System.out.println("added " + name);
         }
+
         boolean firstRun = true;
         while (true) {
 
@@ -291,8 +298,11 @@ public class Game {
             }
             try { Thread.sleep(1000); } catch (Exception e) { e.printStackTrace(); }
             System.out.println("");
+        }
+    }
 
-        }*/
+    private void tradeSequence() {
+
     }
 
 }
