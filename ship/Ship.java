@@ -6,14 +6,13 @@ import characters.Crewmember;
 
 import java.util.ArrayList;
 
-public class Ship {
+public class Ship extends AbstractShip {
 
-    public final String name;
     private int fuelCapacity;
     private int remainingFuel;
     private int crewCapacity;
     private Scanner scanner;
-    private ArrayList<Crewmember> crew;
+    //private ArrayList<Crewmember> crew;
     private GridPoint location;
 
     // todo: find a better place for this, player or crew class?
@@ -33,7 +32,7 @@ public class Ship {
     private EngineModule engines = new EngineModule("Engines MK1",5);
 
     public Ship(String pName, int fuel, int crewCap, GridMap map, GridPoint startLocation) {
-        name = pName;
+        super(pName);
         fuelCapacity = fuel;
         remainingFuel = fuel;
         crewCapacity = crewCap;
