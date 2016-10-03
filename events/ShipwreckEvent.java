@@ -13,7 +13,7 @@ public class ShipwreckEvent extends Event {
 
     @Override
     void initialize() {
-        int moneyReward = RNG.randInt(20,150);
+        int moneyReward = RNG.randInt(20,1500);
         outcome = new EventOutcome(moneyReward, generateCrewMembers(), generateGoods());
     }
 
@@ -21,7 +21,7 @@ public class ShipwreckEvent extends Event {
     void displayEvent() {
         //TODO: move this into a UI/console output class
         System.out.println("You encounter a shipwreck.");
-        System.out.println("There is " + outcome.getMoneyReward() + " money.");
+        System.out.println("There is " + outcome.getMoneyReward() + " CREDS.");
         if (outcome.getCrewReward().size() > 0) {
             System.out.println("There is a survivor!");
         }
