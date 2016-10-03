@@ -67,16 +67,7 @@ public class MapSession extends Session {
         boolean firstRun = true;
         while (true) {
 
-            GridPoint l = p1.getLocation();
-            GridSquare locationSquare = map.getSquareAt(l);
-
-            if (locationSquare instanceof Planet) {
-                Planet locationPlanet = (Planet) locationSquare;
-                String locationName = locationPlanet.name;
-                System.out.println(p1.name + " is at the planet " + locationName + " (" + xLetters.charAt(l.x) + "," + l.y + ")");
-            } else {
-                System.out.println(p1.name + " is at empty grid point " + xLetters.charAt(l.x) + "," + l.y);
-            }
+            printCurrentLocation();
 
             String input = ConsoleInputHandler.getStringFromUser("");
 
@@ -89,58 +80,26 @@ public class MapSession extends Session {
             } else if (input.equalsIgnoreCase("ship")) {
                 p1.shipStatus();
             } else if (input.equalsIgnoreCase("cargo")) {
-
-                CargoBay playerCargo = p1.getCargoBay();
-                List<PurchasedGoods> cargo = playerCargo.getCargo();
-
-                if (cargo.size() > 0) {
-                    int goodsIndex = 0;
-
-                    for (PurchasedGoods pg : cargo) {
-                        String legal = pg.legal ? "" : "[ILLEGAL]";
-                        int purchasedValue = pg.purchasedValue;
-                        System.out.println(" "+(goodsIndex++)+" - " + pg.getQuantity() + "x +" + pg.name + " : bought for " + purchasedValue + " CREDS  " + legal);
-                    }
-                } else {
-                    System.out.println("Cargo hold is empty!");
-                }
+                printCargo();
             } else if (input.equalsIgnoreCase("fuel")) {
-                GridSquare location = map.getSquareAt(p1.getLocation());
-
-                if (location instanceof Planet) {
-                    Planet planet = (Planet) location;
-
-                    System.out.println("Fuel costs 18 CREDS per unit.");
-                    System.out.println("How much do you want to buy?");
-                    System.out.println("--> Fuel status " + p1.getRemainingFuel() + "/" + p1.getFuelCapacity() + ".");
-
-                    int availableFuelSpace = p1.getFuelCapacity() - p1.getRemainingFuel();
-
-                    int quantityBought = ConsoleInputHandler.getIntFromUser("");
-                    int cost = quantityBought * FUEL_COST;
-                    if (quantityBought <= availableFuelSpace) {
-                        if (cost <= p1.getMoney()) {
-                            System.out.println();
-                            System.out.println("Are you sure you want to buy " + quantityBought + " fuel for " + cost + " CREDS? (Y/N)");
-                            char decision = ConsoleInputHandler.getCharFromUser("");
-                            if (decision == 'Y' || decision == 'y') {
-                                p1.setRemainingFuel(p1.getRemainingFuel() + quantityBought);
-                                System.out.println("You now have " + p1.getRemainingFuel() + "/" + p1.getFuelCapacity() + " fuel remaining.");
-                                int newBalance = p1.getMoney()-cost;
-                                System.out.println("CREDS " + p1.getMoney() + " --> " + newBalance);
-                                p1.setMoney(newBalance);
-                            }
-                        } else System.out.println("You don't have enough money.");
-                    } else System.out.println("You don't have space for that much fuel!");
-                } else System.out.println("There is nowhere to refuel here.");
-
+                fuelSequence();
             } else {
-                System.out.println("Command \"" + input + "\" not recognised.");
-                System.out.println("Available commands: [scan] [trade] [travel] [ship] [cargo] [fuel]");
-                System.out.println("Un-installed tools: [crew]");
+                consoleInformation(input);
             }
             try { Thread.sleep(1000); } catch (Exception e) { e.printStackTrace(); }
             System.out.println("");
+        }
+    }
+
+    private void printCurrentLocation() {
+        GridPoint l = p1.getLocation();
+        GridSquare locationSquare = map.getSquareAt(l);
+        if (locationSquare instanceof Planet) {
+            Planet locationPlanet = (Planet) locationSquare;
+            String locationName = locationPlanet.name;
+            System.out.println(p1.name + " is at the planet " + locationName + " (" + xLetters.charAt(l.x) + "," + l.y + ")");
+        } else {
+            System.out.println(p1.name + " is at empty grid point " + xLetters.charAt(l.x) + "," + l.y);
         }
     }
 
@@ -306,6 +265,60 @@ public class MapSession extends Session {
                 System.out.println("Square out of bounds!");
             }
         }
+    }
+
+    private void printCargo() {
+        CargoBay playerCargo = p1.getCargoBay();
+        List<PurchasedGoods> cargo = playerCargo.getCargo();
+
+        if (cargo.size() > 0) {
+            int goodsIndex = 0;
+
+            for (PurchasedGoods pg : cargo) {
+                String legal = pg.legal ? "" : "[ILLEGAL]";
+                int purchasedValue = pg.purchasedValue;
+                System.out.println(" "+(goodsIndex++)+" - " + pg.getQuantity() + "x +" + pg.name + " : bought for " + purchasedValue + " CREDS  " + legal);
+            }
+        } else {
+            System.out.println("Cargo hold is empty!");
+        }
+    }
+
+    private void fuelSequence() {
+        GridSquare location = map.getSquareAt(p1.getLocation());
+
+        if (location instanceof Planet) {
+            Planet planet = (Planet) location;
+
+            System.out.println("Fuel costs 18 CREDS per unit.");
+            System.out.println("How much do you want to buy?");
+            System.out.println("--> Fuel status " + p1.getRemainingFuel() + "/" + p1.getFuelCapacity() + ".");
+
+            int availableFuelSpace = p1.getFuelCapacity() - p1.getRemainingFuel();
+
+            int quantityBought = ConsoleInputHandler.getIntFromUser("");
+            int cost = quantityBought * FUEL_COST;
+            if (quantityBought <= availableFuelSpace) {
+                if (cost <= p1.getMoney()) {
+                    System.out.println();
+                    System.out.println("Are you sure you want to buy " + quantityBought + " fuel for " + cost + " CREDS? (Y/N)");
+                    char decision = ConsoleInputHandler.getCharFromUser("");
+                    if (decision == 'Y' || decision == 'y') {
+                        p1.setRemainingFuel(p1.getRemainingFuel() + quantityBought);
+                        System.out.println("You now have " + p1.getRemainingFuel() + "/" + p1.getFuelCapacity() + " fuel remaining.");
+                        int newBalance = p1.getMoney()-cost;
+                        System.out.println("CREDS " + p1.getMoney() + " --> " + newBalance);
+                        p1.setMoney(newBalance);
+                    }
+                } else System.out.println("You don't have enough money.");
+            } else System.out.println("You don't have space for that much fuel!");
+        } else System.out.println("There is nowhere to refuel here.");
+    }
+
+    private void consoleInformation(String input) {
+        System.out.println("Command \"" + input + "\" not recognised.");
+        System.out.println("Available commands: [scan] [trade] [travel] [ship] [cargo] [fuel]");
+        System.out.println("Un-installed tools: [crew]");
     }
 
 }
