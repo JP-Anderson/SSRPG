@@ -86,7 +86,7 @@ public class MapSession extends Session {
             } else {
                 consoleInformation(input);
             }
-            try { Thread.sleep(1000); } catch (Exception e) { e.printStackTrace(); }
+            sleep(1);
             System.out.println("");
         }
     }
@@ -239,6 +239,7 @@ public class MapSession extends Session {
                         if (RNG.randZeroToOne() <= 0.25) {
                             ShipwreckEvent event = new ShipwreckEvent();
                             EventOutcome outcome = event.transpire();
+                            sleep(2);
                             for (GoodsForSale g : outcome.getGoodsReward()) {
                                 //p1.getCargoBay().addCargo(g);
                                 if (!p1.getCargoBay().isFull()) {
@@ -253,7 +254,12 @@ public class MapSession extends Session {
                             int newBalance = p1.getMoney() + outcome.getMoneyReward();
                             System.out.println("CREDS " + p1.getMoney() + " --> " + newBalance);
                             p1.setMoney(newBalance);
+                            printTwoRows();
                         }
+                        System.out.println("You jump to the next sector.");
+                        System.out.println(distance - jumps + " sectors away.");
+                        sleep(1);
+                        printTwoRows();
                     }
                     System.out.println("You travel " + distance + " to reach " + destinationString);
                 }
@@ -319,6 +325,16 @@ public class MapSession extends Session {
         System.out.println("Command \"" + input + "\" not recognised.");
         System.out.println("Available commands: [scan] [trade] [travel] [ship] [cargo] [fuel]");
         System.out.println("Un-installed tools: [crew]");
+    }
+
+    private void sleep(int seconds) {
+        int milliseconds = seconds * 1000;
+        try { Thread.sleep(milliseconds); } catch (Exception e) { e.printStackTrace(); }
+    }
+
+    private void printTwoRows() {
+        System.out.println();
+        System.out.println();
     }
 
 }
