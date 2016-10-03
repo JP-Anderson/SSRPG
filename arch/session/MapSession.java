@@ -83,108 +83,7 @@ public class MapSession extends Session {
             if (input.equalsIgnoreCase("scan")) {
                 p1.scan();
             } else if (input.equalsIgnoreCase("trade")) {
-                GridSquare location = map.getSquareAt(p1.getLocation());
-
-                if (location instanceof Planet) {
-
-                    System.out.print("Buying or selling?: ");
-                    char tradeChoice = ConsoleInputHandler.getCharFromUser("");
-
-                    Planet planet = (Planet) location;
-
-                    if (tradeChoice == 'b' || tradeChoice == 'B') {
-
-                        //todo: refactor this into a function at Market
-                        ArrayList<GoodsForSale> availableGoods = planet.market.availableGoods;
-                        System.out.println("GOODS:");
-                        System.out.println(" Enter an index to buy Goods, or return");
-                        int goodsIndex = 0;
-                        for (GoodsForSale g : availableGoods) {
-                            int actualValueDiffFromBaseValue = g.baseValue - g.getPurchaseValue();
-                            String legal = g.legal ? "" : "[ILLEGAL]";
-                            String profit = actualValueDiffFromBaseValue < 0 ? "[+]" : "[-]";
-                            System.out.println(" "+(goodsIndex++)+" - " + g.name + " : " + g.getPurchaseValue() + " CREDS  "+ profit + legal);
-                        }
-
-                        int goodsCount = availableGoods.size();
-                        int choice = ConsoleInputHandler.getIntInRangeFromUser(goodsCount);
-
-                        GoodsForSale selectedGoods = availableGoods.get(choice);
-                        int goodsValue = selectedGoods.getPurchaseValue();
-                        System.out.println(selectedGoods.name + " costs " + goodsValue + " per unit.");
-                        System.out.println("How many units would you like to buy?");
-                        int numberCanAfford = p1.getMoney() / goodsValue;
-                        System.out.println("--> You can afford " + numberCanAfford);
-
-
-                        int quantity = ConsoleInputHandler.getIntFromUser("");
-
-                        CargoBay playerCargo = p1.getCargoBay();
-                        int cargoSize = playerCargo.getFilledCapacity();
-                        int cargoMaxSize = playerCargo.getMaxCapacity();
-                        if (quantity <= numberCanAfford) {
-                            if (cargoSize + quantity <= cargoMaxSize) {
-                                int totalCost = goodsValue*quantity;
-                                playerCargo.addCargo(new PurchasedGoods(selectedGoods, quantity, planet.gridPoint));
-                                p1.setMoney(p1.getMoney() - totalCost);
-                                System.out.println("Bought " + quantity + " " + selectedGoods.name + " for " +  totalCost + " CREDS.");
-                            } else {
-                                System.out.println("Not enough cargo space.");
-                            }
-                        } else System.out.println("You cannot afford that amount of " + selectedGoods.name);
-                    }
-
-                    if (tradeChoice == 's' || tradeChoice == 'S') {
-                        System.out.println("CARGO:");
-                        CargoBay playerCargo = p1.getCargoBay();
-                        List<PurchasedGoods> cargo = playerCargo.getCargo();
-
-                        if (cargo.size() > 0) {
-                            int goodsIndex = 0;
-
-                            for (PurchasedGoods pg : cargo) {
-                                int localValueOfGoods = planet.market.getValueForSpecificGoods(pg);
-                                int profit = localValueOfGoods - pg.purchasedValue;
-                                String legal = pg.legal ? "" : "[ILLEGAL]";
-                                String profitString = profit == 0 ? "[=]" : profit < 0 ? "[-]" : "[+]";
-                                System.out.println(" "+(goodsIndex++)+" - " + pg.getQuantity() + "x +" + pg.name + " : " + localValueOfGoods + " CREDS  "+ profitString + legal);
-                            }
-
-                            int choice = ConsoleInputHandler.getIntInRangeFromUser(cargo.size());
-
-                            PurchasedGoods selectedGoods = cargo.get(choice);
-                            int quantityOwned = selectedGoods.getQuantity();
-                            int localValueOfGoods = planet.market.getValueForSpecificGoods(selectedGoods);
-                            int profit = localValueOfGoods - selectedGoods.purchasedValue;
-
-                            System.out.println("How many units would you like to sell?");
-                            System.out.println("--> You can sell " + quantityOwned);
-
-                            if (profit > 0) {
-                                System.out.println("--> You will make a profit on this sale.");
-                            } else if (profit < 0) {
-                                System.out.println("--> You will NOT profit on this sale.");
-                            } else if (profit == 0) {
-                                System.out.println("--> You will break even on this sale.");
-                            }
-
-                            int quantitySold = ConsoleInputHandler.getIntFromUser("");
-
-                            if (quantitySold <= quantityOwned) {
-                                int totalMoneyMade = localValueOfGoods*quantitySold;
-                                p1.setMoney(p1.getMoney() + totalMoneyMade);
-                                if (quantitySold == quantityOwned) {
-                                    playerCargo.removeCargo(choice);
-                                } else {
-                                    playerCargo.removeCargo(choice, quantitySold);
-                                }
-                                System.out.println("Sold " + quantitySold + " " + selectedGoods.name + " for " + totalMoneyMade + " CREDS.");
-                            } else System.out.println("You don't have that much " + selectedGoods.name);
-                        } else System.out.println("No cargo to sell...");
-                    }
-                } else {
-                    System.out.println("Cannot trade here.");
-                }
+                tradeSequence();
             } else if (input.equalsIgnoreCase("travel")) {
                 while (true) {
                     System.out.println("Select a square to travel to: ('A-Z','0-9'):");
@@ -302,7 +201,108 @@ public class MapSession extends Session {
     }
 
     private void tradeSequence() {
+        GridSquare location = map.getSquareAt(p1.getLocation());
 
+        if (location instanceof Planet) {
+
+            System.out.print("Buying or selling?: ");
+            char tradeChoice = ConsoleInputHandler.getCharFromUser("");
+
+            Planet planet = (Planet) location;
+
+            if (tradeChoice == 'b' || tradeChoice == 'B') {
+
+                //todo: refactor this into a function at Market
+                ArrayList<GoodsForSale> availableGoods = planet.market.availableGoods;
+                System.out.println("GOODS:");
+                System.out.println(" Enter an index to buy Goods, or return");
+                int goodsIndex = 0;
+                for (GoodsForSale g : availableGoods) {
+                    int actualValueDiffFromBaseValue = g.baseValue - g.getPurchaseValue();
+                    String legal = g.legal ? "" : "[ILLEGAL]";
+                    String profit = actualValueDiffFromBaseValue < 0 ? "[+]" : "[-]";
+                    System.out.println(" "+(goodsIndex++)+" - " + g.name + " : " + g.getPurchaseValue() + " CREDS  "+ profit + legal);
+                }
+
+                int goodsCount = availableGoods.size();
+                int choice = ConsoleInputHandler.getIntInRangeFromUser(goodsCount);
+
+                GoodsForSale selectedGoods = availableGoods.get(choice);
+                int goodsValue = selectedGoods.getPurchaseValue();
+                System.out.println(selectedGoods.name + " costs " + goodsValue + " per unit.");
+                System.out.println("How many units would you like to buy?");
+                int numberCanAfford = p1.getMoney() / goodsValue;
+                System.out.println("--> You can afford " + numberCanAfford);
+
+
+                int quantity = ConsoleInputHandler.getIntFromUser("");
+
+                CargoBay playerCargo = p1.getCargoBay();
+                int cargoSize = playerCargo.getFilledCapacity();
+                int cargoMaxSize = playerCargo.getMaxCapacity();
+                if (quantity <= numberCanAfford) {
+                    if (cargoSize + quantity <= cargoMaxSize) {
+                        int totalCost = goodsValue*quantity;
+                        playerCargo.addCargo(new PurchasedGoods(selectedGoods, quantity, planet.gridPoint));
+                        p1.setMoney(p1.getMoney() - totalCost);
+                        System.out.println("Bought " + quantity + " " + selectedGoods.name + " for " +  totalCost + " CREDS.");
+                    } else {
+                        System.out.println("Not enough cargo space.");
+                    }
+                } else System.out.println("You cannot afford that amount of " + selectedGoods.name);
+            }
+
+            if (tradeChoice == 's' || tradeChoice == 'S') {
+                System.out.println("CARGO:");
+                CargoBay playerCargo = p1.getCargoBay();
+                List<PurchasedGoods> cargo = playerCargo.getCargo();
+
+                if (cargo.size() > 0) {
+                    int goodsIndex = 0;
+
+                    for (PurchasedGoods pg : cargo) {
+                        int localValueOfGoods = planet.market.getValueForSpecificGoods(pg);
+                        int profit = localValueOfGoods - pg.purchasedValue;
+                        String legal = pg.legal ? "" : "[ILLEGAL]";
+                        String profitString = profit == 0 ? "[=]" : profit < 0 ? "[-]" : "[+]";
+                        System.out.println(" "+(goodsIndex++)+" - " + pg.getQuantity() + "x +" + pg.name + " : " + localValueOfGoods + " CREDS  "+ profitString + legal);
+                    }
+
+                    int choice = ConsoleInputHandler.getIntInRangeFromUser(cargo.size());
+
+                    PurchasedGoods selectedGoods = cargo.get(choice);
+                    int quantityOwned = selectedGoods.getQuantity();
+                    int localValueOfGoods = planet.market.getValueForSpecificGoods(selectedGoods);
+                    int profit = localValueOfGoods - selectedGoods.purchasedValue;
+
+                    System.out.println("How many units would you like to sell?");
+                    System.out.println("--> You can sell " + quantityOwned);
+
+                    if (profit > 0) {
+                        System.out.println("--> You will make a profit on this sale.");
+                    } else if (profit < 0) {
+                        System.out.println("--> You will NOT profit on this sale.");
+                    } else if (profit == 0) {
+                        System.out.println("--> You will break even on this sale.");
+                    }
+
+                    int quantitySold = ConsoleInputHandler.getIntFromUser("");
+
+                    if (quantitySold <= quantityOwned) {
+                        int totalMoneyMade = localValueOfGoods*quantitySold;
+                        p1.setMoney(p1.getMoney() + totalMoneyMade);
+                        if (quantitySold == quantityOwned) {
+                            playerCargo.removeCargo(choice);
+                        } else {
+                            playerCargo.removeCargo(choice, quantitySold);
+                        }
+                        System.out.println("Sold " + quantitySold + " " + selectedGoods.name + " for " + totalMoneyMade + " CREDS.");
+                    } else System.out.println("You don't have that much " + selectedGoods.name);
+                } else System.out.println("No cargo to sell...");
+            }
+        } else {
+            System.out.println("Cannot trade here.");
+        }
     }
 
 }
