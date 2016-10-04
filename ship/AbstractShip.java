@@ -7,12 +7,14 @@ public abstract class AbstractShip {
 
     public final String name;
 
-    private int maxHullIntegrity;
-    private int remainingHullIntegrity;
-    private int maxShields;
-    private int remainingShields;
+    protected int maxHullIntegrity;
+    protected int remainingHullIntegrity;
+    protected int maxShields;
+    protected int remainingShields;
 
-    ArrayList<Crewmember> crew;
+    protected ArrayList<Crewmember> crew;
+
+    protected int crewCapacity;
 
     public AbstractShip(String pName) {
         name = pName;
