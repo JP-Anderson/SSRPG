@@ -3,7 +3,7 @@ package ship;
 import characters.Crewmember;
 import java.util.ArrayList;
 
-public class AbstractShip {
+public abstract class AbstractShip {
 
     public final String name;
 
