@@ -3,6 +3,7 @@ package ship;
 import map.GridMap;
 import map.GridPoint;
 import characters.Crewmember;
+import ship.modules.*;
 
 import java.util.ArrayList;
 

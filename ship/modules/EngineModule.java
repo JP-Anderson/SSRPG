@@ -1,4 +1,4 @@
-package ship;
+package ship.modules;
 
 public class EngineModule implements ShipModule {
 

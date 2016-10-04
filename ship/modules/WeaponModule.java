@@ -1,4 +1,4 @@
-package ship;
+package ship.modules;
 
 import ship.weapons.*;
 
