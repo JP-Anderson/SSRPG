@@ -10,7 +10,6 @@ public class Ship extends AbstractShip {
 
     private int fuelCapacity;
     private int remainingFuel;
-    private int crewCapacity;
     private Scanner scanner;
     //private ArrayList<Crewmember> crew;
     private GridPoint location;
@@ -53,6 +52,7 @@ public class Ship extends AbstractShip {
 
     public void shipStatus() {
         System.out.println("Ship status:");
+        System.out.println(crew.size() + "/" + crewCapacity + " crew");
         System.out.println(" CREDS total: " + money);
         System.out.println(" Remaining Fuel: " + remainingFuel + "/" + fuelCapacity);
         System.out.println(" Cargo Bay: " + cargo.getFilledCapacity() + " units out of " + cargo.getMaxCapacity());
