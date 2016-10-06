@@ -17,14 +17,6 @@ public class TextInteraction extends Interaction {
 		next(0);
 	}
 	
-	protected void next(int index) {
-		if (hasNext()) {
-			next.get(index).interact();
-		} else {
-			System.out.println("END");
-		}
-	}
-	
 	protected String messageToUser;
 	
 	public String getMessage() {

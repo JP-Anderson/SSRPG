@@ -19,6 +19,14 @@ public abstract class Interaction {
 	
 	public abstract void interact();
 	
+	protected void next(int index) {
+		if (hasNext()) {
+			next.get(index).interact();
+		} else {
+			System.out.println("END");
+		}
+	}
+	
 	public boolean hasNext() {
 		return next.size() > 0 ? true: false;
 	}
