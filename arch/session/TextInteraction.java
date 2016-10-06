@@ -2,6 +2,8 @@ package arch.session;
 
 public class TextInteraction extends Interaction {
 	
+	protected String messageToUser;
+	
 	public TextInteraction(TextInteraction previous, String message) {
 		super(previous);
 		messageToUser = message;
@@ -16,8 +18,6 @@ public class TextInteraction extends Interaction {
 		System.out.println(messageToUser);
 		next(0);
 	}
-	
-	protected String messageToUser;
 	
 	public String getMessage() {
 		return messageToUser;

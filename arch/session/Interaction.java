@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 public abstract class Interaction {
 	
+	protected Interaction previous;
+	protected ArrayList<Interaction> next;
+	
 	public Interaction(Interaction previousInteraction) {
 		previous = previousInteraction;
 		next = new ArrayList<Interaction>();
@@ -30,8 +33,5 @@ public abstract class Interaction {
 	public boolean hasNext() {
 		return next.size() > 0 ? true: false;
 	}
-	
-	protected Interaction previous;
-	protected ArrayList<Interaction> next;
 	
 }

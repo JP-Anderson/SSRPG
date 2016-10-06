@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 public class TextInteractionDecision extends TextInteraction {
 	
+	protected ArrayList<String> userOptions;
+	
 	public TextInteractionDecision(TextInteraction previous, String messageToUser, ArrayList<String> usersOptions) {
 		super(previous, messageToUser);
 		userOptions = usersOptions;
@@ -28,7 +30,5 @@ public class TextInteractionDecision extends TextInteraction {
 	private int getIntIndexFromUser(int maxIndex) {
 		return ConsoleInputHandler.getIntInRangeFromUser(maxIndex);
 	}
-	
-	protected ArrayList<String> userOptions;
 	
 }
