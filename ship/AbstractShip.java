@@ -2,6 +2,7 @@ package ship;
 
 import characters.Crewmember;
 import java.util.ArrayList;
+import ship.modules.*;
 
 public abstract class AbstractShip {
 
