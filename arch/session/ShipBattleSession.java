@@ -1,6 +1,7 @@
 package arch.session;
 
 import ship.AbstractShip;
+import arch.view.ShipBattleView;
 
 public class ShipBattleSession extends Session {
 
