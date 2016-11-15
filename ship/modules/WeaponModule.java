@@ -8,8 +8,8 @@ public class WeaponModule implements ShipModule {
     public final int power;
     private ShipWeapon loadedWeapon;
 
-    public WeaponModule(String engineName, int weaponPower) {
-        name = engineName;
+    public WeaponModule(String weaponName, int weaponPower) {
+        name = weaponName;
         power = weaponPower;
     }
 
