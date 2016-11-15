@@ -2,14 +2,13 @@ package ship.modules;
 
 import ship.weapons.*;
 
-public class WeaponModule implements ShipModule {
+public class WeaponModule extends ShipModule {
 
-    public final String name;
     public final int power;
     private ShipWeapon loadedWeapon;
 
     public WeaponModule(String weaponName, int weaponPower) {
-        name = weaponName;
+        super(weaponName);
         power = weaponPower;
     }
 

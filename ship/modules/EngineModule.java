@@ -1,12 +1,11 @@
 package ship.modules;
 
-public class EngineModule implements ShipModule {
+public class EngineModule extends ShipModule {
 
-    public final String name;
     public final int fuelEfficiency;
 
     public EngineModule(String engineName, int efficiency) {
-        name = engineName;
+        super(engineName);
         fuelEfficiency = efficiency;
     }
 
