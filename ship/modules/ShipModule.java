@@ -4,11 +4,10 @@ import characters.Crewmember;
 
 public abstract class ShipModule {
 
-    public final String name;
-    private Crewmember activeCrewmember = null;
+    protected String name;
+    protected Crewmember activeCrewmember = null;
 
-    public ShipModule(String moduleName) {
-        name = moduleName;
+    public ShipModule() {
     }
 
     abstract void printInformation();
