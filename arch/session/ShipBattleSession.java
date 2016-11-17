@@ -56,13 +56,13 @@ public class ShipBattleSession extends Session {
 
     static abstract class Turn {
         void runTurn() {
-            defensePhase();
+            defencePhase();
             attackPhase();
         }
 
-        void defensePhase() {
+        void defencePhase() {
             // Use ShieldModule here and recharge shields if necessary
-            System.out.println("Defense phase.");
+            System.out.println("Defence phase.");
         }
 
         abstract void attackPhase();
