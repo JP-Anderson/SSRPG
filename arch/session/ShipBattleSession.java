@@ -1,8 +1,11 @@
 package arch.session;
 
+import util.*;
 import ship.AbstractShip;
 import ship.Ship;
 import ship.EnemyShip;
+import ship.modules.*;
+import ship.weapons.*;
 import arch.view.ShipBattleView;
 
 public class ShipBattleSession extends Session {
@@ -17,7 +20,21 @@ public class ShipBattleSession extends Session {
     public ShipBattleSession(AbstractShip newShip1, AbstractShip newShip2) {
         super("ShipBattleSession");
         ship1 = newShip1;
+        ship1.addWeaponModule(3);
         ship2 = newShip2;
+        ship2.addWeaponModule(2);
+
+        for (WeaponModule m : ship1.getWeaponModules()) {
+            m.setWeapon(new RailGun());
+        }
+
+        for (WeaponModule m : ship2.getWeaponModules()) {
+            m.setWeapon(new RailGun());
+        }
+
+        for (WeaponModule m : ship2.getWeaponModules()) {
+            m.setWeapon(new BurstLaserMk3());
+        }
         currentActiveShip = ship1;
     }
 
@@ -48,6 +65,7 @@ public class ShipBattleSession extends Session {
     static class PlayerTurn extends Turn {
 
         void attackPhase() {
+            String input = ConsoleInputHandler.getStringFromUser("Hello: ");
             System.out.println("Player will attack if possible in this turn.");
         }
 
