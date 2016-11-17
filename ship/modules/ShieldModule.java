@@ -11,7 +11,7 @@ public class ShieldModule extends ShipModule {
     @Override
     public void printInformation() {
         System.out.println(" - SHIELD MODULE ["+name+"]");
-        System.out.println("  + FUEL EFFICIENCY ["+fuelEfficiency+"]");
+        System.out.println("  + SHIELD POWER ["+maxShieldPowerSupported+"]");
     }
 
 }
