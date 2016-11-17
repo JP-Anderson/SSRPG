@@ -26,7 +26,7 @@ public class Ship extends AbstractShip {
     }
 
     // todo: create getters/setters for this
-    private EngineModule engines = new EngineModule("Engines MK1",5);
+    private EngineModule engines = new EngineModule(5);
 
     public Ship(String pName, int fuel, int crewCap, GridMap map, GridPoint startLocation) {
         super(pName);
