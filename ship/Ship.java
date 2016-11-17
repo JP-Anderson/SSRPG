@@ -25,9 +25,6 @@ public class Ship extends AbstractShip {
         return money;
     }
 
-
-    private CargoBay cargo;
-
     // todo: create getters/setters for this
     private EngineModule engines = new EngineModule("Engines MK1",5);
 
@@ -38,7 +35,6 @@ public class Ship extends AbstractShip {
         crewCapacity = crewCap;
         crew = new ArrayList<Crewmember>();
         location = startLocation;
-        cargo = new CargoBay(15);
         scanner = Scanner.getScanner(7,map,startLocation);
     }
 
@@ -75,10 +71,6 @@ public class Ship extends AbstractShip {
 
     public void scan() {
         scanner.scan();
-    }
-
-    public CargoBay getCargoBay() {
-        return cargo;
     }
 
     public ArrayList<Crewmember> getCrew() {

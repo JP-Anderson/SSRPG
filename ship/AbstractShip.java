@@ -21,13 +21,21 @@ public abstract class AbstractShip {
     protected int numberOfAvailableWeaponModules;
     protected ArrayList<WeaponModule> weaponModules;
 
+    protected CargoBay cargo;
+
 
     public AbstractShip(String pName) {
         name = pName;
+        cargo = new CargoBay(15);
     }
 
     // TODO: create an AttackAttempt class and provide a WeaponModule param
     public void fireWeapon(int weaponModulesIndex) {
 
     }
+
+    public CargoBay getCargoBay() {
+        return cargo;
+    }
+
 }
