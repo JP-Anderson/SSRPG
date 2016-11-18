@@ -22,6 +22,10 @@ public class WeaponModule extends ShipModule {
         return turnsTilWeaponReady;
     }
 
+    public void resetTurnsTilWeaponReady() {
+        turnsTilWeaponReady = loadedWeapon.cooldown;
+    }
+
     @Override
     public void printInformation() {
         System.out.println(" - WEAPON MODULE ["+name+"]");

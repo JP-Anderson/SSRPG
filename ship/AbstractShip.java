@@ -19,7 +19,8 @@ public abstract class AbstractShip {
 
     protected EngineModule engineModule;
 
-    protected int numberOfAvailableWeaponModules;
+    // Will need to set this based on type of Ship, must also be upgradeable
+    protected int numberOfAvailableWeaponModules = 2;
     protected ArrayList<WeaponModule> weaponModules;
 
     protected CargoBay cargo;
@@ -32,7 +33,9 @@ public abstract class AbstractShip {
     }
 
     public void addWeaponModule(int weaponModulePower) {
-        weaponModules.add(new WeaponModule(weaponModulePower));
+        if (weaponModules.size() < numberOfAvailableWeaponModules) {
+            weaponModules.add(new WeaponModule(weaponModulePower));
+        }
     }
 
     public ArrayList<WeaponModule> getWeaponModules() {

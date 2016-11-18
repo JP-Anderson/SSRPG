@@ -40,9 +40,8 @@ public class ShipBattleSession extends Session {
 
     @Override
     public void run() {
-        //TODO need to replace System calls with output handler class
-        nextTurn();
-        nextTurn();
+        int TURNS = 9;
+        for (int i = 0; i < TURNS; i++) nextTurn();
 
     }
 
@@ -54,10 +53,13 @@ public class ShipBattleSession extends Session {
         currentActiveShip = currentActiveShip == ship1 ? ship2: ship1;
     }
 
-    static abstract class Turn {
+    abstract class Turn {
+
         void runTurn() {
             defencePhase();
-            attackPhase();
+            if (weaponCheckPhase()) {
+                attackPhase();
+            }
         }
 
         void defencePhase() {
@@ -65,10 +67,28 @@ public class ShipBattleSession extends Session {
             System.out.println("Defence phase.");
         }
 
+        boolean weaponCheckPhase() {
+            for (WeaponModule m : currentActiveShip.getWeaponModules()) {
+                if (m.getWeapon() != null) {
+                    ShipWeapon w = m.getWeapon();
+                    if (m.getTurnsTilWeaponReady() == 0) {
+                        System.out.println(m.getTurnsTilWeaponReady());
+                        m.resetTurnsTilWeaponReady();
+                        return true;
+                    } else {
+                        System.out.println(w.name + " will be ready to fire in "
+                            + m.getTurnsTilWeaponReady() + " turns.");
+                        System.out.println(m.getTurnsTilWeaponReady());
+                        m.decrementTurnsTilWeaponReady();
+                    }
+                }
+            }
+            return false;
+        }
         abstract void attackPhase();
     }
 
-    static class PlayerTurn extends Turn {
+    class PlayerTurn extends Turn {
 
         void attackPhase() {
             String input = ConsoleInputHandler.getStringFromUser("Hello: ");
@@ -77,7 +97,7 @@ public class ShipBattleSession extends Session {
 
     }
 
-    static class CPUTurn extends Turn {
+    class CPUTurn extends Turn {
 
         void attackPhase() {
             System.out.println("CPU controlled enemy will attack if possible this turn.");
