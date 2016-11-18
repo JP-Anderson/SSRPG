@@ -4,6 +4,7 @@ import characters.Crewmember;
 import java.util.ArrayList;
 import ship.modules.*;
 import ship.weapons.ShipWeapon;
+import ship.weapons.Attack;
 
 public abstract class AbstractShip {
 
@@ -57,8 +58,12 @@ public abstract class AbstractShip {
     }
 
     // TODO: create an AttackAttempt class and provide a WeaponModule param
-    public void fireWeapon(int weaponModulesIndex) {
-
+    public Attack fireWeapon(int weaponModulesIndex) {
+        WeaponModule weaponModule = weaponModules.get(weaponModulesIndex);
+        if (weaponModule != null) {
+            return weaponModule.attack();
+        }
+        return null;
     }
 
     public CargoBay getCargoBay() {

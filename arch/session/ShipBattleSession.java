@@ -72,7 +72,8 @@ public class ShipBattleSession extends Session {
                 if (m.getWeapon() != null) {
                     ShipWeapon w = m.getWeapon();
                     if (m.getTurnsTilWeaponReady() == 0) {
-                        System.out.println(m.getTurnsTilWeaponReady());
+                        Attack a = m.attack();
+                        System.out.println(a.hullDamage +","+ a.shieldDamage +","+ a.accuracy);
                         m.resetTurnsTilWeaponReady();
                         return true;
                     } else {

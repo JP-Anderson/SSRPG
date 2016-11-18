@@ -7,8 +7,8 @@ public abstract class ShipWeapon {
     public WeaponType weaponType;
     public int cost;
     public int cooldown;
-    public int hullDamage;
     public int shieldDamage;
+    public int hullDamage;
     public int requiredWeaponModulePower;
 
     public ShipWeapon(String pName) {

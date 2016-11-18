@@ -44,6 +44,12 @@ public class WeaponModule extends ShipModule {
         }
     }
 
+    public Attack attack() {
+        if (loadedWeapon != null && turnsTilWeaponReady == 0)
+            return new Attack(loadedWeapon.shieldDamage, loadedWeapon.hullDamage, 0.9);
+        return null;
+    }
+
     public void removeWeapon() {
         loadedWeapon = null;
     }
