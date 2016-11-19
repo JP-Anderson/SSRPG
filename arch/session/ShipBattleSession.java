@@ -8,6 +8,8 @@ import ship.modules.*;
 import ship.weapons.*;
 import arch.view.ShipBattleView;
 
+import java.util.ArrayList;
+
 public class ShipBattleSession extends Session {
 
     private final AbstractShip ship1;
@@ -72,9 +74,6 @@ public class ShipBattleSession extends Session {
                 if (m.getWeapon() != null) {
                     ShipWeapon w = m.getWeapon();
                     if (m.getTurnsTilWeaponReady() == 0) {
-                        Attack a = m.attack();
-                        System.out.println(a.hullDamage +","+ a.shieldDamage +","+ a.accuracy);
-                        m.resetTurnsTilWeaponReady();
                         return true;
                     } else {
                         System.out.println(w.name + " will be ready to fire in "
@@ -92,8 +91,21 @@ public class ShipBattleSession extends Session {
     class PlayerTurn extends Turn {
 
         void attackPhase() {
-            String input = ConsoleInputHandler.getStringFromUser("Hello: ");
-            System.out.println("Player will attack if possible in this turn.");
+            ArrayList<WeaponModule> readyWeapons = new ArrayList<>();
+            System.out.println("Charged weapons:");
+            for (WeaponModule m : currentActiveShip.getWeaponModules()) {
+                if (m.getWeapon() != null) {
+                    if (m.getTurnsTilWeaponReady() == 0) {
+                        readyWeapons.add(m);
+                        System.out.println(m.getWeapon().name);
+                    }
+                }
+            }
+
+            WeaponModule m = readyWeapons.get(0);
+            Attack a = m.attack();
+            System.out.println(a.hullDamage +","+ a.shieldDamage +","+ a.accuracy);
+            m.resetTurnsTilWeaponReady();
         }
 
     }
