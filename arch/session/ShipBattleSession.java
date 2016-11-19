@@ -42,7 +42,7 @@ public class ShipBattleSession extends Session {
 
     @Override
     public void run() {
-        int TURNS = 14;
+        int TURNS = 29;
         for (int i = 0; i < TURNS; i++) {
             nextTurn();
             try {
@@ -113,6 +113,8 @@ public class ShipBattleSession extends Session {
             WeaponModule m = readyWeapons.get(choice);
             Attack a = m.attack();
             System.out.println(a.hullDamage +","+ a.shieldDamage +","+ a.accuracy);
+            AbstractShip shipToAttack = currentActiveShip == ship1 ? ship2 : ship1;
+            shipToAttack.sustainFire(a);
             m.resetTurnsTilWeaponReady();
         }
 
