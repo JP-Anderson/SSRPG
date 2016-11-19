@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import ship.modules.*;
 import ship.weapons.ShipWeapon;
 import ship.weapons.Attack;
+import ship.shields.*;
 
 public abstract class AbstractShip {
 
@@ -12,13 +13,12 @@ public abstract class AbstractShip {
 
     protected int maxHullIntegrity;
     protected int remainingHullIntegrity;
-    protected int maxShields;
-    protected int remainingShields;
 
     protected ArrayList<Crewmember> crew;
     protected int crewCapacity;
 
-    protected EngineModule engineModule;
+    //protected EngineModule engineModule;
+    protected ShieldModule shieldModule = new ShieldModule(2);
 
     // Will need to set this based on type of Ship, must also be upgradeable
     protected int numberOfAvailableWeaponModules = 2;
@@ -26,11 +26,26 @@ public abstract class AbstractShip {
 
     protected CargoBay cargo;
 
-
     public AbstractShip(String pName) {
         name = pName;
         cargo = new CargoBay(15);
         weaponModules = new ArrayList<>();
+        shieldModule.shields(new BasicShieldsMk2());
+        // Need to generate different hull integritys across shipStatus
+        maxHullIntegrity = 500;
+        remainingHullIntegrity = maxHullIntegrity;
+    }
+
+    public void sustainFire(Attack attack) {
+        int originalShields = shieldModule.shields().remainingShields;
+        int originalHull = remainingHullIntegrity;
+
+        System.out.println("Attack: sD " + attack.shieldDamage + " hD " + attack.hullDamage);
+        Attack shieldedAttack = shieldModule.shieldAttack(attack);
+        System.out.println("Shielded Attack: sD " + shieldedAttack.shieldDamage + " hD " + shieldedAttack.hullDamage);
+        remainingHullIntegrity = remainingHullIntegrity - shieldedAttack.hullDamage;
+        System.out.println("Shields: " + originalShields + " => " + shieldModule.shields().remainingShields);
+        System.out.println("Hull: " + originalHull + " => " + remainingHullIntegrity);
     }
 
     public void addWeaponModule(int weaponModulePower) {
@@ -45,7 +60,7 @@ public abstract class AbstractShip {
 
     public boolean equipWeapon(ShipWeapon newWeapon) {
         for (WeaponModule m : weaponModules) {
-            if (m.maxWeaponPowerSupported <= newWeapon.requiredWeaponModulePower
+            if (m.maxWeaponPowerSupported >= newWeapon.requiredWeaponModulePower
             && m.getWeapon() == null) {
                 System.out.println("This weapon has been equipped.");
                 m.setWeapon(newWeapon);
@@ -55,15 +70,6 @@ public abstract class AbstractShip {
 
         System.out.println("Cannot equip weapon.");
         return false;
-    }
-
-    // TODO: create an AttackAttempt class and provide a WeaponModule param
-    public Attack fireWeapon(int weaponModulesIndex) {
-        WeaponModule weaponModule = weaponModules.get(weaponModulesIndex);
-        if (weaponModule != null) {
-            return weaponModule.attack();
-        }
-        return null;
     }
 
     public CargoBay getCargoBay() {

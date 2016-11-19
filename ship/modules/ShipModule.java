@@ -12,7 +12,6 @@ public abstract class ShipModule {
 
     abstract void printInformation();
 
-
     void assignCrewmember(Crewmember crewmember) {
         activeCrewmember = crewmember;
     }
