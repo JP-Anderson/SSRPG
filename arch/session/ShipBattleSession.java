@@ -42,8 +42,15 @@ public class ShipBattleSession extends Session {
 
     @Override
     public void run() {
-        int TURNS = 9;
-        for (int i = 0; i < TURNS; i++) nextTurn();
+        int TURNS = 14;
+        for (int i = 0; i < TURNS; i++) {
+            nextTurn();
+            try {
+                Thread.sleep(1500);
+            } catch(InterruptedException e){
+                System.out.println("got interrupted!");
+            }
+        }
 
     }
 
@@ -85,36 +92,57 @@ public class ShipBattleSession extends Session {
             }
             return false;
         }
-        abstract void attackPhase();
-    }
-
-    class PlayerTurn extends Turn {
 
         void attackPhase() {
             ArrayList<WeaponModule> readyWeapons = new ArrayList<>();
-            System.out.println("Charged weapons:");
+            if (isPlayer()) System.out.println("Charged weapons:");
+            int i = 0;
             for (WeaponModule m : currentActiveShip.getWeaponModules()) {
                 if (m.getWeapon() != null) {
                     if (m.getTurnsTilWeaponReady() == 0) {
                         readyWeapons.add(m);
-                        System.out.println(m.getWeapon().name);
+                        if (isPlayer()) System.out.println("("+i+") " + m.getWeapon().name);
+                        i++;
                     }
                 }
             }
 
-            WeaponModule m = readyWeapons.get(0);
+            int weaponCount = readyWeapons.size();
+            int choice = chooseWeaponAtIndex(weaponCount);
+
+            WeaponModule m = readyWeapons.get(choice);
             Attack a = m.attack();
             System.out.println(a.hullDamage +","+ a.shieldDamage +","+ a.accuracy);
             m.resetTurnsTilWeaponReady();
         }
 
+        abstract int chooseWeaponAtIndex(int weaponCount);
+
+        abstract boolean isPlayer();
+
+    }
+
+    class PlayerTurn extends Turn {
+
+        @Override
+        int chooseWeaponAtIndex(int weaponCount) {
+            return ConsoleInputHandler.getIntInRangeFromUser(weaponCount);
+        }
+
+        @Override
+        boolean isPlayer() { return true; }
+
     }
 
     class CPUTurn extends Turn {
 
-        void attackPhase() {
-            System.out.println("CPU controlled enemy will attack if possible this turn.");
+        @Override
+        int chooseWeaponAtIndex(int weaponCount) {
+            return 0;
         }
+
+        @Override
+        boolean isPlayer() { return false; }
 
     }
 
