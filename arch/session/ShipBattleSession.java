@@ -84,11 +84,10 @@ public class ShipBattleSession extends Session {
         boolean weaponCheckPhase() {
             for (WeaponModule m : currentActiveShip.getWeaponModules()) {
                 if (m.getWeapon() != null) {
-                    ShipWeapon w = m.getWeapon();
                     if (m.getTurnsTilWeaponReady() == 0) {
                         return true;
                     } else {
-                        System.out.println(w.name + " will be ready to fire in "
+                        System.out.println(m.getWeapon().name + " will be ready to fire in "
                             + m.getTurnsTilWeaponReady() + " turns.");
                         System.out.println(m.getTurnsTilWeaponReady());
                         m.decrementTurnsTilWeaponReady();
