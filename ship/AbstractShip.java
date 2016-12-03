@@ -26,6 +26,8 @@ public abstract class AbstractShip {
 
     protected CargoBay cargo;
 
+    protected boolean isDestroyed;
+
     public AbstractShip(String pName) {
         name = pName;
         cargo = new CargoBay(15);
@@ -34,17 +36,18 @@ public abstract class AbstractShip {
         // Need to generate different hull integritys across shipStatus
         maxHullIntegrity = 500;
         remainingHullIntegrity = maxHullIntegrity;
+        isDestroyed = false;
     }
 
     public void sustainFire(Attack attack) {
-        int originalShields = shieldModule.shields().remainingShields;
+        int originalShields = shieldModule.shields().getRemainingShields();
         int originalHull = remainingHullIntegrity;
 
         System.out.println("Attack: sD " + attack.shieldDamage + " hD " + attack.hullDamage);
         Attack shieldedAttack = shieldModule.shieldAttack(attack);
         System.out.println("Shielded Attack: sD " + shieldedAttack.shieldDamage + " hD " + shieldedAttack.hullDamage);
-        remainingHullIntegrity = remainingHullIntegrity - shieldedAttack.hullDamage;
-        System.out.println("Shields: " + originalShields + " => " + shieldModule.shields().remainingShields);
+        takeHullDamage(shieldedAttack);
+        System.out.println("Shields: " + originalShields + " => " + shieldModule.shields().getRemainingShields());
         System.out.println("Hull: " + originalHull + " => " + remainingHullIntegrity);
     }
 
@@ -74,6 +77,21 @@ public abstract class AbstractShip {
 
     public CargoBay getCargoBay() {
         return cargo;
+    }
+
+    public boolean isDestroyed() {
+        return isDestroyed;
+    }
+
+    public void rechargeShields() {
+        shieldModule.rechargeShields();
+    }
+
+    private void takeHullDamage(Attack shieldedAttack) {
+        remainingHullIntegrity = remainingHullIntegrity - shieldedAttack.hullDamage;
+        if (remainingHullIntegrity < 0) {
+            isDestroyed = true;
+        }
     }
 
 }

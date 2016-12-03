@@ -30,6 +30,7 @@ public class ShipBattleSession extends Session {
             m.setWeapon(new RailGun());
         }
 
+        // This should fail
         for (WeaponModule m : ship2.getWeaponModules()) {
             m.setWeapon(new RailGun());
         }
@@ -42,8 +43,7 @@ public class ShipBattleSession extends Session {
 
     @Override
     public void run() {
-        int TURNS = 29;
-        for (int i = 0; i < TURNS; i++) {
+        while(checkFightersAlive()) {
             nextTurn();
             try {
                 Thread.sleep(1500);
@@ -51,7 +51,12 @@ public class ShipBattleSession extends Session {
                 System.out.println("got interrupted!");
             }
         }
+        System.out.println("Fight over.");
 
+    }
+
+    private boolean checkFightersAlive() {
+        return !ship1.isDestroyed() && !ship2.isDestroyed();
     }
 
     private void nextTurn() {
@@ -72,7 +77,7 @@ public class ShipBattleSession extends Session {
         }
 
         void defencePhase() {
-            // Use ShieldModule here and recharge shields if necessary
+            currentActiveShip.rechargeShields();
             System.out.println("Defence phase.");
         }
 
