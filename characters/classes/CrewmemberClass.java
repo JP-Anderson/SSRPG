@@ -12,6 +12,7 @@ public abstract class CrewmemberClass {
     public CrewmemberClass(String cName) {
         className = cName;
         abilities = new AbilityTree();
+        buildAbilityTree();
     }
 
     public abstract void buildAbilityTree();
