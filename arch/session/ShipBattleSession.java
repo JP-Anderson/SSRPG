@@ -116,9 +116,11 @@ public class ShipBattleSession extends Session {
 
             WeaponModule m = readyWeapons.get(choice);
             Attack a = m.attack();
-            System.out.println(a.hullDamage +","+ a.shieldDamage +","+ a.accuracy);
-            AbstractShip shipToAttack = currentActiveShip == ship1 ? ship2 : ship1;
-            shipToAttack.sustainFire(a);
+            if (a != null) {
+                System.out.println(a.hullDamage + "," + a.shieldDamage + "," + a.accuracy);
+                AbstractShip shipToAttack = currentActiveShip == ship1 ? ship2 : ship1;
+                shipToAttack.sustainFire(a);
+            }
             m.resetTurnsTilWeaponReady();
         }
 

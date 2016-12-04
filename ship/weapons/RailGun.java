@@ -9,6 +9,7 @@ public class RailGun extends ShipWeapon {
         cost = 300;
         cooldown = 4;
         hullDamage = 400;
+        baseHitChance = 0.8;
         shieldDamage = 600;
         requiredWeaponModulePower = 3;
         weaponType = ShipWeapon.WeaponType.LAZER;

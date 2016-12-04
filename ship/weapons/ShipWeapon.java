@@ -9,6 +9,7 @@ public abstract class ShipWeapon {
     public int cooldown;
     public int shieldDamage;
     public int hullDamage;
+    public double baseHitChance;
     public int requiredWeaponModulePower;
 
     public ShipWeapon(String pName) {

@@ -1,6 +1,7 @@
 package ship.modules;
 
 import ship.weapons.*;
+import util.RNG;
 
 public class WeaponModule extends ShipModule {
 
@@ -46,8 +47,16 @@ public class WeaponModule extends ShipModule {
 
     public Attack attack() {
         if (loadedWeapon != null && turnsTilWeaponReady == 0)
-            return new Attack(loadedWeapon.shieldDamage, loadedWeapon.hullDamage, 0.9, loadedWeapon.weaponType);
+            if (rollForAttackHitChance()) return new Attack(loadedWeapon.shieldDamage, loadedWeapon.hullDamage, 0.9, loadedWeapon.weaponType);
+        System.out.println("MISS!");
         return null;
+    }
+
+    private boolean rollForAttackHitChance() {
+        double hitChance = loadedWeapon.baseHitChance;
+        double roll = RNG.randZeroToOne();
+        if (roll<= hitChance) return true;
+        else return false;
     }
 
     public void removeWeapon() {
