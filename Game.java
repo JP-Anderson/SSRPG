@@ -1,15 +1,6 @@
-import arch.session.CrewCreationSession;
+import arch.session.ShipAndCrewCreationSession;
 import ship.*;
 import map.*;
-import goods.*;
-import util.csv.*;
-import util.*;
-import events.*;
-import characters.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import arch.session.MapSession;
 import arch.session.ShipBattleSession;
 
@@ -20,17 +11,18 @@ public class Game {
 
     public static void main(String[] args) {
 
-        CrewCreationSession c = new CrewCreationSession();
+        ShipAndCrewCreationSession c = new ShipAndCrewCreationSession();
         c.run();
 
-        Ship s1 = new Ship("1", 100, 3, GridMap.generateGridMap(11,7), new GridPoint(0,1));
-        EnemyShip s2 = new EnemyShip("2");
+        MapSession mmm = new MapSession(c.generateNewShip());
+        mmm.run();
 
-        ShipBattleSession sbs = new ShipBattleSession(s1,s2);
-        sbs.run();
+        //Ship s1 = new Ship("1", 100, 3, GridMap.generateGridMap(11,7), new GridPoint(0,1));
+        //EnemyShip s2 = new EnemyShip("2");
 
-        MapSession mmm = new MapSession();
-        //mmm.run();
+        //ShipBattleSession sbs = new ShipBattleSession(s1,s2);
+        //sbs.run();
+
     }
 
 }

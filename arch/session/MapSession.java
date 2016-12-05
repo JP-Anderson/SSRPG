@@ -13,24 +13,28 @@ import java.util.List;
 
 public class MapSession extends Session {
 
-    public MapSession() {
-        super("MapSession");
-    }
-
-    //todo: move this?
     private final static int FUEL_COST = 180;
     private GridMap map;
     private Ship p1;
     private ArrayList<GoodsForSale> goods;
+
+    public MapSession(Ship crewedShip) {
+        super("MapSession");
+        p1 = crewedShip;
+
+        GridPoint start = new GridPoint(3,6);
+        map = GridMap.generateGridMap(11,7);
+
+        p1.initialiseMap(start, map);
+        p1.setMoney(20000);
+        initMapAndGoodsList();
+    }
 
     private final String xLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     @Override
     public void run() {
 
-        map = GridMap.generateGridMap(11,7);
-        generatePlayer();
-        initMapAndGoodsList();
 
         while (true) {
 
@@ -58,12 +62,6 @@ public class MapSession extends Session {
             sleep(1);
             System.out.println("");
         }
-    }
-
-    private void generatePlayer() {
-        GridPoint start = new GridPoint(3,6);
-        p1 = new Ship("Jp",100,3,map,start);
-        p1.setMoney(20000);
     }
 
     private void initMapAndGoodsList() {

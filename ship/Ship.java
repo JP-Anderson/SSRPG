@@ -12,10 +12,9 @@ public class Ship extends AbstractShip {
     private int fuelCapacity;
     private int remainingFuel;
     private Scanner scanner;
-    //private ArrayList<Crewmember> crew;
+    private ArrayList<Crewmember> crew;
     private GridPoint location;
 
-    // todo: find a better place for this, player or crew class?
     private int money;
 
     public void setMoney (int m) {
@@ -28,12 +27,19 @@ public class Ship extends AbstractShip {
     // todo: create getters/setters for this
     private EngineModule engines = new EngineModule(5);
 
-    public Ship(String pName, int fuel, int crewCap, GridMap map, GridPoint startLocation) {
+    public Ship(String pName, int fuel, int crewCap) {
         super(pName);
         fuelCapacity = fuel;
         remainingFuel = fuel;
         crewCapacity = crewCap;
-        crew = new ArrayList<Crewmember>();
+        crew = new ArrayList<>();
+    }
+
+    public void initialiseCrew(ArrayList<Crewmember> newCrew) {
+        crew = newCrew;
+    }
+
+    public void initialiseMap(GridPoint startLocation, GridMap map) {
         location = startLocation;
         scanner = Scanner.getScanner(7,map,startLocation);
     }
@@ -82,5 +88,9 @@ public class Ship extends AbstractShip {
     public int getRemainingFuel() { return remainingFuel; }
 
     public void setRemainingFuel(int newFuel) { remainingFuel = newFuel; }
+
+    public void setCrew(ArrayList<Crewmember> newCrew) {
+        crew = newCrew;
+    }
 
 }

@@ -3,6 +3,7 @@ package arch.session;
 import characters.Crewmember;
 import characters.Skills;
 import characters.classes.*;
+import ship.Ship;
 import util.ConsoleInputHandler;
 
 import java.util.ArrayList;
@@ -10,13 +11,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class CrewCreationSession extends Session {
+public class ShipAndCrewCreationSession extends Session {
 
     ArrayList<Crewmember> crew = null;
     private ArrayList<CrewmemberClass> availableClasses;
+    private String newName;
 
-    public CrewCreationSession() {
-        super("CrewCreationSession");
+    public ShipAndCrewCreationSession() {
+        super("ShipAndCrewCreationSession");
         availableClasses = new ArrayList<>();
         availableClasses.add(new PilotClass());
         availableClasses.add(new ScoundrelClass());
@@ -25,6 +27,7 @@ public class CrewCreationSession extends Session {
 
     @Override
     public void run() {
+        newName = ConsoleInputHandler.getStringFromUser("What would you like to call your ship?");
         crew = new ArrayList<>();
         int crewCount = 1;
         final int numberOfStartingCrewmembers = 2;
@@ -41,11 +44,12 @@ public class CrewCreationSession extends Session {
             crewCount++;
             System.out.println();
         }
-
     }
 
-    public ArrayList<Crewmember> getGeneratedCrew() {
-        return crew;
+    public Ship generateNewShip() {
+        Ship p1 = new Ship(newName,100,3);
+        p1.initialiseCrew(crew);
+        return p1;
     }
 
     private void printAvailableClasses() {
