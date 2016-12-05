@@ -10,9 +10,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by Jp on 05/12/2016.
- */
 public class CrewCreationSession extends Session {
 
     ArrayList<Crewmember> crew = null;

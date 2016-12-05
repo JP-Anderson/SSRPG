@@ -1,6 +1,5 @@
 package arch.session;
 
-import arch.view.*;
 import ship.*;
 import map.*;
 import goods.*;
@@ -10,8 +9,6 @@ import events.*;
 import characters.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 
 
 public class MapSession extends Session {
