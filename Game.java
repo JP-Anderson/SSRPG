@@ -1,3 +1,4 @@
+import arch.session.CrewCreationSession;
 import ship.*;
 import map.*;
 import goods.*;
@@ -18,6 +19,9 @@ public class Game {
     public final static int FUEL_COST = 180;
 
     public static void main(String[] args) {
+
+        CrewCreationSession c = new CrewCreationSession();
+        c.run();
 
         Ship s1 = new Ship("1", 100, 3, GridMap.generateGridMap(11,7), new GridPoint(0,1));
         EnemyShip s2 = new EnemyShip("2");

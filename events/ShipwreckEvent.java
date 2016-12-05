@@ -2,6 +2,7 @@ package events;
 
 import characters.Crewmember;
 import characters.Skills;
+import characters.classes.PilotClass;
 import goods.*;
 import goods.GoodsList;
 import util.RNG;
@@ -59,7 +60,8 @@ public class ShipwreckEvent extends Event {
     private ArrayList<Crewmember> generateCrewMembers() {
         ArrayList<Crewmember> survivors = new ArrayList<Crewmember>();
         if (RNG.randZeroToOne() <= 0.05) {
-            Crewmember survivor = new Crewmember("Survivor", new Skills());
+            // need to randomize the classes
+            Crewmember survivor = new Crewmember("Survivor", new Skills(), new PilotClass());
             survivors.add(survivor);
         }
         return survivors;

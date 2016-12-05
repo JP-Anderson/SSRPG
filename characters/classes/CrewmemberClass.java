@@ -4,7 +4,7 @@ import characters.abilities.*;
 
 public abstract class CrewmemberClass {
 
-    protected String className;
+    public final String className;
     //pilot, navigator, weapons, engineer, trader, shields, scoundrel
 
     protected AbilityTree abilities;
