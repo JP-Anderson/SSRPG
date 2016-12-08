@@ -5,6 +5,7 @@ import characters.Skills;
 import characters.classes.PilotClass;
 import goods.*;
 import goods.GoodsList;
+import ship.Ship;
 import util.RNG;
 import util.ConsoleInputHandler;
 
@@ -15,7 +16,7 @@ public class ShipwreckEvent extends Event {
     @Override
     void initialize() {
         int moneyReward = RNG.randInt(20,1500);
-        outcome = new EventOutcome(moneyReward, generateCrewMembers(), generateGoods());
+        outcome = new EventOutcome(moneyReward, generateCrewMembers(0.05), generateGoods(0.25));
     }
 
     @Override
@@ -57,23 +58,4 @@ public class ShipwreckEvent extends Event {
         return outcome;
     }
 
-    private ArrayList<Crewmember> generateCrewMembers() {
-        ArrayList<Crewmember> survivors = new ArrayList<Crewmember>();
-        if (RNG.randZeroToOne() <= 0.05) {
-            // need to randomize the classes
-            Crewmember survivor = new Crewmember("Survivor", new Skills(), new PilotClass());
-            survivors.add(survivor);
-        }
-        return survivors;
-    }
-
-    private ArrayList<GoodsForSale> generateGoods() {
-        ArrayList<GoodsForSale> goods = new ArrayList<GoodsForSale>();
-        if (RNG.randZeroToOne() <= 0.25) {
-            int possibleGoods = GoodsList.GOODS.length;
-            GoodsForSale survivingGoods = GoodsList.GOODS[RNG.randInt(0,possibleGoods)];
-            goods.add(survivingGoods);
-        }
-        return goods;
-    }
 }

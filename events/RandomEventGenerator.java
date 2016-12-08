@@ -9,7 +9,7 @@ public class RandomEventGenerator {
 
         public void generateEvent(Ship player) {
             ShipwreckEvent event = new ShipwreckEvent();
-            EventOutcome outcome = event.transpire();
+            EventOutcome outcome = event.transpire(player);
             sleep(2);
             for (GoodsForSale g : outcome.getGoodsReward()) {
                 //player.getCargoBay().addCargo(g);

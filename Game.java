@@ -13,16 +13,9 @@ public class Game {
 
         ShipAndCrewCreationSession c = new ShipAndCrewCreationSession();
         c.run();
-
-        MapSession mmm = new MapSession(c.generateNewShip());
+        Ship player = c.generateNewShip();
+        MapSession mmm = new MapSession(player);
         mmm.run();
-
-        //Ship s1 = new Ship("1", 100, 3, GridMap.generateGridMap(11,7), new GridPoint(0,1));
-        //EnemyShip s2 = new EnemyShip("2");
-
-        //ShipBattleSession sbs = new ShipBattleSession(s1,s2);
-        //sbs.run();
-
     }
 
 }
