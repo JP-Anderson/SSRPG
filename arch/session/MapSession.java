@@ -147,7 +147,7 @@ public class MapSession extends Session {
                 CargoBay playerCargo = p1.getCargoBay();
                 int cargoSize = playerCargo.getFilledCapacity();
                 int cargoMaxSize = playerCargo.getMaxCapacity();
-                if (quantity <= numberCanAfford) {
+                if (quantity <= numberCanAfford && quantity > 0) {
                     if (cargoSize + quantity <= cargoMaxSize) {
                         int totalCost = goodsValue*quantity;
                         playerCargo.addCargo(new PurchasedGoods(selectedGoods, quantity, planet.gridPoint));
@@ -156,7 +156,11 @@ public class MapSession extends Session {
                     } else {
                         System.out.println("Not enough cargo space.");
                     }
-                } else System.out.println("You cannot afford that amount of " + selectedGoods.name);
+                } else if (quantity == 0) {
+                    System.out.println("You buy nothing.");
+                } else {
+                    System.out.println("You cannot afford that amount of " + selectedGoods.name);
+                }
             }
 
             if (tradeChoice == 's' || tradeChoice == 'S') {
