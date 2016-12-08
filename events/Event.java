@@ -3,9 +3,11 @@ package events;
 import characters.Crewmember;
 import characters.Skills;
 import characters.classes.PilotClass;
+import goods.Goods;
 import goods.GoodsForSale;
 import goods.GoodsList;
 import ship.Ship;
+import util.ConsoleInputHandler;
 import util.RNG;
 
 import java.util.ArrayList;
@@ -14,11 +16,14 @@ public abstract class Event {
 
     abstract void initialize();
     abstract void displayEvent();
-    abstract void getUserInput();
     abstract EventOutcome generateOutcome();
 
     protected Ship playerShip;
     protected EventOutcome outcome;
+
+    protected String crewPrompt = "Would you like to take the survivor";
+    protected String goodsPrompt = "Would you like to take the $";
+
 
     public final EventOutcome transpire(Ship playerShip){
             setPlayerShip(playerShip);
@@ -26,6 +31,26 @@ public abstract class Event {
             displayEvent();
             getUserInput();
             return generateOutcome();
+    }
+
+     protected void getUserInput() {
+        //TODO: move this into a UI/console input class
+        if (outcome.getCrewReward().size() > 0) {
+            System.out.println(crewPrompt + "? (Y/N)");
+            char decision = ConsoleInputHandler.getCharFromUser("");
+            if (decision != 'Y' && decision != 'y') {
+                outcome.removeCrewReward();
+            }
+        }
+        if (outcome.getGoodsReward().size() > 0) {
+            Goods newGoods = outcome.getGoodsReward().get(0);
+            System.out.println(goodsPrompt.replace("$",newGoods.name) + "? (Y/N)");
+            char decision = ConsoleInputHandler.getCharFromUser("");
+            if (decision != 'Y' && decision != 'y') {
+                outcome.removeGoodsReward();
+            }
+        }
+
     }
 
     protected final ArrayList<Crewmember> generateCrewMembers(double chanceOfCrewmember) {
