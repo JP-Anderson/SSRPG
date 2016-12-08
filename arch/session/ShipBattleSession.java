@@ -30,11 +30,6 @@ public class ShipBattleSession extends Session {
             m.setWeapon(new RailGun());
         }
 
-        // This should fail
-        for (WeaponModule m : ship2.getWeaponModules()) {
-            m.setWeapon(new RailGun());
-        }
-
         for (WeaponModule m : ship2.getWeaponModules()) {
             m.setWeapon(new BurstLaserMk3());
         }
