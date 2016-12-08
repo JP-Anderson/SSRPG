@@ -24,9 +24,6 @@ public class Ship extends AbstractShip {
         return money;
     }
 
-    // todo: create getters/setters for this
-    private EngineModule engines = new EngineModule(5);
-
     public Ship(String pName, int fuel, int crewCap) {
         super(pName);
         fuelCapacity = fuel;
@@ -61,6 +58,7 @@ public class Ship extends AbstractShip {
         System.out.println(" Cargo Bay: " + cargo.getFilledCapacity() + " units out of " + cargo.getMaxCapacity());
         System.out.println(" Modules: ");
         engines.printInformation();
+        shieldModule.printInformation();
     }
 
     public boolean travel(GridPoint gridPoint, int distance) {

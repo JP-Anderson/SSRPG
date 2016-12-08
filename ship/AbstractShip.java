@@ -17,7 +17,8 @@ public abstract class AbstractShip {
     protected ArrayList<Crewmember> crew;
     protected int crewCapacity;
 
-    //protected EngineModule engineModule;
+    // todo: create getters/setters for this
+    protected EngineModule engines = new EngineModule(5);
     protected ShieldModule shieldModule = new ShieldModule(2);
 
     // Will need to set this based on type of Ship, must also be upgradeable
