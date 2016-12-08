@@ -29,7 +29,7 @@ public class BanditEvent extends Event {
 
         System.out.println("There is " + outcome.getMoneyReward() + " CREDS.");
         if (outcome.getCrewReward().size() > 0) {
-            System.out.println("There is a survivor!");
+            System.out.println("There is a survivor who was taken prisoner by the Bandits!");
         }
         if (outcome.getGoodsReward().size() > 0) {
             Goods newGoods = outcome.getGoodsReward().get(0);
