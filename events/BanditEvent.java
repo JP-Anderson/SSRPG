@@ -3,6 +3,7 @@ package events;
 import arch.session.ShipBattleSession;
 import goods.Goods;
 import ship.EnemyShip;
+import util.ConsoleInputHandler;
 import util.RNG;
 
 /**
@@ -38,11 +39,25 @@ public class BanditEvent extends Event {
 
     @Override
     void getUserInput() {
+        //TODO: move this into a UI/console input class
+        if (outcome.getCrewReward().size() > 0) {
+            System.out.println("The Bandits were holding a prisoner who offers to join your crew. Accept? (Y/N)");
+            char decision = ConsoleInputHandler.getCharFromUser("");
+            if (decision != 'Y' && decision != 'y') {
+                outcome.removeCrewReward();
+            }
+        }
+        if (outcome.getGoodsReward().size() > 0) {
+            Goods newGoods = outcome.getGoodsReward().get(0);
+            System.out.println("You find some " + newGoods.name + " in the Bandit hold, would you like to take the " + newGoods.name + "? (Y/N)");
+            char decision = ConsoleInputHandler.getCharFromUser("");
+            if (decision != 'Y' && decision != 'y') {
+                outcome.removeGoodsReward();
+            }
+        }
 
     }
 
     @Override
-    EventOutcome generateOutcome() {
-        return null;
-    }
+    EventOutcome generateOutcome() { return outcome; }
 }
