@@ -5,10 +5,9 @@ import characters.Crewmember;
 import goods.GoodsForSale;
 import goods.PurchasedGoods;
 
-public class RandomEventGenerator {
+public class EventRunner {
 
-        public void generateEvent(Ship player) {
-            ShipwreckEvent event = new ShipwreckEvent();
+        public static void run(Event event, Ship player) {
             EventOutcome outcome = event.transpire(player);
             sleep(2);
             for (GoodsForSale g : outcome.getGoodsReward()) {
@@ -31,12 +30,12 @@ public class RandomEventGenerator {
         }
 
         // TODO: Refactor these to a console or view class
-        private void sleep(int seconds) {
+        private static void sleep(int seconds) {
             int milliseconds = seconds * 1000;
             try { Thread.sleep(milliseconds); } catch (Exception e) { e.printStackTrace(); }
         }
 
-        private void printTwoRows() {
+        private static void printTwoRows() {
             System.out.println();
             System.out.println();
         }

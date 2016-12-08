@@ -242,44 +242,9 @@ public class MapSession extends Session {
                     for (int jumps = 0; jumps < distance; jumps++ ) {
                         double eventRoll = RNG.randZeroToOne();
                         if (eventRoll <= 0.15) {
-                            ShipwreckEvent event = new ShipwreckEvent();
-                            EventOutcome outcome = event.transpire(p1);
-                            sleep(2);
-                            for (GoodsForSale g : outcome.getGoodsReward()) {
-                                //p1.getCargoBay().addCargo(g);
-                                if (!p1.getCargoBay().isFull()) {
-                                    p1.getCargoBay().addCargo(new PurchasedGoods(g,1,null));
-                                    System.out.println("Adding " + g.name + ".");
-                                } else System.out.println("No space for " + g.name + ".");
-                            }
-                            for (Crewmember c : outcome.getCrewReward()) {
-                                p1.getCrew().add(c);
-                                System.out.println("Adding to crew.");
-                            }
-                            int newBalance = p1.getMoney() + outcome.getMoneyReward();
-                            System.out.println("CREDS " + p1.getMoney() + " --> " + newBalance);
-                            sleep(2);
-
-                            p1.setMoney(newBalance);
-                            printTwoRows();
+                            EventRunner.run(new ShipwreckEvent(), p1);
                         } else if (eventRoll >= 0.16 && eventRoll <= 0.3) {
-                            BanditEvent event = new BanditEvent();
-                            EventOutcome outcome = event.transpire(p1);
-                            sleep(2);
-                            for (GoodsForSale g : outcome.getGoodsReward()) {
-                                //p1.getCargoBay().addCargo(g);
-                                if (!p1.getCargoBay().isFull()) {
-                                    p1.getCargoBay().addCargo(new PurchasedGoods(g,1,null));
-                                    System.out.println("Adding " + g.name + ".");
-                                } else System.out.println("No space for " + g.name + ".");
-                            }
-                            for (Crewmember c : outcome.getCrewReward()) {
-                                p1.getCrew().add(c);
-                                System.out.println("Adding to crew.");
-                            }
-                            int newBalance = p1.getMoney() + outcome.getMoneyReward();
-                            System.out.println("CREDS " + p1.getMoney() + " --> " + newBalance);
-                            sleep(2);
+                            EventRunner.run(new BanditEvent(), p1);
                         }
                         System.out.println("You jump to the next sector.");
                         System.out.println(distance - jumps + " sectors away.");
