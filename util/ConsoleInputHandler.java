@@ -36,8 +36,7 @@ public class ConsoleInputHandler {
         Returns the user input as a String.
      */
     public static String getStringFromUser(String promptMessage) {
-        String input = readFromBufferedReader(promptMessage);
-        return input;
+        return readFromBufferedReader(promptMessage);
     }
 
     /*
@@ -55,7 +54,6 @@ public class ConsoleInputHandler {
             String allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
             if (allowedChars.indexOf(specifiedChar) < 0) {
                 System.out.println("Enter a letter");
-                continue;
             }  else return specifiedChar;
         }
     }
@@ -67,11 +65,9 @@ public class ConsoleInputHandler {
         while (true) {
             String input = readFromBufferedReader(promptMessage);
             try {
-                Integer inputInteger = Integer.parseInt(input);
-                return inputInteger;
+                return Integer.parseInt(input);
             } catch (NumberFormatException e) {
                 System.out.println("Enter a number");
-                continue;
             }
         }
     }
