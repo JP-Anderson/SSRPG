@@ -40,6 +40,20 @@ public class ConsoleInputHandler {
     }
 
     /*
+        Get non empty String from user.
+     */
+    public static String getNonEmptyStringFromUser(String promptMessage) {
+        while (true) {
+            String input = readFromBufferedReader(promptMessage);
+            if (input.equals("")) {
+                System.out.println("Please enter a value.");
+                continue;
+            }
+            return input;
+        }
+    }
+
+    /*
         Only accepts a single lower or uppercase letter from the user.
     */
     public static char getCharFromUser(String promptMessage) {
