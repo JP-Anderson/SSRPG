@@ -11,12 +11,18 @@ public abstract class CrewmemberClass {
 
     public CrewmemberClass(String cName) {
         className = cName;
-        abilities = new AbilityTree();
-        buildAbilityTree();
+        //abilities = new AbilityTree( need to stick a base ability here! );
+        //buildAbilityTree();
     }
 
     public abstract void buildAbilityTree();
 
-    public AbilityTree getAbilityTree() { return abilities; }
+    // Do we need a getter, should we hide this tree?
+    //public AbilityTree getAbilityTree() { return abilities; }
+
+    public boolean hasAbility() {
+        return true;
+    }
+
 
 }
