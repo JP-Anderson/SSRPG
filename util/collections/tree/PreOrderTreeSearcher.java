@@ -1,20 +1,14 @@
 package util.collections.tree;
 
-import characters.abilities.Ability;
-
 import java.util.List;
-import java.util.ArrayList;
 import java.util.function.Predicate;
 
 public class PreOrderTreeSearcher <E> {
 
     private Predicate<E> _predicate;
-    private Tree _tree;
+    private Tree<E> _tree;
 
-
-    // for now, just thinking about pre order iteration
-    // Root node first, then its children from left to right
-    public boolean contains(Tree tree, Predicate<E> predicate) {
+    public boolean contains(Tree<E> tree, Predicate<E> predicate) {
         _predicate = predicate;
         _tree = tree;
         return preOrderTreeIterator();
@@ -28,7 +22,7 @@ public class PreOrderTreeSearcher <E> {
         if (_predicate.test(n.getNodeItem())) {
             return true;
         } else {
-            List<TreeNode> children = n.getChildren();
+            List<TreeNode<E>> children = n.getChildren();
             if (children != null) {
                 for (TreeNode<E> node : children) preOrderTraversal(node);
             }

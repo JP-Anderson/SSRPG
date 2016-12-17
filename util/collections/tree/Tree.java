@@ -4,12 +4,12 @@ import characters.abilities.Ability.AbilityID;
 
 public class Tree<E> {
 
-    private TreeNode root;
+    private TreeNode<E> root;
 
-    public Tree(TreeNode newRoot) {
+    public Tree(TreeNode<E> newRoot) {
         root = newRoot;
     }
 
-    public TreeNode getRoot() { return root; }
+    public TreeNode<E> getRoot() { return root; }
 
 }
