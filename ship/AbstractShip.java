@@ -11,26 +11,26 @@ public abstract class AbstractShip {
 
     public final String name;
 
-    protected int maxHullIntegrity;
-    protected int remainingHullIntegrity;
+    int maxHullIntegrity;
+    int remainingHullIntegrity;
 
     protected ArrayList<Crewmember> crew;
-    protected int crewCapacity;
+    int crewCapacity;
 
     // todo: create getters/setters for this
     // todo: don't use hardcoded modules
-    protected EngineModule engines = new EngineModule("Engines1", 5);
-    protected ShieldModule shieldModule = new ShieldModule("Shields1", 2);
+    EngineModule engines = new EngineModule("Engines1", 5);
+    ShieldModule shieldModule = new ShieldModule("Shields1", 2);
 
     // Will need to set this based on type of Ship, must also be upgradeable
-    protected int numberOfAvailableWeaponModules = 2;
-    protected ArrayList<WeaponModule> weaponModules;
+    private int numberOfAvailableWeaponModules = 2;
+    private ArrayList<WeaponModule> weaponModules;
 
-    protected CargoBay cargo;
+    CargoBay cargo;
 
-    protected boolean isDestroyed;
+    private boolean isDestroyed;
 
-    public AbstractShip(String pName) {
+    AbstractShip(String pName) {
         name = pName;
         cargo = new CargoBay(15);
         weaponModules = new ArrayList<>();

@@ -1,7 +1,5 @@
 package util.collections.tree;
 
-import characters.abilities.Ability.AbilityID;
-
 public class Tree<E> {
 
     private TreeNode<E> root;
