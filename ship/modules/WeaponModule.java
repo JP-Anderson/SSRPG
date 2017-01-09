@@ -3,39 +3,39 @@ package ship.modules;
 import ship.weapons.*;
 import util.RNG;
 
-public class WeaponModule extends ShipModule {
+public class WeaponModule extends MannableShipModule {
 
     public final int maxWeaponPowerSupported;
     private ShipWeapon loadedWeapon;
-    private int turnsTilWeaponReady;
+    private int baseTurnsTilWeaponReady;
 
-    public WeaponModule(int maxWeaponPower) {
+    public WeaponModule(String newName, int maxWeaponPower) {
+        super(newName, ShipModuleType.WEAPON);
         maxWeaponPowerSupported = maxWeaponPower;
         loadedWeapon = null;
     }
 
     public void decrementTurnsTilWeaponReady() {
-        turnsTilWeaponReady = turnsTilWeaponReady > 0 ?
-            turnsTilWeaponReady-1:0;
+        baseTurnsTilWeaponReady = baseTurnsTilWeaponReady > 0 ? baseTurnsTilWeaponReady -1 : 0;
     }
 
-    public int getTurnsTilWeaponReady() {
-        return turnsTilWeaponReady;
+    public int getBaseTurnsTilWeaponReady() {
+        return baseTurnsTilWeaponReady;
     }
 
-    public void resetTurnsTilWeaponReady() {
-        turnsTilWeaponReady = loadedWeapon.cooldown;
+    public void resetBaseTurnsTilWeaponReady() {
+        baseTurnsTilWeaponReady = loadedWeapon.cooldown;
     }
 
     @Override
     public void printInformation() {
-        System.out.println(" - WEAPON MODULE ["+name+"]");
+        super.printInformation();
         System.out.println("  + POWER ["+maxWeaponPowerSupported+"]");
     }
 
     public boolean setWeapon(ShipWeapon weapon) {
         if (maxWeaponPowerSupported >= weapon.requiredWeaponModulePower) {
-            turnsTilWeaponReady = weapon.cooldown;
+            baseTurnsTilWeaponReady = weapon.cooldown;
             loadedWeapon = weapon;
             System.out.println("Equipped " + weapon.name + ".");
             return true;
@@ -46,7 +46,7 @@ public class WeaponModule extends ShipModule {
     }
 
     public Attack attack() {
-        if (loadedWeapon != null && turnsTilWeaponReady == 0)
+        if (loadedWeapon != null && baseTurnsTilWeaponReady == 0)
             if (rollForAttackHitChance()) return new Attack(loadedWeapon.shieldDamage, loadedWeapon.hullDamage, 0.9, loadedWeapon.weaponType);
         System.out.println("MISS!");
         return null;

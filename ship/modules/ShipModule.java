@@ -4,25 +4,22 @@ import characters.Crewmember;
 
 public abstract class ShipModule {
 
-    protected String name;
-    protected Crewmember activeCrewmember = null;
+    public enum ShipModuleType {
+        COCKPIT, ENGINE, SHIELD, WEAPON
+    }
 
-    public ShipModule() {
+    protected String name;
+    protected final ShipModuleType moduleType;
+
+    public ShipModule(String newName, ShipModuleType newModuleType) {
+        name = newName;
+        moduleType = newModuleType;
     }
 
     abstract void printInformation();
 
-    void assignCrewmember(Crewmember crewmember) {
-        activeCrewmember = crewmember;
+    public boolean isMannable() {
+        return false;
     }
-
-    Crewmember getActiveCrewmember() {
-        return activeCrewmember;
-    }
-
-    void removeCrewmember() {
-        activeCrewmember = null;
-    }
-
 
 }

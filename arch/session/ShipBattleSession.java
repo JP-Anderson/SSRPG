@@ -79,12 +79,12 @@ public class ShipBattleSession extends Session {
         boolean weaponCheckPhase() {
             for (WeaponModule m : currentActiveShip.getWeaponModules()) {
                 if (m.getWeapon() != null) {
-                    if (m.getTurnsTilWeaponReady() == 0) {
+                    if (m.getBaseTurnsTilWeaponReady() == 0) {
                         return true;
                     } else {
                         System.out.println(m.getWeapon().name + " will be ready to fire in "
-                            + m.getTurnsTilWeaponReady() + " turns.");
-                        System.out.println(m.getTurnsTilWeaponReady());
+                            + m.getBaseTurnsTilWeaponReady() + " turns.");
+                        System.out.println(m.getBaseTurnsTilWeaponReady());
                         m.decrementTurnsTilWeaponReady();
                     }
                 }
@@ -98,7 +98,7 @@ public class ShipBattleSession extends Session {
             int i = 0;
             for (WeaponModule m : currentActiveShip.getWeaponModules()) {
                 if (m.getWeapon() != null) {
-                    if (m.getTurnsTilWeaponReady() == 0) {
+                    if (m.getBaseTurnsTilWeaponReady() == 0) {
                         readyWeapons.add(m);
                         if (isPlayer()) System.out.println("("+i+") " + m.getWeapon().name);
                         i++;
@@ -116,7 +116,7 @@ public class ShipBattleSession extends Session {
                 AbstractShip shipToAttack = currentActiveShip == ship1 ? ship2 : ship1;
                 shipToAttack.sustainFire(a);
             }
-            m.resetTurnsTilWeaponReady();
+            m.resetBaseTurnsTilWeaponReady();
         }
 
         abstract int chooseWeaponAtIndex(int weaponCount);

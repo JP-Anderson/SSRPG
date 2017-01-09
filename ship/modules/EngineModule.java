@@ -1,16 +1,17 @@
 package ship.modules;
 
-public class EngineModule extends ShipModule {
+public class EngineModule extends MannableShipModule {
 
     public final int fuelEfficiency;
 
-    public EngineModule(int efficiency) {
+    public EngineModule(String newName, int efficiency) {
+        super(newName, ShipModuleType.ENGINE);
         fuelEfficiency = efficiency;
     }
 
     @Override
     public void printInformation() {
-        System.out.println(" - ENGINE MODULE ["+name+"]");
+        super.printInformation();
         System.out.println("  + FUEL EFFICIENCY ["+fuelEfficiency+"]");
     }
 

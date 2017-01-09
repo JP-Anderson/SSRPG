@@ -18,8 +18,9 @@ public abstract class AbstractShip {
     protected int crewCapacity;
 
     // todo: create getters/setters for this
-    protected EngineModule engines = new EngineModule(5);
-    protected ShieldModule shieldModule = new ShieldModule(2);
+    // todo: don't use hardcoded modules
+    protected EngineModule engines = new EngineModule("Engines1", 5);
+    protected ShieldModule shieldModule = new ShieldModule("Shields1", 2);
 
     // Will need to set this based on type of Ship, must also be upgradeable
     protected int numberOfAvailableWeaponModules = 2;
@@ -54,7 +55,7 @@ public abstract class AbstractShip {
 
     public void addWeaponModule(int weaponModulePower) {
         if (weaponModules.size() < numberOfAvailableWeaponModules) {
-            weaponModules.add(new WeaponModule(weaponModulePower));
+            weaponModules.add(new WeaponModule("Weapon1",weaponModulePower));
         }
     }
 
