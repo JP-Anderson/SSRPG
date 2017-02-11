@@ -4,6 +4,10 @@ public class Tree<E> {
 
     private TreeNode<E> root;
 
+    public Tree(E newRootObject) {
+        root = new TreeNode<>(null, newRootObject);
+    }
+
     public Tree(TreeNode<E> newRoot) {
         root = newRoot;
     }
