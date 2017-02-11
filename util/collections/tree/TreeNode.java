@@ -12,6 +12,7 @@ public class TreeNode<E> {
     public TreeNode(TreeNode pParent, E pItem) {
         parent = pParent;
         item = pItem;
+        children = new ArrayList<>();
     }
 
     public void setNodeItem(E newItem) { item = newItem; }
@@ -23,6 +24,8 @@ public class TreeNode<E> {
     public void addChild(TreeNode<E> newChild) { children.add(newChild); }
 
     public List<TreeNode<E>> getChildren() { return children; }
+
+    public int getNumberOfChildren() { return children.size(); }
 
     public TreeNode<E> getParent() { return parent; }
 

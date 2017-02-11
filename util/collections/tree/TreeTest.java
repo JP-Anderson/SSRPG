@@ -1,6 +1,7 @@
 package util.collections.tree;
 
 import characters.abilities.Ability;
+import characters.abilities.BooleanAbility;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,10 +29,10 @@ public class TreeTest {
         1-1-1
 
          */
-        Ability a1 = new Ability(1,"A1", "D1", 1);
-        Ability a1_1 = new Ability(2,"A1-1", "D1-1", 3);
-        Ability a1_2 = new Ability(3,"A1-2", "D1-2", 2);
-        Ability a1_1_1 = new Ability(4,"A1-1-1", "D1-1-1", 1);
+        Ability a1 = new BooleanAbility(1,"A1", "D1");
+        Ability a1_1 = new BooleanAbility(2,"A1-1", "D1-1");
+        Ability a1_2 = new BooleanAbility(3,"A1-2", "D1-2");
+        Ability a1_1_1 = new BooleanAbility(4,"A1-1-1", "D1-1-1");
 
         TreeNode<Ability> n1 = new TreeNode<>(null, a1);
         TreeNode<Ability> n1_1 = new TreeNode<>(n1, a1_1);
