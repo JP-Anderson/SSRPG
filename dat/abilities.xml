@@ -3,34 +3,28 @@
 	<Skill Name="Pilot">
 		<Ability Name="Evasive Maneuvers"
 				 Description="Increased chances of fleeing combat"
-				 ValuePerLevel="1.3;1.6;1.9"
-				 CostPerLevel="5;2;3">
+				 ValuePerLevel="1.3;1.6;1.9">
 			<!-- Attacking first will be a function of this skill, and ship engine/power ratings -->
 			<Ability Name="Initiative"
 			         Description="Increased chance to attack first in combat"
-			         ValuePerLevel="1.25;1.5"
-			         CostPerLevel="2;3">
+			         ValuePerLevel="1.25;1.5">
 			</Ability>
 			<Ability Name="Aerobatics Expert"
 			         Description="Increased chance of dodging attacks"
-			         ValuePerLevel="1.2;1.4;1.6;1.8;2"
-			         CostPerLevel="1;2;3;4;5">
+			         ValuePerLevel="1.2;1.4;1.6;1.8;2">
 			</Ability>
 		</Ability>
 	</Skill>
 	<Skill Name="Navigation">
 		<Ability Name="Cartographer"
 			     Description="Increases the grid size of the scanning map when travelling"
-				 ValuePerLevel="1;1;1;1"
-				 CostPerLevel="1;2;3;4">
+				 ValuePerLevel="1;1;1;1">
 			<Ability Name="Pathfinder"
 			         Description="You get a chance to choose to skip any random event"
-			         ValuePerLevel="0.25;0.5"
-			         CostPerLevel="2;4">
+			         ValuePerLevel="0.25;0.5">
 				<Ability Name="Scout"
 				         Description="You get a chance to choose from random events"
-				         ValuePerLevel="0.25;0.5"
-				         CostPerLevel="2;4">
+				         ValuePerLevel="0.25;0.5">
 				</Ability>
 			</Ability>
 		</Ability>
@@ -38,17 +32,14 @@
 	<Skill Name="Weapons">
 		<Ability Name="Weapon Efficiency"
 		         Description="Reduce cooldown for all weapons by 1"
-		         ValuePerLevel="1;2;3"
-				 CostPerLevel="5;2;3">
+		         ValuePerLevel="1;2;3">
 			<Ability Name="Supercharged"
 			         Description="Increased shield damage with all projectile/laser weapons"
-			         ValuePerLevel="1.15;1.3;1.5"
-			         CostPerLevel="1;2;3">
+			         ValuePerLevel="1.15;1.3;1.5">
 			</Ability>
 			<Ability Name="Surgical Strikes"
 			         Description="Increased hit chance with rocket based weapons"
-			         ValuePerLevel="1.25;1.5;1.75"
-			         CostPerLevel="1;2;3">
+			         ValuePerLevel="1.25;1.5;1.75">
 			</Ability>
 		</Ability>
 	</Skill>
@@ -70,17 +61,14 @@
 	<Skill Name="Scoundrel">
 		<Ability Name="Connected"
 		         Description="You get much better deals buying/selling all illegal goods"
-		         ValuePerLevel="1.2/0.8;1.3/0.75;1.4/0.5"
-		         CostPerLevel="5;2;3">
+		         ValuePerLevel="1.2/0.8;1.3/0.75;1.4/0.5">
 			<Ability Name="Smuggler"
 			         Description="Decreased detection chance at security checkpoints"
-			         ValuePerLevel="0.6;0.3"
-			         CostPerLevel="2;3">
+			         ValuePerLevel="0.6;0.3">
 			</Ability>
 			<Ability Name="Dark Marketeer"
 			         Description="Increased chance of seeing contraband in markets"
-			         ValuePerLevel="1.25"
-			         CostPerLevel="3">
+			         ValuePerLevel="1.25">
 			</Ability>
 		</Ability>
 	</Skill>
