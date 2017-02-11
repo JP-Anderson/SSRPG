@@ -18,7 +18,9 @@ public class TreeNode<E> {
 
     public E getNodeItem() { return item; }
 
-    public void setChildren(ArrayList<TreeNode<E>> newChildren) { children = newChildren; }
+    public void addChildren(ArrayList<TreeNode<E>> newChildren) { children.addAll(newChildren); }
+
+    public void addChild(TreeNode<E> newChild) { children.add(newChild); }
 
     public List<TreeNode<E>> getChildren() { return children; }
 

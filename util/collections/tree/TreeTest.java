@@ -11,9 +11,9 @@ public class TreeTest {
     public static void main(String[] args) {
         Tree<Ability> abilityTree = init();
         PreOrderTreeSearcher<Ability> pots = new PreOrderTreeSearcher<>();
-        if (pots.contains(abilityTree, a -> a.id == Ability.AbilityID.FIVE))
+        if (pots.contains(abilityTree, a -> a._id == 5))
             System.out.println("We have FIVE!");
-        if (pots.contains(abilityTree, a -> a.id == Ability.AbilityID.ONE))
+        if (pots.contains(abilityTree, a -> a._id == 1))
             System.out.println("We have ONE!");
     }
 
@@ -28,17 +28,17 @@ public class TreeTest {
         1-1-1
 
          */
-        Ability a1 = new Ability("A1", Ability.AbilityID.ONE);
-        Ability a1_1 = new Ability("A1-1", Ability.AbilityID.TWO);
-        Ability a1_2 = new Ability("A1-2", Ability.AbilityID.THREE);
-        Ability a1_1_1 = new Ability("A1-1-1", Ability.AbilityID.FOUR);
+        Ability a1 = new Ability(1,"A1", "D1", 1);
+        Ability a1_1 = new Ability(2,"A1-1", "D1-1", 3);
+        Ability a1_2 = new Ability(3,"A1-2", "D1-2", 2);
+        Ability a1_1_1 = new Ability(4,"A1-1-1", "D1-1-1", 1);
 
         TreeNode<Ability> n1 = new TreeNode<>(null, a1);
         TreeNode<Ability> n1_1 = new TreeNode<>(n1, a1_1);
         TreeNode<Ability> n1_2 = new TreeNode<>(n1, a1_2);
-        n1.setChildren(new ArrayList<>(Arrays.asList(n1_1,n1_2)));
+        n1.addChildren(new ArrayList<>(Arrays.asList(n1_1,n1_2)));
         TreeNode<Ability> n1_1_1 = new TreeNode<>(n1_1, a1_1_1);
-        n1_1.setChildren(new ArrayList<>(Arrays.asList(n1_1_1)));
+        n1_1.addChildren(new ArrayList<>(Arrays.asList(n1_1_1)));
 
         return new Tree<>(n1);
     }

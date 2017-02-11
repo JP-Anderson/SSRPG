@@ -2,15 +2,31 @@ package characters.abilities;
 
 public class Ability {
 
-    public final String name;
-    public final AbilityID id;
-    public Ability(String pName, AbilityID pId) {
-        name = pName;
-        id = pId;
+    public final int _id;
+    public final String _name;
+    public final String _description;
+    public final int _levels;
+
+    private int abilityLevel = 0;
+
+    public Ability(int id, String name, String description, int levels) {
+        _id = id;
+        _name = name;
+        _description = description;
+        _levels = levels;
     }
 
-    public enum AbilityID {
-        ONE, TWO, THREE, FOUR, FIVE
+    /*
+        Returns the level of the ability, 0 means the ability is not unlocked
+     */
+    public int getAbilityLevel() {
+        return abilityLevel;
+    }
+
+    public void levelUp() {
+        if (abilityLevel < _levels) {
+            abilityLevel++;
+        }
     }
 
 }
