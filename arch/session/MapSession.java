@@ -324,8 +324,7 @@ public class MapSession extends Session {
 
     private void consoleInformation(String input) {
         System.out.println("Command \"" + input + "\" not recognised.");
-        System.out.println("Available commands: [scan] [trade] [travel] [ship] [cargo] [fuel]");
-        System.out.println("Un-installed tools: [crew]");
+        System.out.println("Available commands: [scan] [trade] [travel] [ship] [cargo] [fuel] [crew]");
     }
 
     private void sleep(int seconds) {
