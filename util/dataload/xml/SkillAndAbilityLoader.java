@@ -51,7 +51,7 @@ public class SkillAndAbilityLoader extends XMLLoader {
 	}
 
 	private static AbilityTree generateAbilityTreeFromNode(Node skillNode) {
-		Node rootAbilityNode = getNextAbilityNode(skillNode);
+		Node rootAbilityNode = getRootAbilityNode(skillNode);
 		Ability rootAbility = createAbilityFromNode(rootAbilityNode);
 		TreeNode<Ability> rootTreeNode = new TreeNode<>(null, rootAbility);
 		recursiveAddAbilitiesToParent(rootTreeNode, rootAbilityNode);
@@ -60,7 +60,7 @@ public class SkillAndAbilityLoader extends XMLLoader {
 		return aTree;
 	}
 
-	private static Node getNextAbilityNode(Node skillNode) {
+	private static Node getRootAbilityNode(Node skillNode) {
 		Node n = skillNode.getFirstChild();
 		while (!n.getNodeName().equals("Ability")) {
 			n = n.getNextSibling();
