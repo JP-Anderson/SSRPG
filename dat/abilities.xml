@@ -52,6 +52,7 @@
 			</Ability>
 		</Ability>
 	</Skill>
+	<!--
 	<Skill Name="Engineering">
 		<Ability>
 
@@ -67,6 +68,7 @@
 
 		</Ability>
 	</Skill>
+	-->
 	<Skill Name="Scoundrel">
 		<Ability Name="Connected"
 		         Description="You get much better deals buying/selling all illegal goods"

@@ -1,9 +1,9 @@
 package util.dataload.xml;
 
-import characters.Skill;
+import characters.skills.Skill;
 import java.util.ArrayList;
 
-import characters.abilities.*;
+import characters.skills.abilities.*;
 import org.w3c.dom.*;
 import util.collections.tree.Tree;
 import util.collections.tree.TreeNode;

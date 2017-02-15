@@ -1,6 +1,6 @@
 package util.dataload.xml;
 
-import characters.Skill;
+import characters.skills.Skill;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package characters.abilities;
+package characters.skills.abilities;
 
 /**
  * Created by Jp on 11/02/2017.

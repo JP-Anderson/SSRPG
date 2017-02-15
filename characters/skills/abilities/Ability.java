@@ -1,4 +1,4 @@
-package characters.abilities;
+package characters.skills.abilities;
 
 public abstract class Ability {
 

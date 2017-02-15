@@ -1,7 +1,7 @@
 package util.collections.tree;
 
-import characters.abilities.Ability;
-import characters.abilities.BooleanAbility;
+import characters.skills.abilities.Ability;
+import characters.skills.abilities.BooleanAbility;
 
 import java.util.ArrayList;
 import java.util.Arrays;

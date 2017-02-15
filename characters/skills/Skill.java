@@ -1,6 +1,6 @@
-package characters;
+package characters.skills;
 
-import characters.abilities.AbilityTree;
+import characters.skills.abilities.AbilityTree;
 
 public class Skill {
 

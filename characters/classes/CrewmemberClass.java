@@ -1,6 +1,6 @@
 package characters.classes;
 
-import characters.abilities.*;
+import characters.skills.abilities.*;
 
 public abstract class CrewmemberClass {
 
