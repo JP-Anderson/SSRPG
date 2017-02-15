@@ -3,6 +3,7 @@ package util.dataload.xml;
 import characters.skills.Skill;
 import java.util.ArrayList;
 
+import characters.skills.SkillsHolder;
 import characters.skills.abilities.*;
 import org.w3c.dom.*;
 import util.collections.tree.Tree;
@@ -16,14 +17,6 @@ public class SkillAndAbilityLoader extends XMLLoader {
 
 	private static int skillCounter = 0;
 	private static int abilityCounter = 0;
-
-	private static int assignSkillID() {
-		return skillCounter++;
-	}
-
-	private static int assignAbilityID() {
-		return abilityCounter++;
-	}
 
 	private static ArrayList<Skill> loadSkillsFromXML() {
 		ArrayList<Skill> skills = new ArrayList<>();
@@ -41,7 +34,7 @@ public class SkillAndAbilityLoader extends XMLLoader {
 	private static Skill generateSkillFromNode(Node node) {
 		String skillName = getNamedAttributeFromNode(node, "Name");
 		AbilityTree skillTree = generateAbilityTreeFromNode(node);
-		return new Skill(assignSkillID(), skillName, skillTree);
+		return new Skill(assignSkillID(skillName), skillName, skillTree);
 	}
 
 	private static String getNamedAttributeFromNode(Node node, String attributeName) {
@@ -95,15 +88,26 @@ public class SkillAndAbilityLoader extends XMLLoader {
 	}
 
 	private static BooleanAbility createBooleanAbility(String name, String description) {
-		return new BooleanAbility(assignAbilityID(), name, description);
+		return new BooleanAbility(assignAbilityID(name), name, description);
 	}
 
 	private static IntAbility createIntAbility(String name, String description, String valueList) {
-		return new IntAbility(assignAbilityID(), name, description, valueList);
+		return new IntAbility(assignAbilityID(name), name, description, valueList);
 	}
 
 	private static DoubleAbility createDoubleAbility(String name, String description, String valueList) {
-		return new DoubleAbility(assignAbilityID(), name, description, valueList);
+		return new DoubleAbility(assignAbilityID(name), name, description, valueList);
 	}
 
+	private static int assignSkillID(String skillName) {
+		skillCounter++;
+		SkillsHolder.SKILLS_ENUM.put(skillName, skillCounter);
+		return skillCounter;
+	}
+
+	private static int assignAbilityID(String abilityName) {
+		abilityCounter++;
+		SkillsHolder.ABILITY_ENUM.put(abilityName, abilityCounter);
+		return abilityCounter;
+	}
 }
