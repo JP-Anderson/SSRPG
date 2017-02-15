@@ -35,7 +35,7 @@
 			</Ability>
 		</Ability>
 	</Skill>
-	<Skill Name="Weapons">
+	<Skill Name="WeaponsExpert">
 		<Ability Name="Weapon Efficiency"
 		         Description="Reduce cooldown for all weapons by 1"
 				 Type="Int"

@@ -7,9 +7,6 @@ import ship.Ship;
 import util.ConsoleInputHandler;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 public class ShipAndCrewCreationSession extends Session {
 
@@ -39,7 +36,7 @@ public class ShipAndCrewCreationSession extends Session {
             int chosenIndex = ConsoleInputHandler.getIntInRangeFromUser(availableClasses.size());
             CrewmemberClass chosenClass = availableClasses.get(chosenIndex);
             availableClasses.remove(chosenIndex);
-            String chosenName = ConsoleInputHandler.getNonEmptyStringFromUser("What will you call this " + chosenClass.className+"?");
+            String chosenName = ConsoleInputHandler.getNonEmptyStringFromUser("What will you call this " + chosenClass._className +"?");
             crew.add(new Crewmember(chosenName, new Skills(), chosenClass));
             crewCount++;
             System.out.println();
@@ -54,7 +51,7 @@ public class ShipAndCrewCreationSession extends Session {
 
     private void printAvailableClasses() {
         for (int i = 0; i < availableClasses.size(); i++) {
-            System.out.println(i + " : " + availableClasses.get(i).className);
+            System.out.println(i + " : " + availableClasses.get(i)._className);
         }
     }
 }

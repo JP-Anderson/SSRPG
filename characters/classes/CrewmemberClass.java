@@ -1,21 +1,24 @@
 package characters.classes;
 
+import characters.skills.Skill;
+import characters.skills.SkillsHolder;
 import characters.skills.abilities.*;
 
 public abstract class CrewmemberClass {
 
-    public final String className;
+    public final String _className;
     //pilot, navigator, weapons, engineer, trader, shields, scoundrel
 
-    protected AbilityTree abilities;
+    protected Skill skill;
 
-    public CrewmemberClass(String cName) {
-        className = cName;
-        //abilities = new AbilityTree( need to stick a base ability here! );
-        //buildAbilityTree();
+    public CrewmemberClass(String className) {
+        _className = className;
+        loadSkills();
     }
 
-    public abstract void buildAbilityTree();
+    public final void loadSkills() {
+        skill = SkillsHolder.getSkill(_className);
+    }
 
     // Do we need a getter, should we hide this tree?
     //public AbilityTree getAbilityTree() { return abilities; }
