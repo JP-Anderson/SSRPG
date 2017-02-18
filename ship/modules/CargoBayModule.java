@@ -1,22 +1,24 @@
-package ship;
+package ship.modules;
 
 import goods.PurchasedGoods;
 import java.util.List;
 import java.util.ArrayList;
 
-public class CargoBay {
+public class CargoBayModule extends MannableShipModule {
 
     private int capacity;
     private int filledCapacity;
     private List<PurchasedGoods> cargo;
 
-    public CargoBay(int newCapacity) {
+    public CargoBayModule(String moduleName, int newCapacity) {
+        super(moduleName, ShipModuleType.CARGO);
         capacity = newCapacity;
         filledCapacity = 0;
         cargo = new ArrayList<PurchasedGoods>();
     }
 
-    public CargoBay(int newCapacity, List<PurchasedGoods> newCargo) {
+    public CargoBayModule(String moduleName, int newCapacity, List<PurchasedGoods> newCargo) {
+        super(moduleName, ShipModuleType.CARGO);
         capacity = newCapacity;
         filledCapacity = newCargo.size();
         cargo = newCargo;

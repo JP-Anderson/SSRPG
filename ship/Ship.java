@@ -26,13 +26,13 @@ public abstract class Ship {
     private int numberOfAvailableWeaponModules = 2;
     private ArrayList<WeaponModule> weaponModules;
 
-    CargoBay cargo;
+    CargoBayModule cargo;
 
     private boolean isDestroyed;
 
     Ship(String pName) {
         name = pName;
-        cargo = new CargoBay(15);
+        cargo = new CargoBayModule("CargoModule1", 15);
         weaponModules = new ArrayList<>();
         shieldModule.shields(new BasicShieldsMk2());
         // Need to generate different hull integritys across shipStatus
@@ -77,7 +77,7 @@ public abstract class Ship {
         return false;
     }
 
-    public CargoBay getCargoBay() {
+    public CargoBayModule getCargoBay() {
         return cargo;
     }
 

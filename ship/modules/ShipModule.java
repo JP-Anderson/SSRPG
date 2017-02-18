@@ -5,7 +5,7 @@ import characters.Crewmember;
 public abstract class ShipModule {
 
     public enum ShipModuleType {
-        COCKPIT, ENGINE, SHIELD, WEAPON
+        COCKPIT, ENGINE, CARGO, SHIELD, WEAPON
     }
 
     protected String name;

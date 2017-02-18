@@ -3,6 +3,7 @@ package arch.session;
 import ship.*;
 import map.*;
 import goods.*;
+import ship.modules.CargoBayModule;
 import util.dataload.csv.*;
 import util.*;
 import events.*;
@@ -144,7 +145,7 @@ public class MapSession extends Session {
 
                 int quantity = ConsoleInputHandler.getIntFromUser("");
 
-                CargoBay playerCargo = p1.getCargoBay();
+                CargoBayModule playerCargo = p1.getCargoBay();
                 int cargoSize = playerCargo.getFilledCapacity();
                 int cargoMaxSize = playerCargo.getMaxCapacity();
                 if (quantity <= numberCanAfford && quantity > 0) {
@@ -165,7 +166,7 @@ public class MapSession extends Session {
 
             if (tradeChoice == 's' || tradeChoice == 'S') {
                 System.out.println("CARGO:");
-                CargoBay playerCargo = p1.getCargoBay();
+                CargoBayModule playerCargo = p1.getCargoBay();
                 List<PurchasedGoods> cargo = playerCargo.getCargo();
 
                 if (cargo.size() > 0) {
@@ -268,7 +269,7 @@ public class MapSession extends Session {
     }
 
     private void printCargo() {
-        CargoBay playerCargo = p1.getCargoBay();
+        CargoBayModule playerCargo = p1.getCargoBay();
         List<PurchasedGoods> cargo = playerCargo.getCargo();
 
         if (cargo.size() > 0) {
