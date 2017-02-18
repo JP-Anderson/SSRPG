@@ -1,94 +1,99 @@
 package ship;
 
-import map.GridMap;
-import map.GridPoint;
 import characters.Crewmember;
-import ship.modules.*;
-
 import java.util.ArrayList;
+import ship.modules.*;
+import ship.weapons.ShipWeapon;
+import ship.weapons.Attack;
+import ship.shields.*;
 
-public class Ship extends AbstractShip {
+public abstract class Ship {
 
-    private int fuelCapacity;
-    private int remainingFuel;
-    private Scanner scanner;
-    private ArrayList<Crewmember> crew;
-    private GridPoint location;
+    public final String name;
 
-    private int money;
+    int maxHullIntegrity;
+    int remainingHullIntegrity;
 
-    public void setMoney (int m) {
-        money = m;
-    }
-    public int getMoney() {
-        return money;
-    }
+    protected ArrayList<Crewmember> crew;
+    int crewCapacity;
 
-    public Ship(String pName, int fuel, int crewCap) {
-        super(pName);
-        fuelCapacity = fuel;
-        remainingFuel = fuel;
-        crewCapacity = crewCap;
-        crew = new ArrayList<>();
-    }
+    // todo: create getters/setters for this
+    // todo: don't use hardcoded modules
+    EngineModule engines = new EngineModule("Engines1", 5);
+    ShieldModule shieldModule = new ShieldModule("Shields1", 2);
 
-    public void initialiseCrew(ArrayList<Crewmember> newCrew) {
-        crew = newCrew;
-    }
+    // Will need to set this based on type of PlayerShip, must also be upgradeable
+    private int numberOfAvailableWeaponModules = 2;
+    private ArrayList<WeaponModule> weaponModules;
 
-    public void initialiseMap(GridPoint startLocation, GridMap map) {
-        location = startLocation;
-        scanner = Scanner.getScanner(7,map,startLocation);
-    }
+    CargoBay cargo;
 
-    public GridPoint getLocation() {
-        return location;
-    }
+    private boolean isDestroyed;
 
-    public void setLocation(GridPoint gridPoint) {
-        location = gridPoint;
-        scanner.setShipLocation(gridPoint);
+    Ship(String pName) {
+        name = pName;
+        cargo = new CargoBay(15);
+        weaponModules = new ArrayList<>();
+        shieldModule.shields(new BasicShieldsMk2());
+        // Need to generate different hull integritys across shipStatus
+        maxHullIntegrity = 500;
+        remainingHullIntegrity = maxHullIntegrity;
+        isDestroyed = false;
     }
 
-    public void shipStatus() {
-        System.out.println("Ship status:");
-        System.out.println(crew.size() + "/" + crewCapacity + " crew");
-        System.out.println(" CREDS total: " + money);
-        System.out.println(" Remaining Fuel: " + remainingFuel + "/" + fuelCapacity);
-        System.out.println(" Cargo Bay: " + cargo.getFilledCapacity() + " units out of " + cargo.getMaxCapacity());
-        System.out.println(" Modules: ");
-        engines.printInformation();
-        shieldModule.printInformation();
+    public void sustainFire(Attack attack) {
+        int originalShields = shieldModule.shields().getRemainingShields();
+        int originalHull = remainingHullIntegrity;
+
+        System.out.println("Attack: sD " + attack.shieldDamage + " hD " + attack.hullDamage);
+        Attack shieldedAttack = shieldModule.shieldAttack(attack);
+        System.out.println("Shielded Attack: sD " + shieldedAttack.shieldDamage + " hD " + shieldedAttack.hullDamage);
+        takeHullDamage(shieldedAttack);
+        System.out.println("Shields: " + originalShields + " => " + shieldModule.shields().getRemainingShields());
+        System.out.println("Hull: " + originalHull + " => " + remainingHullIntegrity);
     }
 
-    public boolean travel(GridPoint gridPoint, int distance) {
-        location = gridPoint;
-        scanner.setShipLocation(gridPoint);
-        int fuelCost = distance * engines.fuelEfficiency;
-        if (fuelCost <= remainingFuel) {
-            System.out.println("Used " + fuelCost + " fuel.");
-            remainingFuel = remainingFuel - fuelCost;
-            return true;
+    public void addWeaponModule(int weaponModulePower) {
+        if (weaponModules.size() < numberOfAvailableWeaponModules) {
+            weaponModules.add(new WeaponModule("Weapon1",weaponModulePower));
         }
+    }
+
+    public ArrayList<WeaponModule> getWeaponModules() {
+        return weaponModules;
+    }
+
+    public boolean equipWeapon(ShipWeapon newWeapon) {
+        for (WeaponModule m : weaponModules) {
+            if (m.maxWeaponPowerSupported >= newWeapon.requiredWeaponModulePower
+            && m.getWeapon() == null) {
+                System.out.println("This weapon has been equipped.");
+                m.setWeapon(newWeapon);
+                return true;
+            }
+        }
+
+        System.out.println("Cannot equip weapon.");
         return false;
     }
 
-    public void scan() {
-        scanner.scan();
+    public CargoBay getCargoBay() {
+        return cargo;
     }
 
-    public ArrayList<Crewmember> getCrew() {
-        return crew;
+    public boolean isDestroyed() {
+        return isDestroyed;
     }
 
-    public int getFuelCapacity() { return fuelCapacity; }
+    public void rechargeShields() {
+        shieldModule.rechargeShields();
+    }
 
-    public int getRemainingFuel() { return remainingFuel; }
-
-    public void setRemainingFuel(int newFuel) { remainingFuel = newFuel; }
-
-    public void setCrew(ArrayList<Crewmember> newCrew) {
-        crew = newCrew;
+    private void takeHullDamage(Attack shieldedAttack) {
+        remainingHullIntegrity = remainingHullIntegrity - shieldedAttack.hullDamage;
+        if (remainingHullIntegrity < 0) {
+            isDestroyed = true;
+        }
     }
 
 }

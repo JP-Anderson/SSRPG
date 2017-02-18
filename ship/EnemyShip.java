@@ -1,6 +1,6 @@
 package ship;
 
-public class EnemyShip extends AbstractShip  {
+public class EnemyShip extends Ship {
 
     public EnemyShip(String name) {
         super(name);

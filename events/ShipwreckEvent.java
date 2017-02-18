@@ -1,15 +1,7 @@
 package events;
 
-import characters.Crewmember;
-import characters.Skills;
-import characters.classes.PilotClass;
 import goods.*;
-import goods.GoodsList;
-import ship.Ship;
 import util.RNG;
-import util.ConsoleInputHandler;
-
-import java.util.ArrayList;
 
 public class ShipwreckEvent extends Event {
 

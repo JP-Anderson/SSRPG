@@ -6,7 +6,7 @@ import characters.classes.PilotClass;
 import goods.Goods;
 import goods.GoodsForSale;
 import goods.GoodsList;
-import ship.Ship;
+import ship.PlayerShip;
 import util.ConsoleInputHandler;
 import util.RNG;
 
@@ -18,15 +18,15 @@ public abstract class Event {
     abstract void displayEvent();
     abstract EventOutcome generateOutcome();
 
-    protected Ship playerShip;
+    protected PlayerShip _playerShip;
     protected EventOutcome outcome;
 
     protected String crewPrompt = "Would you like to take the survivor";
     protected String goodsPrompt = "Would you like to take the $";
 
 
-    public final EventOutcome transpire(Ship playerShip){
-            setPlayerShip(playerShip);
+    public final EventOutcome transpire(PlayerShip playerPlayerShip){
+            setPlayerPlayerShip(playerPlayerShip);
             initialize();
             displayEvent();
             getUserInput();
@@ -73,8 +73,8 @@ public abstract class Event {
         return goods;
     }
 
-    private void setPlayerShip(Ship _playerShip) {
-        playerShip = _playerShip;
+    private void setPlayerPlayerShip(PlayerShip playerShip) {
+        _playerShip = playerShip;
     }
 
 }

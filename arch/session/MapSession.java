@@ -15,12 +15,12 @@ public class MapSession extends Session {
 
     private final static int FUEL_COST = 180;
     private GridMap map;
-    private Ship p1;
+    private PlayerShip p1;
     private ArrayList<GoodsForSale> goods;
 
-    public MapSession(Ship crewedShip) {
+    public MapSession(PlayerShip crewedPlayerShip) {
         super("MapSession");
-        p1 = crewedShip;
+        p1 = crewedPlayerShip;
 
         GridPoint start = new GridPoint(3,6);
         map = GridMap.generateGridMap(11,7);

@@ -1,13 +1,13 @@
 package events;
 
-import ship.Ship;
+import ship.PlayerShip;
 import characters.Crewmember;
 import goods.GoodsForSale;
 import goods.PurchasedGoods;
 
 public class EventRunner {
 
-        public static void run(Event event, Ship player) {
+        public static void run(Event event, PlayerShip player) {
             EventOutcome outcome = event.transpire(player);
             sleep(2);
             for (GoodsForSale g : outcome.getGoodsReward()) {

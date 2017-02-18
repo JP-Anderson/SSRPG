@@ -1,8 +1,8 @@
 package arch.session;
 
 import util.*;
-import ship.AbstractShip;
 import ship.Ship;
+import ship.PlayerShip;
 import ship.EnemyShip;
 import ship.modules.*;
 import ship.weapons.*;
@@ -12,14 +12,14 @@ import java.util.ArrayList;
 
 public class ShipBattleSession extends Session {
 
-    private final AbstractShip ship1;
-    private final AbstractShip ship2;
+    private final Ship ship1;
+    private final Ship ship2;
 
-    private AbstractShip currentActiveShip;
+    private Ship currentActiveShip;
 
     private ShipBattleView view;
 
-    public ShipBattleSession(AbstractShip newShip1, AbstractShip newShip2) {
+    public ShipBattleSession(Ship newShip1, Ship newShip2) {
         super("ShipBattleSession");
         ship1 = newShip1;
         ship1.addWeaponModule(3);
@@ -56,7 +56,7 @@ public class ShipBattleSession extends Session {
 
     private void nextTurn() {
         Turn turn = null;
-        if (currentActiveShip instanceof Ship) turn = new PlayerTurn();
+        if (currentActiveShip instanceof PlayerShip) turn = new PlayerTurn();
         else if (currentActiveShip instanceof EnemyShip) turn = new CPUTurn();
         turn.runTurn();
         currentActiveShip = currentActiveShip == ship1 ? ship2: ship1;
@@ -113,7 +113,7 @@ public class ShipBattleSession extends Session {
             Attack a = m.attack();
             if (a != null) {
                 System.out.println(a.hullDamage + "," + a.shieldDamage + "," + a.accuracy);
-                AbstractShip shipToAttack = currentActiveShip == ship1 ? ship2 : ship1;
+                Ship shipToAttack = currentActiveShip == ship1 ? ship2 : ship1;
                 shipToAttack.sustainFire(a);
             }
             m.resetBaseTurnsTilWeaponReady();

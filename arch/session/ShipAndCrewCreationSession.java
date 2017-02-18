@@ -3,7 +3,7 @@ package arch.session;
 import characters.Crewmember;
 import characters.Skills;
 import characters.classes.*;
-import ship.Ship;
+import ship.PlayerShip;
 import util.ConsoleInputHandler;
 
 import java.util.ArrayList;
@@ -43,8 +43,8 @@ public class ShipAndCrewCreationSession extends Session {
         }
     }
 
-    public Ship generateNewShip() {
-        Ship p1 = new Ship(newName,100,3);
+    public PlayerShip generateNewShip() {
+        PlayerShip p1 = new PlayerShip(newName,100,3);
         p1.initialiseCrew(crew);
         return p1;
     }

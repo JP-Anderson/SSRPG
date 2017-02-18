@@ -3,7 +3,6 @@ package events;
 import arch.session.ShipBattleSession;
 import goods.Goods;
 import ship.EnemyShip;
-import util.ConsoleInputHandler;
 import util.RNG;
 
 /**
@@ -23,7 +22,7 @@ public class BanditEvent extends Event {
         System.out.println("The Bandit primes its weapons and moves in to attack!");
 
         EnemyShip s2 = new EnemyShip("2");
-        ShipBattleSession sbs = new ShipBattleSession(playerShip,s2);
+        ShipBattleSession sbs = new ShipBattleSession(_playerShip,s2);
         sbs.run();
 
 

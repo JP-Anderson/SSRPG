@@ -1,8 +1,6 @@
 import arch.session.ShipAndCrewCreationSession;
 import ship.*;
-import map.*;
 import arch.session.MapSession;
-import arch.session.ShipBattleSession;
 
 public class Game {
 
@@ -13,7 +11,7 @@ public class Game {
 
         ShipAndCrewCreationSession c = new ShipAndCrewCreationSession();
         c.run();
-        Ship player = c.generateNewShip();
+        PlayerShip player = c.generateNewShip();
         MapSession mmm = new MapSession(player);
         mmm.run();
     }
