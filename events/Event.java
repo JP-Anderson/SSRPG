@@ -25,8 +25,8 @@ public abstract class Event {
     protected String goodsPrompt = "Would you like to take the $";
 
 
-    public final EventOutcome transpire(PlayerShip playerPlayerShip){
-            setPlayerPlayerShip(playerPlayerShip);
+    public final EventOutcome transpire(PlayerShip playerShip){
+            setPlayerPlayerShip(playerShip);
             initialize();
             displayEvent();
             getUserInput();

@@ -52,6 +52,13 @@ public abstract class Ship {
         System.out.println("Shields: " + originalShields + " => " + shieldModule.shields().getRemainingShields());
         System.out.println("Hull: " + originalHull + " => " + remainingHullIntegrity);
     }
+    
+    private void takeHullDamage(Attack shieldedAttack) {
+        remainingHullIntegrity = remainingHullIntegrity - shieldedAttack.hullDamage;
+        if (remainingHullIntegrity < 0) {
+            isDestroyed = true;
+        }
+    }
 
     public void addWeaponModule(int weaponModulePower) {
         if (weaponModules.size() < numberOfAvailableWeaponModules) {
@@ -87,13 +94,6 @@ public abstract class Ship {
 
     public void rechargeShields() {
         shieldModule.rechargeShields();
-    }
-
-    private void takeHullDamage(Attack shieldedAttack) {
-        remainingHullIntegrity = remainingHullIntegrity - shieldedAttack.hullDamage;
-        if (remainingHullIntegrity < 0) {
-            isDestroyed = true;
-        }
     }
 
 }
