@@ -1,57 +1,126 @@
 package ship;
 
-import ship.modules.CockpitModule;
-import ship.modules.EngineModule;
-import ship.modules.ShieldModule;
-import ship.modules.WeaponModule;
+import ship.modules.*;
+import ship.weapons.ShipWeapon;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class ShipModules {
 
-    //MODULE POWER LEVEL
-    private int currentMaxModulePowerSupported;
+    private ShipModules(int maxCombinedModulePower, CockpitModule cockpitModule, EngineModule engineModule) {
+        _maxCombinedModulePower = maxCombinedModulePower;
+        _cockpitModule = cockpitModule;
+        _engineModule = engineModule;
+    }
+
+    public static ShipModules createInstance(int maxCombinedModulePower, CockpitModule cockpitModule, EngineModule engineModule) {
+        if (cockpitModule == null) throw new IllegalArgumentException("Need a cockpit module");
+        if (engineModule == null) throw new IllegalArgumentException("Need an engine module");
+        if (maxCombinedModulePower < cockpitModule.getModulePower() + engineModule.getModulePower())
+            throw new IllegalStateException("Max supported module power is not high enough for selected cockpit and engine modules");
+        return new ShipModules(maxCombinedModulePower, cockpitModule, engineModule);
+    }
+
+    public static ShipModules createInstance(int maxPower, CockpitModule cockpitModule, EngineModule engineModule, List<ShipModule> optionalModules) {
+        ShipModules shipModules = createInstance(maxPower, cockpitModule, engineModule);
+        if (optionalModules != null && optionalModules.size() > 0) shipModules.setUpOptionalModules(optionalModules);
+        return shipModules;
+    }
+
+    private void setUpOptionalModules(List<ShipModule> optionalModules) {
+        combinedModulePower = _cockpitModule.getModulePower() + _engineModule.getModulePower();
+        Iterator<ShipModule> i = optionalModules.iterator();
+        while (i.hasNext()) {
+            ShipModule module = i.next();
+            combinedModulePower = combinedModulePower + module.getModulePower();
+            if (combinedModulePower > _maxCombinedModulePower)
+                throw new IllegalStateException("Optional module " + module.getName() + " has exceeded max module power in Ship.");
+            else if (module.getModuleType() == ShipModule.ShipModuleType.WEAPON)
+                weaponModules.add((WeaponModule) module);
+            else if (module.getModuleType() == ShipModule.ShipModuleType.CARGO)
+                _cargoBayModule = (CargoBayModule) module;
+            else if (module.getModuleType() == ShipModule.ShipModuleType.SHIELD) _shieldModule = (ShieldModule) module;
+        }
+    }
+
+    private int _maxCombinedModulePower;
+    private int combinedModulePower = 0;
 
     //MANDATORY MODULES
-    private CockpitModule cockpitModule;
-    private EngineModule engineModule;
+    private CockpitModule _cockpitModule;
+    private EngineModule _engineModule;
 
     //OPTIONAL MODULES
-    private ShieldModule shieldModule;
+    private CargoBayModule _cargoBayModule;
+    private ShieldModule _shieldModule;
     private ArrayList<WeaponModule> weaponModules = new ArrayList<>();
     //Communication module (Trader, Scoundrel?)
 
     //region Getters and Setters
-    public int getCurrentMaxModulePowerSupported() {
-        return currentMaxModulePowerSupported;
+    public int getMaxCombinedModulePower() {
+        return _maxCombinedModulePower;
     }
 
-    public void setCurrentMaxModulePowerSupported(int currentMaxModulePowerSupported) {
-        this.currentMaxModulePowerSupported = currentMaxModulePowerSupported;
+    public void setMaxCombinedModulePower(int maxCombinedModulePower) {
+        _maxCombinedModulePower = maxCombinedModulePower;
     }
 
     public CockpitModule getCockpitModule() {
-        return cockpitModule;
+        return _cockpitModule;
     }
 
     public void setCockpitModule(CockpitModule cockpitModule) {
-        this.cockpitModule = cockpitModule;
+        _cockpitModule = cockpitModule;
     }
 
     public EngineModule getEngineModule() {
-        return engineModule;
+        return _engineModule;
     }
 
     public void setEngineModule(EngineModule engineModule) {
-        this.engineModule = engineModule;
+        _engineModule = engineModule;
+    }
+
+    public CargoBayModule getCargoBayModule() {
+        return _cargoBayModule;
+    }
+
+    public void setCargoBayModule(CargoBayModule cargoBayModule) {
+        this._cargoBayModule = _cargoBayModule;
     }
 
     public ShieldModule getShieldModule() {
-        return shieldModule;
+        return _shieldModule;
     }
 
     public void setShieldModule(ShieldModule shieldModule) {
-        this.shieldModule = shieldModule;
+        _shieldModule = shieldModule;
+    }
+
+    public void addWeaponModule(int weaponModulePower) {
+        if (combinedModulePower + weaponModulePower <= _maxCombinedModulePower) {
+            combinedModulePower += weaponModulePower;
+            weaponModules.add(new WeaponModule("WeaponModule", weaponModulePower));
+        }
+    }
+
+    public ArrayList<WeaponModule> getWeaponModules() {
+        return weaponModules;
+    }
+
+    public boolean equipWeapon(ShipWeapon newWeapon) {
+        for (WeaponModule m : weaponModules) {
+            if (m.maxWeaponPowerSupported >= newWeapon.requiredWeaponModulePower
+                    && m.getWeapon() == null) {
+                System.out.println("This weapon has been equipped.");
+                m.setWeapon(newWeapon);
+                return true;
+            }
+        }
+        System.out.println("Cannot equip weapon.");
+        return false;
     }
 
     public ArrayList<WeaponModule> getAllWeaponModules() {

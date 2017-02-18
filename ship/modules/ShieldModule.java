@@ -8,8 +8,8 @@ public class ShieldModule extends MannableShipModule {
     public final int maxShieldPowerSupported;
     private ShieldSystem shields;
 
-    public ShieldModule(String newName, int maxShieldPower) {
-        super(newName, ShipModuleType.SHIELD);
+    public ShieldModule(String newName, int powerRequirement, int maxShieldPower) {
+        super(newName, ShipModuleType.SHIELD, powerRequirement);
         maxShieldPowerSupported = maxShieldPower;
         shields = null;
     }

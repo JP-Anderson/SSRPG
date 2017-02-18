@@ -3,7 +3,15 @@ package events;
 import arch.session.ShipBattleSession;
 import goods.Goods;
 import ship.EnemyShip;
+import ship.ShipModules;
+import ship.modules.CockpitModule;
+import ship.modules.EngineModule;
+import ship.modules.ShieldModule;
+import ship.modules.ShipModule;
+import ship.shields.BasicShieldsMk2;
 import util.RNG;
+
+import java.util.ArrayList;
 
 /**
  * Created by Jp on 08/12/2016.
@@ -21,7 +29,16 @@ public class BanditEvent extends Event {
         System.out.println("You encounter a Bandit!");
         System.out.println("The Bandit primes its weapons and moves in to attack!");
 
-        EnemyShip s2 = new EnemyShip("2");
+        //TODO refactor this out into a ship builder class
+        CockpitModule cockpitModule = new CockpitModule("CockpitModule1", 1);
+        EngineModule engines = new EngineModule("EnginesModule1", 1, 5);
+        ShieldModule shieldModule = new ShieldModule("ShieldsModule1", 1, 2);
+        shieldModule.shields(new BasicShieldsMk2());
+        ArrayList<ShipModule> optionalModules = new ArrayList<>();
+        optionalModules.add(shieldModule);
+        ShipModules shipModules = ShipModules.createInstance(9, cockpitModule, engines, optionalModules);
+        //
+        EnemyShip s2 = new EnemyShip("2", shipModules);
         ShipBattleSession sbs = new ShipBattleSession(_playerShip,s2);
         sbs.run();
 

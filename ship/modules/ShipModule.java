@@ -1,19 +1,19 @@
 package ship.modules;
 
-import characters.Crewmember;
-
 public abstract class ShipModule {
 
     public enum ShipModuleType {
         COCKPIT, ENGINE, CARGO, SHIELD, WEAPON
     }
 
-    protected String name;
-    protected final ShipModuleType moduleType;
+    protected final String _name;
+    protected final ShipModuleType _moduleType;
+    protected final int _modulePower;
 
-    public ShipModule(String newName, ShipModuleType newModuleType) {
-        name = newName;
-        moduleType = newModuleType;
+    public ShipModule(String name, ShipModuleType moduleType, int modulePower) {
+        _name = name;
+        _moduleType = moduleType;
+        _modulePower = modulePower;
     }
 
     abstract void printInformation();
@@ -22,4 +22,15 @@ public abstract class ShipModule {
         return false;
     }
 
+    public String getName() {
+        return _name;
+    }
+
+    public ShipModuleType getModuleType() {
+        return _moduleType;
+    }
+
+    public int getModulePower() {
+        return _modulePower;
+    }
 }

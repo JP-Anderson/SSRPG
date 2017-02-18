@@ -10,38 +10,26 @@ import ship.shields.*;
 public abstract class Ship {
 
     public final String name;
-
+    ShipModules modules;
     int maxHullIntegrity;
     int remainingHullIntegrity;
-
     protected ArrayList<Crewmember> crew;
     int crewCapacity;
-
-    // todo: create getters/setters for this
-    // todo: don't use hardcoded modules
-    EngineModule engines = new EngineModule("Engines1", 5);
-    ShieldModule shieldModule = new ShieldModule("Shields1", 2);
-
-    // Will need to set this based on type of PlayerShip, must also be upgradeable
-    private int numberOfAvailableWeaponModules = 2;
-    private ArrayList<WeaponModule> weaponModules;
 
     CargoBayModule cargo;
 
     private boolean isDestroyed;
 
-    Ship(String pName) {
-        name = pName;
-        cargo = new CargoBayModule("CargoModule1", 15);
-        weaponModules = new ArrayList<>();
-        shieldModule.shields(new BasicShieldsMk2());
-        // Need to generate different hull integritys across shipStatus
+    Ship(String shipName, ShipModules shipModules) {
+        name = shipName;
+        modules = shipModules;
         maxHullIntegrity = 500;
         remainingHullIntegrity = maxHullIntegrity;
         isDestroyed = false;
     }
 
     public void sustainFire(Attack attack) {
+        ShieldModule shieldModule = modules.getShieldModule();
         int originalShields = shieldModule.shields().getRemainingShields();
         int originalHull = remainingHullIntegrity;
 
@@ -52,7 +40,7 @@ public abstract class Ship {
         System.out.println("Shields: " + originalShields + " => " + shieldModule.shields().getRemainingShields());
         System.out.println("Hull: " + originalHull + " => " + remainingHullIntegrity);
     }
-    
+
     private void takeHullDamage(Attack shieldedAttack) {
         remainingHullIntegrity = remainingHullIntegrity - shieldedAttack.hullDamage;
         if (remainingHullIntegrity < 0) {
@@ -61,31 +49,19 @@ public abstract class Ship {
     }
 
     public void addWeaponModule(int weaponModulePower) {
-        if (weaponModules.size() < numberOfAvailableWeaponModules) {
-            weaponModules.add(new WeaponModule("Weapon1",weaponModulePower));
-        }
+        modules.addWeaponModule(weaponModulePower);
     }
 
     public ArrayList<WeaponModule> getWeaponModules() {
-        return weaponModules;
+        return modules.getWeaponModules();
     }
 
     public boolean equipWeapon(ShipWeapon newWeapon) {
-        for (WeaponModule m : weaponModules) {
-            if (m.maxWeaponPowerSupported >= newWeapon.requiredWeaponModulePower
-            && m.getWeapon() == null) {
-                System.out.println("This weapon has been equipped.");
-                m.setWeapon(newWeapon);
-                return true;
-            }
-        }
-
-        System.out.println("Cannot equip weapon.");
-        return false;
+        return modules.equipWeapon(newWeapon);
     }
 
     public CargoBayModule getCargoBay() {
-        return cargo;
+        return modules.getCargoBayModule();
     }
 
     public boolean isDestroyed() {
@@ -93,7 +69,7 @@ public abstract class Ship {
     }
 
     public void rechargeShields() {
-        shieldModule.rechargeShields();
+        modules.getShieldModule().rechargeShields();
     }
 
 }

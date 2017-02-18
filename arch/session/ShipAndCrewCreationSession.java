@@ -4,6 +4,9 @@ import characters.Crewmember;
 import characters.Skills;
 import characters.classes.*;
 import ship.PlayerShip;
+import ship.ShipModules;
+import ship.modules.*;
+import ship.shields.BasicShieldsMk2;
 import util.ConsoleInputHandler;
 
 import java.util.ArrayList;
@@ -44,7 +47,21 @@ public class ShipAndCrewCreationSession extends Session {
     }
 
     public PlayerShip generateNewShip() {
-        PlayerShip p1 = new PlayerShip(newName,100,3);
+        // TODO need to build a class to build ship objects, player or enemy
+        CockpitModule cockpitModule = new CockpitModule("CockpitModule1", 1);
+        EngineModule engines = new EngineModule("EnginesModule1", 1, 5);
+
+        ShieldModule shieldModule = new ShieldModule("ShieldsModule1", 1, 2);
+        shieldModule.shields(new BasicShieldsMk2());
+
+        //TODO cargo bay is now optional, so need to check everytime cargo bay is accessed and handle this case
+        CargoBayModule cargoBayModule = new CargoBayModule("CargoBayModule", 0, 20);
+
+        ArrayList<ShipModule> optionalModules = new ArrayList<>();
+        optionalModules.add(shieldModule);
+        optionalModules.add(cargoBayModule);
+        ShipModules shipModules = ShipModules.createInstance(10, cockpitModule, engines, optionalModules);
+        PlayerShip p1 = new PlayerShip(newName,shipModules,100,3);
         p1.initialiseCrew(crew);
         return p1;
     }

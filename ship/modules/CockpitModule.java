@@ -2,8 +2,8 @@ package ship.modules;
 
 public class CockpitModule extends MannableShipModule {
 
-    public CockpitModule(String newName) {
-        super(newName, ShipModuleType.COCKPIT);
+    public CockpitModule(String name, int powerRequirement) {
+        super(name, ShipModuleType.COCKPIT, powerRequirement);
     }
 
     @Override

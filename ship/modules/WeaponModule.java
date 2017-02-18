@@ -10,7 +10,7 @@ public class WeaponModule extends MannableShipModule {
     private int baseTurnsTilWeaponReady;
 
     public WeaponModule(String newName, int maxWeaponPower) {
-        super(newName, ShipModuleType.WEAPON);
+        super(newName, ShipModuleType.WEAPON, maxWeaponPower);
         maxWeaponPowerSupported = maxWeaponPower;
         loadedWeapon = null;
     }

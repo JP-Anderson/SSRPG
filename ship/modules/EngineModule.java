@@ -4,8 +4,8 @@ public class EngineModule extends MannableShipModule {
 
     public final int fuelEfficiency;
 
-    public EngineModule(String newName, int efficiency) {
-        super(newName, ShipModuleType.ENGINE);
+    public EngineModule(String newName, int powerRequirement, int efficiency) {
+        super(newName, ShipModuleType.ENGINE, powerRequirement);
         fuelEfficiency = efficiency;
     }
 
