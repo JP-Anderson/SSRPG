@@ -4,6 +4,8 @@ import map.GridMap;
 import map.GridPoint;
 import characters.Crewmember;
 import ship.modules.CargoBayModule;
+import ship.modules.CockpitModule;
+import ship.modules.EngineModule;
 
 import java.util.ArrayList;
 
@@ -11,10 +13,10 @@ public class PlayerShip extends Ship {
 
     private int fuelCapacity;
     private int remainingFuel;
+    private int scannerStrength;
     private Scanner scanner;
-    private ArrayList<Crewmember> crew;
+    //private ArrayList<Crewmember> crew;
     private GridPoint location;
-
     private int money;
 
     public void setMoney (int m) {
@@ -22,6 +24,14 @@ public class PlayerShip extends Ship {
     }
     public int getMoney() {
         return money;
+    }
+
+    private PlayerShip(PlayerShipBuilder builder) {
+        super(builder);
+        fuelCapacity = builder.fuelCapacity;
+        remainingFuel = fuelCapacity;
+        scannerStrength = builder.scannerStrength;
+        money = builder.money;
     }
 
     public PlayerShip(String pName, ShipModules modules, int fuel, int crewCap) {
@@ -38,7 +48,7 @@ public class PlayerShip extends Ship {
 
     public void initialiseMap(GridPoint startLocation, GridMap map) {
         location = startLocation;
-        scanner = Scanner.getScanner(7,map,startLocation);
+        scanner = Scanner.getScanner(scannerStrength,map,startLocation);
     }
 
     public GridPoint getLocation() {
@@ -91,6 +101,40 @@ public class PlayerShip extends Ship {
 
     public void setCrew(ArrayList<Crewmember> newCrew) {
         crew = newCrew;
+    }
+
+    public static class PlayerShipBuilder extends Ship.GenericShipBuilder<PlayerShipBuilder> {
+
+        public PlayerShipBuilder(String name,
+                          int maxCombinedModulePower,
+                          CockpitModule cockpitModule,
+                          EngineModule engineModule) {
+            super(name, maxCombinedModulePower, cockpitModule, engineModule);
+        }
+
+        protected int fuelCapacity = 100;
+        protected int scannerStrength = 7;
+        protected int money = 20000;
+
+        public PlayerShipBuilder fuelCapacity(int maxFuelCapacity) {
+            this.fuelCapacity = maxFuelCapacity;
+            return this;
+        }
+
+        public PlayerShipBuilder scannerStrength(int scannerStrength) {
+            this.scannerStrength = scannerStrength;
+            return this;
+        }
+
+        public PlayerShipBuilder money(int money) {
+            this.money = money;
+            return this;
+        }
+
+        public PlayerShip build() {
+            return new PlayerShip(this);
+        }
+
     }
 
 }

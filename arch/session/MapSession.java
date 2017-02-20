@@ -27,7 +27,6 @@ public class MapSession extends Session {
         map = GridMap.generateGridMap(11,7);
 
         p1.initialiseMap(start, map);
-        p1.setMoney(20000);
         initMapAndGoodsList();
     }
 

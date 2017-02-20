@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import ship.modules.*;
 import ship.weapons.ShipWeapon;
 import ship.weapons.Attack;
-import ship.shields.*;
 
 public abstract class Ship {
 
@@ -20,6 +19,16 @@ public abstract class Ship {
 
     private boolean isDestroyed;
 
+    protected Ship(GenericShipBuilder builder) {
+        name = builder.name;
+        modules = builder.generateModules();
+        maxHullIntegrity = builder.maxHullIntegrity;
+        remainingHullIntegrity = maxHullIntegrity;
+        crew = builder.crew;
+        crewCapacity = builder.crewCapacity;
+    }
+
+    //TODO remove this once EnemyShip builder has been created and we no longer need public constructors
     Ship(String shipName, ShipModules shipModules) {
         name = shipName;
         modules = shipModules;
@@ -72,4 +81,70 @@ public abstract class Ship {
         modules.getShieldModule().rechargeShields();
     }
 
+    public static abstract class GenericShipBuilder <B extends GenericShipBuilder<B>> {
+
+		protected String name;
+		protected int maxCombinedModulePower;
+		protected CockpitModule cockpitModule;
+		protected EngineModule engineModule;
+		protected ShieldModule shieldModule = null;
+		protected CargoBayModule cargoBayModule = null;
+		protected ArrayList<WeaponModule> weaponModules = null;
+		protected int maxHullIntegrity = 100;
+		protected ArrayList<Crewmember> crew = null;
+		protected int crewCapacity = 3;
+
+		// ShipModules class is not passed into the builder but is constructed from the modules
+		protected ShipModules modules;
+		// We need to first add the modules to an ArrayList so we can construct the ShipModules class
+        // The use of an ArrayList hopefully makes it easier to add modules in the future.
+        private ArrayList<ShipModule> optionalModulesList = new ArrayList<>();
+
+		GenericShipBuilder(String name,
+						   int maxCombinedModulePower,
+						   CockpitModule cockpitModule,
+						   EngineModule engineModule) {
+			this.name = name;
+			this.maxCombinedModulePower = maxCombinedModulePower;
+			this.cockpitModule = cockpitModule;
+			this.engineModule = engineModule;
+		}
+
+		public B shieldModule(ShieldModule shieldModule) {
+			this.shieldModule = shieldModule;
+			optionalModulesList.add(shieldModule);
+			return (B) this;
+		}
+
+		public B cargoBayModule(CargoBayModule cargoBayModule) {
+			this.cargoBayModule = cargoBayModule;
+            optionalModulesList.add(cargoBayModule);
+			return (B) this;
+		}
+
+		public B weaponModules(ArrayList<WeaponModule> weaponModules) {
+			this.weaponModules = weaponModules;
+            optionalModulesList.addAll(weaponModules);
+			return (B) this;
+		}
+
+		public B maxHullIntegrity(int maxHullIntegrity) {
+			this.maxHullIntegrity = maxHullIntegrity;
+			return (B) this;
+		}
+
+		public B crew(ArrayList<Crewmember> crew) {
+			this.crew = crew;
+			return (B) this;
+		}
+
+		public B crewCapacity(int crewCapacity) {
+			this.crewCapacity = crewCapacity;
+			return (B) this;
+		}
+
+		protected ShipModules generateModules() {
+			return ShipModules.createInstance(maxCombinedModulePower, cockpitModule, engineModule, optionalModulesList);
+        }
+	}
 }
