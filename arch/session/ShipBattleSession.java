@@ -1,9 +1,9 @@
 package arch.session;
 
+import ship.AIShip;
 import util.*;
 import ship.Ship;
 import ship.PlayerShip;
-import ship.EnemyShip;
 import ship.modules.*;
 import ship.weapons.*;
 import arch.view.ShipBattleView;
@@ -57,7 +57,7 @@ public class ShipBattleSession extends Session {
     private void nextTurn() {
         Turn turn = null;
         if (currentActiveShip instanceof PlayerShip) turn = new PlayerTurn();
-        else if (currentActiveShip instanceof EnemyShip) turn = new CPUTurn();
+        else if (currentActiveShip instanceof AIShip) turn = new CPUTurn();
         turn.runTurn();
         currentActiveShip = currentActiveShip == ship1 ? ship2: ship1;
     }

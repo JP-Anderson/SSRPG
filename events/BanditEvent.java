@@ -2,7 +2,7 @@ package events;
 
 import arch.session.ShipBattleSession;
 import goods.Goods;
-import ship.EnemyShip;
+import ship.AIShip;
 import ship.ShipModules;
 import ship.modules.CockpitModule;
 import ship.modules.EngineModule;
@@ -29,19 +29,22 @@ public class BanditEvent extends Event {
         System.out.println("You encounter a Bandit!");
         System.out.println("The Bandit primes its weapons and moves in to attack!");
 
-        //TODO refactor this out into a ship builder class
         CockpitModule cockpitModule = new CockpitModule("CockpitModule1", 1);
         EngineModule engines = new EngineModule("EnginesModule1", 1, 5);
         ShieldModule shieldModule = new ShieldModule("ShieldsModule1", 1, 2);
         shieldModule.shields(new BasicShieldsMk2());
-        ArrayList<ShipModule> optionalModules = new ArrayList<>();
-        optionalModules.add(shieldModule);
-        ShipModules shipModules = ShipModules.createInstance(9, cockpitModule, engines, optionalModules);
-        //
-        EnemyShip s2 = new EnemyShip("2", shipModules);
+
+        AIShip s2 = new AIShip.AIShipBuilder(
+                "Bandits",
+                12,
+                cockpitModule,
+                engines)
+                .shieldModule(shieldModule)
+                .maxHullIntegrity(100)
+                .build();
+
         ShipBattleSession sbs = new ShipBattleSession(_playerShip,s2);
         sbs.run();
-
 
         System.out.println("There is " + outcome.getMoneyReward() + " CREDS.");
         if (outcome.getCrewReward().size() > 0) {

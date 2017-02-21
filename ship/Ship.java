@@ -28,7 +28,7 @@ public abstract class Ship {
         crewCapacity = builder.crewCapacity;
     }
 
-    //TODO remove this once EnemyShip builder has been created and we no longer need public constructors
+    //TODO remove this once AIShip builder has been created and we no longer need public constructors
     Ship(String shipName, ShipModules shipModules) {
         name = shipName;
         modules = shipModules;
@@ -116,6 +116,7 @@ public abstract class Ship {
 			return (B) this;
 		}
 
+		// TODO: think about refactoring this. AIShip might not need this module
 		public B cargoBayModule(CargoBayModule cargoBayModule) {
 			this.cargoBayModule = cargoBayModule;
             optionalModulesList.add(cargoBayModule);
