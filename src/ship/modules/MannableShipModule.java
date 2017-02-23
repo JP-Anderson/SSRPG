@@ -27,6 +27,7 @@ public abstract class MannableShipModule extends ShipModule {
 
     public void assignCrewmember(Crewmember crewmember) {
         activeCrewmember = crewmember;
+        crewmember.setMannedModule(this);
     }
 
     public Crewmember getActiveCrewmember() {

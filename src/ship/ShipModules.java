@@ -157,6 +157,13 @@ public class ShipModules {
         return modulesAsArrayList;
     }
 
+    public ArrayList<MannableShipModule> getMannableModulesAsList() {
+        ArrayList<MannableShipModule> mannableModules = new ArrayList<>();
+        for (ShipModule module : modulesAsArrayList) {
+            if (module instanceof MannableShipModule) mannableModules.add((MannableShipModule) module);
+        }
+        return mannableModules;
+    }
     //endregion
 
     //addModuleFunction

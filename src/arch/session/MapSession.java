@@ -4,6 +4,7 @@ import ship.*;
 import map.*;
 import goods.*;
 import ship.modules.CargoBayModule;
+import ship.modules.MannableShipModule;
 import util.dataload.csv.*;
 import util.*;
 import events.*;
@@ -55,7 +56,7 @@ public class MapSession extends Session {
             } else if (input.equalsIgnoreCase("fuel")) {
                 fuelSequence();
             } else if (input.equalsIgnoreCase("crew")) {
-                printCrew();
+                crewSequence();
             } else {
                 consoleInformation(input);
             }
@@ -315,10 +316,47 @@ public class MapSession extends Session {
         } else System.out.println("There is nowhere to refuel here.");
     }
 
+    private void crewSequence() {
+        char decision = 'n';
+        while (true) {
+            System.out.println("Would you like to move a crewmember? (Y/N)");
+            decision = ConsoleInputHandler.getCharFromUser("");
+            // TODO write a function to take a range of acceptable chars to make these checks shorter
+            if (decision == 'Y' || decision == 'y' || decision == 'N' || decision == 'n' ) break;
+        }
+        if (decision == 'Y' || decision == 'y') {
+            System.out.println("Which crewmember would you like to move?");
+            printCrew();
+            ArrayList<Crewmember> crewmembers = p1.getCrew();
+            int crewIndex = ConsoleInputHandler.getIntInRangeFromUser(crewmembers.size());
+            Crewmember crewmemberToMove = crewmembers.get(crewIndex);
+            ArrayList<MannableShipModule> mannableModules = p1.getMannableShipModulesAsList();
+            if (mannableModules.size() <= 0) {
+                System.out.println("There are no mannable modules");
+            } else {
+                System.out.println("Which module would you like " + crewmemberToMove.name + " to man?");
+                // TODO:: this could possibly be cleaned up into a function to iterate and print a list
+                // TODO:: which takes a predicate to identify the item to print for an arbitrary object
+                int i = 0;
+                for (MannableShipModule module : mannableModules) {
+                    System.out.println(i + " - " + module.getName());
+                    i++;
+                }
+                int moduleIndex = ConsoleInputHandler.getIntInRangeFromUser(i);
+                mannableModules.get(moduleIndex).assignCrewmember(crewmemberToMove);
+            }
+        }
+        printCrew();
+    }
+
     private void printCrew() {
         ArrayList<Crewmember> playerCrew = p1.getCrew();
+        int i = 0;
         for (Crewmember member : playerCrew) {
-            System.out.println(member.name);
+            MannableShipModule mannedModule = member.getMannedModule();
+            String mannedModuleName = mannedModule != null ? "Manning " + mannedModule.getName() : "Not manning a module.";
+            System.out.println(i + " - " + member.name + " (" + member.crewmemberClass._className + ") " + mannedModuleName);
+            i++;
         }
     }
 

@@ -6,6 +6,7 @@ import characters.Crewmember;
 import ship.modules.CargoBayModule;
 import ship.modules.CockpitModule;
 import ship.modules.EngineModule;
+import ship.modules.MannableShipModule;
 
 import java.util.ArrayList;
 
@@ -94,6 +95,10 @@ public class PlayerShip extends Ship {
     public int getRemainingFuel() { return remainingFuel; }
 
     public void setRemainingFuel(int newFuel) { remainingFuel = newFuel; }
+
+    public ArrayList<MannableShipModule> getMannableShipModulesAsList() {
+        return modules.getMannableModulesAsList();
+    }
 
     public static class PlayerShipBuilder extends Ship.GenericShipBuilder<PlayerShipBuilder> {
 
