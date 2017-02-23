@@ -57,6 +57,10 @@ public abstract class Ship {
         }
     }
 
+    public ArrayList<ShipModule> getModulesInList() {
+		return modules.getModulesAsArrayList();
+	}
+
     public void addWeaponModule(int weaponModulePower) {
         modules.addWeaponModule(weaponModulePower);
     }

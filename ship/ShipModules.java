@@ -9,10 +9,27 @@ import java.util.List;
 
 public class ShipModules {
 
+    private int _maxCombinedModulePower;
+    private int combinedModulePower = 0;
+
+    //MANDATORY MODULES
+    private CockpitModule _cockpitModule;
+    private EngineModule _engineModule;
+
+    //OPTIONAL MODULES
+    private CargoBayModule _cargoBayModule;
+    private ShieldModule _shieldModule;
+    private ArrayList<WeaponModule> weaponModules = new ArrayList<>();
+    //Communication module (Trader, Scoundrel?)
+
+    private ArrayList<ShipModule> modulesAsArrayList;
+
     private ShipModules(int maxCombinedModulePower, CockpitModule cockpitModule, EngineModule engineModule) {
         _maxCombinedModulePower = maxCombinedModulePower;
         _cockpitModule = cockpitModule;
         _engineModule = engineModule;
+        modulesAsArrayList.add(_cockpitModule);
+        modulesAsArrayList.add(_engineModule);
     }
 
     public static ShipModules createInstance(int maxCombinedModulePower, CockpitModule cockpitModule, EngineModule engineModule) {
@@ -41,23 +58,15 @@ public class ShipModules {
                 weaponModules.add((WeaponModule) module);
             else if (module.getModuleType() == ShipModule.ShipModuleType.CARGO)
                 _cargoBayModule = (CargoBayModule) module;
-            else if (module.getModuleType() == ShipModule.ShipModuleType.SHIELD) _shieldModule = (ShieldModule) module;
+            else if (module.getModuleType() == ShipModule.ShipModuleType.SHIELD)
+                _shieldModule = (ShieldModule) module;
         }
+        modulesAsArrayList.addAll(optionalModules);
     }
 
-    private int _maxCombinedModulePower;
-    private int combinedModulePower = 0;
 
-    //MANDATORY MODULES
-    private CockpitModule _cockpitModule;
-    private EngineModule _engineModule;
-
-    //OPTIONAL MODULES
-    private CargoBayModule _cargoBayModule;
-    private ShieldModule _shieldModule;
-    private ArrayList<WeaponModule> weaponModules = new ArrayList<>();
-    //Communication module (Trader, Scoundrel?)
-
+    // TODO: will need to modify these setters to check the module type doesn't already exist, and replace it if so
+    // TODO: also will need to check the new modules don't exceed the max power
     //region Getters and Setters
     public int getMaxCombinedModulePower() {
         return _maxCombinedModulePower;
@@ -135,6 +144,10 @@ public class ShipModules {
         } catch(IndexOutOfBoundsException ie) {
             return null;
         }
+    }
+
+    public ArrayList<ShipModule> getModulesAsArrayList() {
+        return modulesAsArrayList;
     }
 
     //endregion
