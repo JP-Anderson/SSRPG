@@ -22,7 +22,7 @@ public class ShipModules {
     private ArrayList<WeaponModule> weaponModules = new ArrayList<>();
     //Communication module (Trader, Scoundrel?)
 
-    private ArrayList<ShipModule> modulesAsArrayList;
+    private ArrayList<ShipModule> modulesAsArrayList = new ArrayList<>();
 
     private ShipModules(int maxCombinedModulePower, CockpitModule cockpitModule, EngineModule engineModule) {
         _maxCombinedModulePower = maxCombinedModulePower;
