@@ -61,6 +61,27 @@ public abstract class Ship {
 		return modules.getModulesAsArrayList();
 	}
 
+	public ArrayList<Crewmember> getCrew() {
+		return crew;
+	}
+
+	public void setCrew(ArrayList<Crewmember> newCrew) {
+		crew = newCrew;
+	}
+
+	public Crewmember getCrewmemberAtIndex(int crewIndex) {
+    	return crew.get(crewIndex);
+	}
+
+	// TODO: remove crewmembers when they die. Could have a turn timer to get crewmembers to a hospital in X turns?
+	public void removeCrewmemberAtIndex(int crewIndex) {
+    	crew.remove(crewIndex);
+	}
+
+	public void placeCrewmemberInModule(Crewmember crewmember, int shipModuleIndex) {
+    	modules.placeCrewmemberInModule(crewmember, shipModuleIndex);
+	}
+
     public void addWeaponModule(int weaponModulePower) {
         modules.addWeaponModule(weaponModulePower);
     }

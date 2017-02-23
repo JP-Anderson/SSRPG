@@ -89,19 +89,11 @@ public class PlayerShip extends Ship {
         scanner.scan();
     }
 
-    public ArrayList<Crewmember> getCrew() {
-        return crew;
-    }
-
     public int getFuelCapacity() { return fuelCapacity; }
 
     public int getRemainingFuel() { return remainingFuel; }
 
     public void setRemainingFuel(int newFuel) { remainingFuel = newFuel; }
-
-    public void setCrew(ArrayList<Crewmember> newCrew) {
-        crew = newCrew;
-    }
 
     public static class PlayerShipBuilder extends Ship.GenericShipBuilder<PlayerShipBuilder> {
 

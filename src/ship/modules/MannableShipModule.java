@@ -25,15 +25,15 @@ public abstract class MannableShipModule extends ShipModule {
 
     protected Crewmember activeCrewmember = null;
 
-    void assignCrewmember(Crewmember crewmember) {
+    public void assignCrewmember(Crewmember crewmember) {
         activeCrewmember = crewmember;
     }
 
-    Crewmember getActiveCrewmember() {
+    public Crewmember getActiveCrewmember() {
         return activeCrewmember;
     }
 
-    void removeCrewmember() {
+    public void removeCrewmember() {
         activeCrewmember = null;
     }
 

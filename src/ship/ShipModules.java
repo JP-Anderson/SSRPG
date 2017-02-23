@@ -1,5 +1,6 @@
 package ship;
 
+import characters.Crewmember;
 import ship.modules.*;
 import ship.weapons.ShipWeapon;
 
@@ -64,6 +65,12 @@ public class ShipModules {
         modulesAsArrayList.addAll(optionalModules);
     }
 
+    public void placeCrewmemberInModule(Crewmember crewmember, int moduleNumber) {
+        ShipModule moduleToMan = getModulesAsArrayList().get(moduleNumber);
+        if (moduleToMan instanceof MannableShipModule) {
+            ((MannableShipModule) moduleToMan).assignCrewmember(crewmember);
+        }
+    }
 
     // TODO: will need to modify these setters to check the module type doesn't already exist, and replace it if so
     // TODO: also will need to check the new modules don't exceed the max power
