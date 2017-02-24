@@ -2,12 +2,12 @@ package map;
 
 public class EmptyGridSquare extends GridSquare {
 
-  public static EmptyGridSquare generateEmptyGridSquare(GridPoint gridPoint) {
-    return new EmptyGridSquare(gridPoint, ' ');
-  }
+	public static EmptyGridSquare generateEmptyGridSquare(GridPoint gridPoint) {
+		return new EmptyGridSquare(gridPoint, ' ');
+	}
 
-  private EmptyGridSquare(GridPoint gridPoint, char mapSymbol) {
-    super(gridPoint, mapSymbol);
-  }
+	private EmptyGridSquare(GridPoint gridPoint, char mapSymbol) {
+		super(gridPoint, mapSymbol);
+	}
 
 }

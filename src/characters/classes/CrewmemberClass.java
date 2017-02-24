@@ -7,32 +7,32 @@ import util.collections.tree.PreOrderTreeSearcher;
 
 public abstract class CrewmemberClass {
 
-    public final String _className;
-    //pilot, navigator, weapons, engineer, trader, shields, scoundrel
+	public final String _className;
+	//pilot, navigator, weapons, engineer, trader, shields, scoundrel
 
-    protected Skill skill;
+	protected Skill skill;
 
-    public CrewmemberClass(String className) {
-        _className = className;
-        loadSkills();
-    }
+	public CrewmemberClass(String className) {
+		_className = className;
+		loadSkills();
+	}
 
-    private final void loadSkills() {
-        skill = SkillsHolder.getSkill(_className);
-    }
+	private final void loadSkills() {
+		skill = SkillsHolder.getSkill(_className);
+	}
 
-    public Ability getAbilityIfItExists(String abilityName) {
-    	PreOrderTreeSearcher<Ability> treeSearcher = new PreOrderTreeSearcher<>();
-    	return treeSearcher.getElement(
-    			skill._abilities.getTree(),
+	public Ability getAbilityIfItExists(String abilityName) {
+		PreOrderTreeSearcher<Ability> treeSearcher = new PreOrderTreeSearcher<>();
+		return treeSearcher.getElement(
+				skill._abilities.getTree(),
 				a -> a._name.equals(abilityName) && a.isUnlocked());
 	}
 
-    public boolean hasAbility(String abilityName) {
+	public boolean hasAbility(String abilityName) {
 		PreOrderTreeSearcher<Ability> treeSearcher = new PreOrderTreeSearcher<>();
-        return treeSearcher.doesTreeContain(
-        		skill._abilities.getTree(),
+		return treeSearcher.doesTreeContain(
+				skill._abilities.getTree(),
 				a -> a._name.equals(abilityName) && a.isUnlocked());
-    }
+	}
 
 }

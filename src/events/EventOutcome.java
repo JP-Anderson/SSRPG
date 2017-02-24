@@ -8,34 +8,34 @@ import java.util.ArrayList;
 
 public class EventOutcome {
 
-    private int moneyReward;
-    private List<Crewmember> crewReward;
-    private List<GoodsForSale> goodsReward;
+	private int moneyReward;
+	private List<Crewmember> crewReward;
+	private List<GoodsForSale> goodsReward;
 
-    public EventOutcome(int money, List<Crewmember> crew, List<GoodsForSale> goods) {
-        moneyReward = money;
-        crewReward = crew;
-        goodsReward = goods;
-    }
+	public EventOutcome(int money, List<Crewmember> crew, List<GoodsForSale> goods) {
+		moneyReward = money;
+		crewReward = crew;
+		goodsReward = goods;
+	}
 
-    public int getMoneyReward() {
-        return moneyReward;
-    }
+	public int getMoneyReward() {
+		return moneyReward;
+	}
 
-    public List<Crewmember> getCrewReward() {
-        return crewReward;
-    }
+	public List<Crewmember> getCrewReward() {
+		return crewReward;
+	}
 
-    public void removeCrewReward() {
-        crewReward = new ArrayList<Crewmember>();
-    }
+	public void removeCrewReward() {
+		crewReward = new ArrayList<Crewmember>();
+	}
 
-    public List<GoodsForSale> getGoodsReward() {
-        return goodsReward;
-    }
+	public List<GoodsForSale> getGoodsReward() {
+		return goodsReward;
+	}
 
-    public void removeGoodsReward() {
-        goodsReward = new ArrayList<GoodsForSale>();
-    }
+	public void removeGoodsReward() {
+		goodsReward = new ArrayList<GoodsForSale>();
+	}
 
 }

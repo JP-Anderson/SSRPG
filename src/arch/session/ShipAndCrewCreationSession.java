@@ -13,46 +13,46 @@ import java.util.ArrayList;
 
 public class ShipAndCrewCreationSession extends Session {
 
-    ArrayList<Crewmember> crew = null;
-    private ArrayList<CrewmemberClass> availableClasses;
-    private String newName;
+	ArrayList<Crewmember> crew = null;
+	private ArrayList<CrewmemberClass> availableClasses;
+	private String newName;
 
-    public ShipAndCrewCreationSession() {
-        super("ShipAndCrewCreationSession");
-        availableClasses = new ArrayList<>();
-        availableClasses.add(new PilotClass());
-        availableClasses.add(new ScoundrelClass());
-        availableClasses.add(new WeaponsExpertClass());
-    }
+	public ShipAndCrewCreationSession() {
+		super("ShipAndCrewCreationSession");
+		availableClasses = new ArrayList<>();
+		availableClasses.add(new PilotClass());
+		availableClasses.add(new ScoundrelClass());
+		availableClasses.add(new WeaponsExpertClass());
+	}
 
-    @Override
-    public void run() {
-        newName = ConsoleInputHandler.getNonEmptyStringFromUser("What would you like to call your ship?");
-        crew = new ArrayList<>();
-        int crewCount = 1;
-        final int numberOfStartingCrewmembers = 2;
-        for (int i = 0; i < numberOfStartingCrewmembers; i++) {
-            System.out.println("You have " + (numberOfStartingCrewmembers-i) + " crewmembers left to pick");
-            System.out.println("Which class do you pick for crewmember #"+crewCount+"?");
+	@Override
+	public void run() {
+		newName = ConsoleInputHandler.getNonEmptyStringFromUser("What would you like to call your ship?");
+		crew = new ArrayList<>();
+		int crewCount = 1;
+		final int numberOfStartingCrewmembers = 2;
+		for (int i = 0; i < numberOfStartingCrewmembers; i++) {
+			System.out.println("You have " + (numberOfStartingCrewmembers - i) + " crewmembers left to pick");
+			System.out.println("Which class do you pick for crewmember #" + crewCount + "?");
 			System.out.println("Available crew:");
 			CrewmemberClass chosenClass = ConsoleInputHandler.getUserChoiceFromList(availableClasses, "_className");
-            availableClasses.remove(chosenClass);
-            String chosenName = ConsoleInputHandler.getNonEmptyStringFromUser("What will you call this " + chosenClass._className +"?");
-            crew.add(new Crewmember(chosenName, new Skills(), chosenClass));
-            crewCount++;
-            System.out.println();
-        }
-    }
+			availableClasses.remove(chosenClass);
+			String chosenName = ConsoleInputHandler.getNonEmptyStringFromUser("What will you call this " + chosenClass._className + "?");
+			crew.add(new Crewmember(chosenName, new Skills(), chosenClass));
+			crewCount++;
+			System.out.println();
+		}
+	}
 
-    public PlayerShip generateNewShip() {
+	public PlayerShip generateNewShip() {
 		CockpitModule cockpitModule = new CockpitModule("CockpitModule1", 1);
-        EngineModule engineModule = new EngineModule("EnginesModule1", 1, 5);
-        ShieldModule shieldModule = new ShieldModule("ShieldsModule1", 1, 2);
-        shieldModule.shields(new BasicShieldsMk2());
-        CargoBayModule cargoBayModule = new CargoBayModule("CargoBayModule", 0, 20);
+		EngineModule engineModule = new EngineModule("EnginesModule1", 1, 5);
+		ShieldModule shieldModule = new ShieldModule("ShieldsModule1", 1, 2);
+		shieldModule.shields(new BasicShieldsMk2());
+		CargoBayModule cargoBayModule = new CargoBayModule("CargoBayModule", 0, 20);
 
-        PlayerShip p1 = new PlayerShip.PlayerShipBuilder(
-        		newName,
+		PlayerShip p1 = new PlayerShip.PlayerShipBuilder(
+				newName,
 				10,
 				cockpitModule,
 				engineModule)
@@ -64,7 +64,7 @@ public class ShipAndCrewCreationSession extends Session {
 				.money(20000)
 				.scannerStrength(7)
 				.build();
-        return p1;
-    }
+		return p1;
+	}
 
 }

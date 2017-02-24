@@ -2,8 +2,8 @@ package arch.view;
 
 public class ShipBattleView {
 
-    private static class ShipBattleConsole {
-        
-    }
+	private static class ShipBattleConsole {
+
+	}
 
 }

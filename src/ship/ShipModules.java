@@ -10,166 +10,168 @@ import java.util.List;
 
 public class ShipModules {
 
-    private int _maxCombinedModulePower;
-    private int combinedModulePower = 0;
+	private int _maxCombinedModulePower;
+	private int combinedModulePower = 0;
 
-    //MANDATORY MODULES
-    private CockpitModule _cockpitModule;
-    private EngineModule _engineModule;
+	//MANDATORY MODULES
+	private CockpitModule _cockpitModule;
+	private EngineModule _engineModule;
 
-    //OPTIONAL MODULES
-    private CargoBayModule _cargoBayModule;
-    private ShieldModule _shieldModule;
-    private ArrayList<WeaponModule> weaponModules = new ArrayList<>();
-    //Communication module (Trader, Scoundrel?)
+	//OPTIONAL MODULES
+	private CargoBayModule _cargoBayModule;
+	private ShieldModule _shieldModule;
+	private ArrayList<WeaponModule> weaponModules = new ArrayList<>();
+	//Communication module (Trader, Scoundrel?)
 
-    private ArrayList<ShipModule> modulesAsArrayList = new ArrayList<>();
+	private ArrayList<ShipModule> modulesAsArrayList = new ArrayList<>();
 
-    private ShipModules(int maxCombinedModulePower, CockpitModule cockpitModule, EngineModule engineModule) {
-        _maxCombinedModulePower = maxCombinedModulePower;
-        _cockpitModule = cockpitModule;
-        _engineModule = engineModule;
-        modulesAsArrayList.add(_cockpitModule);
-        modulesAsArrayList.add(_engineModule);
-    }
+	private ShipModules(int maxCombinedModulePower, CockpitModule cockpitModule, EngineModule engineModule) {
+		_maxCombinedModulePower = maxCombinedModulePower;
+		_cockpitModule = cockpitModule;
+		_engineModule = engineModule;
+		modulesAsArrayList.add(_cockpitModule);
+		modulesAsArrayList.add(_engineModule);
+	}
 
-    public static ShipModules createInstance(int maxCombinedModulePower, CockpitModule cockpitModule, EngineModule engineModule) {
-        if (cockpitModule == null) throw new IllegalArgumentException("Need a cockpit module");
-        if (engineModule == null) throw new IllegalArgumentException("Need an engine module");
-        if (maxCombinedModulePower < cockpitModule.getModulePower() + engineModule.getModulePower())
-            throw new IllegalStateException("Max supported module power is not high enough for selected cockpit and engine modules");
-        return new ShipModules(maxCombinedModulePower, cockpitModule, engineModule);
-    }
+	public static ShipModules createInstance(int maxCombinedModulePower, CockpitModule cockpitModule, EngineModule engineModule) {
+		if (cockpitModule == null) throw new IllegalArgumentException("Need a cockpit module");
+		if (engineModule == null) throw new IllegalArgumentException("Need an engine module");
+		if (maxCombinedModulePower < cockpitModule.getModulePower() + engineModule.getModulePower())
+			throw new IllegalStateException("Max supported module power is not high enough for selected cockpit and engine modules");
+		return new ShipModules(maxCombinedModulePower, cockpitModule, engineModule);
+	}
 
-    public static ShipModules createInstance(int maxPower, CockpitModule cockpitModule, EngineModule engineModule, List<ShipModule> optionalModules) {
-        ShipModules shipModules = createInstance(maxPower, cockpitModule, engineModule);
-        if (optionalModules != null && optionalModules.size() > 0) shipModules.setUpOptionalModules(optionalModules);
-        return shipModules;
-    }
+	public static ShipModules createInstance(int maxPower, CockpitModule cockpitModule, EngineModule engineModule, List<ShipModule> optionalModules) {
+		ShipModules shipModules = createInstance(maxPower, cockpitModule, engineModule);
+		if (optionalModules != null && optionalModules.size() > 0) shipModules.setUpOptionalModules(optionalModules);
+		return shipModules;
+	}
 
-    private void setUpOptionalModules(List<ShipModule> optionalModules) {
-        combinedModulePower = _cockpitModule.getModulePower() + _engineModule.getModulePower();
-        Iterator<ShipModule> i = optionalModules.iterator();
-        while (i.hasNext()) {
-            ShipModule module = i.next();
-            combinedModulePower = combinedModulePower + module.getModulePower();
-            if (combinedModulePower > _maxCombinedModulePower)
-                throw new IllegalStateException("Optional module " + module.getName() + " has exceeded max module power in Ship.");
-            else if (module.getModuleType() == ShipModule.ShipModuleType.WEAPON)
-                weaponModules.add((WeaponModule) module);
-            else if (module.getModuleType() == ShipModule.ShipModuleType.CARGO)
-                _cargoBayModule = (CargoBayModule) module;
-            else if (module.getModuleType() == ShipModule.ShipModuleType.SHIELD)
-                _shieldModule = (ShieldModule) module;
-        }
-        modulesAsArrayList.addAll(optionalModules);
-    }
+	private void setUpOptionalModules(List<ShipModule> optionalModules) {
+		combinedModulePower = _cockpitModule.getModulePower() + _engineModule.getModulePower();
+		Iterator<ShipModule> i = optionalModules.iterator();
+		while (i.hasNext()) {
+			ShipModule module = i.next();
+			combinedModulePower = combinedModulePower + module.getModulePower();
+			if (combinedModulePower > _maxCombinedModulePower)
+				throw new IllegalStateException("Optional module " + module.getName() + " has exceeded max module power in Ship.");
+			else if (module.getModuleType() == ShipModule.ShipModuleType.WEAPON)
+				weaponModules.add((WeaponModule) module);
+			else if (module.getModuleType() == ShipModule.ShipModuleType.CARGO)
+				_cargoBayModule = (CargoBayModule) module;
+			else if (module.getModuleType() == ShipModule.ShipModuleType.SHIELD)
+				_shieldModule = (ShieldModule) module;
+		}
+		modulesAsArrayList.addAll(optionalModules);
+	}
 
-    public void placeCrewmemberInModule(Crewmember crewmember, int moduleNumber) {
-        ShipModule moduleToMan = getModulesAsArrayList().get(moduleNumber);
-        if (moduleToMan instanceof MannableShipModule) {
-            ((MannableShipModule) moduleToMan).assignCrewmember(crewmember);
-        }
-    }
+	public void placeCrewmemberInModule(Crewmember crewmember, int moduleNumber) {
+		ShipModule moduleToMan = getModulesAsArrayList().get(moduleNumber);
+		if (moduleToMan instanceof MannableShipModule) {
+			((MannableShipModule) moduleToMan).assignCrewmember(crewmember);
+		}
+	}
 
-    // TODO: will need to modify these setters to check the module type doesn't already exist, and replace it if so
-    // TODO: also will need to check the new modules don't exceed the max power
-    //region Getters and Setters
-    public int getMaxCombinedModulePower() {
-        return _maxCombinedModulePower;
-    }
+	// TODO: will need to modify these setters to check the module type doesn't already exist, and replace it if so
+	// TODO: also will need to check the new modules don't exceed the max power
+	//region Getters and Setters
+	public int getMaxCombinedModulePower() {
+		return _maxCombinedModulePower;
+	}
 
-    public void setMaxCombinedModulePower(int maxCombinedModulePower) {
-        _maxCombinedModulePower = maxCombinedModulePower;
-    }
+	public void setMaxCombinedModulePower(int maxCombinedModulePower) {
+		_maxCombinedModulePower = maxCombinedModulePower;
+	}
 
-    public CockpitModule getCockpitModule() {
-        return _cockpitModule;
-    }
+	public CockpitModule getCockpitModule() {
+		return _cockpitModule;
+	}
 
-    public void setCockpitModule(CockpitModule cockpitModule) {
-        _cockpitModule = cockpitModule;
-    }
+	public void setCockpitModule(CockpitModule cockpitModule) {
+		_cockpitModule = cockpitModule;
+	}
 
-    public EngineModule getEngineModule() {
-        return _engineModule;
-    }
+	public EngineModule getEngineModule() {
+		return _engineModule;
+	}
 
-    public void setEngineModule(EngineModule engineModule) {
-        _engineModule = engineModule;
-    }
+	public void setEngineModule(EngineModule engineModule) {
+		_engineModule = engineModule;
+	}
 
-    public CargoBayModule getCargoBayModule() {
-        return _cargoBayModule;
-    }
+	public CargoBayModule getCargoBayModule() {
+		return _cargoBayModule;
+	}
 
-    public void setCargoBayModule(CargoBayModule cargoBayModule) {
-        this._cargoBayModule = _cargoBayModule;
-    }
+	public void setCargoBayModule(CargoBayModule cargoBayModule) {
+		this._cargoBayModule = _cargoBayModule;
+	}
 
-    public ShieldModule getShieldModule() {
-        return _shieldModule;
-    }
+	public ShieldModule getShieldModule() {
+		return _shieldModule;
+	}
 
-    public void setShieldModule(ShieldModule shieldModule) {
-        _shieldModule = shieldModule;
-    }
+	public void setShieldModule(ShieldModule shieldModule) {
+		_shieldModule = shieldModule;
+	}
 
-    public void addWeaponModule(int weaponModulePower) {
-        if (combinedModulePower + weaponModulePower <= _maxCombinedModulePower) {
-            combinedModulePower += weaponModulePower;
-            weaponModules.add(new WeaponModule("WeaponModule", weaponModulePower));
-        }
-    }
+	public void addWeaponModule(int weaponModulePower) {
+		if (combinedModulePower + weaponModulePower <= _maxCombinedModulePower) {
+			combinedModulePower += weaponModulePower;
+			weaponModules.add(new WeaponModule("WeaponModule", weaponModulePower));
+		}
+	}
 
-    public ArrayList<WeaponModule> getWeaponModules() {
-        return weaponModules;
-    }
+	public ArrayList<WeaponModule> getWeaponModules() {
+		return weaponModules;
+	}
 
-    public boolean equipWeapon(ShipWeapon newWeapon) {
-        for (WeaponModule m : weaponModules) {
-            if (m.maxWeaponPowerSupported >= newWeapon.requiredWeaponModulePower
-                    && m.getWeapon() == null) {
-                System.out.println("This weapon has been equipped.");
-                m.setWeapon(newWeapon);
-                return true;
-            }
-        }
-        System.out.println("Cannot equip weapon.");
-        return false;
-    }
+	public boolean equipWeapon(ShipWeapon newWeapon) {
+		for (WeaponModule m : weaponModules) {
+			if (m.maxWeaponPowerSupported >= newWeapon.requiredWeaponModulePower
+					&& m.getWeapon() == null) {
+				System.out.println("This weapon has been equipped.");
+				m.setWeapon(newWeapon);
+				return true;
+			}
+		}
+		System.out.println("Cannot equip weapon.");
+		return false;
+	}
 
-    public ArrayList<WeaponModule> getAllWeaponModules() {
-        return weaponModules;
-    }
+	public ArrayList<WeaponModule> getAllWeaponModules() {
+		return weaponModules;
+	}
 
-    public int getWeaponModuleCount() { return weaponModules.size(); }
+	public int getWeaponModuleCount() {
+		return weaponModules.size();
+	}
 
-    public WeaponModule getWeaponModule(int weaponModuleListIndex) {
-        try {
-            return weaponModules.get(weaponModuleListIndex);
-        } catch(IndexOutOfBoundsException ie) {
-            return null;
-        }
-    }
+	public WeaponModule getWeaponModule(int weaponModuleListIndex) {
+		try {
+			return weaponModules.get(weaponModuleListIndex);
+		} catch (IndexOutOfBoundsException ie) {
+			return null;
+		}
+	}
 
-    public ArrayList<ShipModule> getModulesAsArrayList() {
-        return modulesAsArrayList;
-    }
+	public ArrayList<ShipModule> getModulesAsArrayList() {
+		return modulesAsArrayList;
+	}
 
-    public ArrayList<MannableShipModule> getMannableModulesAsList() {
-        ArrayList<MannableShipModule> mannableModules = new ArrayList<>();
-        for (ShipModule module : modulesAsArrayList) {
-            if (module instanceof MannableShipModule) mannableModules.add((MannableShipModule) module);
-        }
-        return mannableModules;
-    }
-    //endregion
+	public ArrayList<MannableShipModule> getMannableModulesAsList() {
+		ArrayList<MannableShipModule> mannableModules = new ArrayList<>();
+		for (ShipModule module : modulesAsArrayList) {
+			if (module instanceof MannableShipModule) mannableModules.add((MannableShipModule) module);
+		}
+		return mannableModules;
+	}
+	//endregion
 
-    //addModuleFunction
-        // need to check we don't already have the module installed and enough power
-        // in the case of weapons just need to check we have enough power
-        // adding a module is very expensive, much more expensive than switching a modules contents
+	//addModuleFunction
+	// need to check we don't already have the module installed and enough power
+	// in the case of weapons just need to check we have enough power
+	// adding a module is very expensive, much more expensive than switching a modules contents
 //
 //    Crew and crew modules
 //

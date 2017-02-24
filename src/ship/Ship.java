@@ -1,6 +1,7 @@
 package ship;
 
 import characters.Crewmember;
+
 import java.util.ArrayList;
 
 import characters.classes.PilotClass;
@@ -12,59 +13,59 @@ import ship.weapons.Attack;
 
 public abstract class Ship {
 
-    public final String name;
-    ShipModules modules;
-    int maxHullIntegrity;
-    int remainingHullIntegrity;
-    protected ArrayList<Crewmember> crew;
-    int crewCapacity;
+	public final String name;
+	ShipModules modules;
+	int maxHullIntegrity;
+	int remainingHullIntegrity;
+	protected ArrayList<Crewmember> crew;
+	int crewCapacity;
 
-    CargoBayModule cargo;
+	CargoBayModule cargo;
 
-    private boolean isDestroyed;
+	private boolean isDestroyed;
 
-    protected Ship(GenericShipBuilder builder) {
-        name = builder.name;
-        modules = builder.generateModules();
-        maxHullIntegrity = builder.maxHullIntegrity;
-        remainingHullIntegrity = maxHullIntegrity;
-        crew = builder.crew;
-        crewCapacity = builder.crewCapacity;
-    }
+	protected Ship(GenericShipBuilder builder) {
+		name = builder.name;
+		modules = builder.generateModules();
+		maxHullIntegrity = builder.maxHullIntegrity;
+		remainingHullIntegrity = maxHullIntegrity;
+		crew = builder.crew;
+		crewCapacity = builder.crewCapacity;
+	}
 
-    //TODO remove this once AIShip builder has been created and we no longer need public constructors
-    Ship(String shipName, ShipModules shipModules) {
-        name = shipName;
-        modules = shipModules;
-        maxHullIntegrity = 500;
-        remainingHullIntegrity = maxHullIntegrity;
-        isDestroyed = false;
-    }
+	//TODO remove this once AIShip builder has been created and we no longer need public constructors
+	Ship(String shipName, ShipModules shipModules) {
+		name = shipName;
+		modules = shipModules;
+		maxHullIntegrity = 500;
+		remainingHullIntegrity = maxHullIntegrity;
+		isDestroyed = false;
+	}
 
-    public void sustainFire(Attack attack) {
-        ShieldModule shieldModule = modules.getShieldModule();
-        int originalShields = shieldModule.shields().getRemainingShields();
-        int originalHull = remainingHullIntegrity;
+	public void sustainFire(Attack attack) {
+		ShieldModule shieldModule = modules.getShieldModule();
+		int originalShields = shieldModule.shields().getRemainingShields();
+		int originalHull = remainingHullIntegrity;
 
-        System.out.println("Attack: sD " + attack.shieldDamage + " hD " + attack.hullDamage);
-        Attack shieldedAttack = shieldModule.shieldAttack(attack);
-        System.out.println("Shielded Attack: sD " + shieldedAttack.shieldDamage + " hD " + shieldedAttack.hullDamage);
-        takeHullDamage(shieldedAttack);
-        System.out.println("Shields: " + originalShields + " => " + shieldModule.shields().getRemainingShields());
-        System.out.println("Hull: " + originalHull + " => " + remainingHullIntegrity);
-    }
+		System.out.println("Attack: sD " + attack.shieldDamage + " hD " + attack.hullDamage);
+		Attack shieldedAttack = shieldModule.shieldAttack(attack);
+		System.out.println("Shielded Attack: sD " + shieldedAttack.shieldDamage + " hD " + shieldedAttack.hullDamage);
+		takeHullDamage(shieldedAttack);
+		System.out.println("Shields: " + originalShields + " => " + shieldModule.shields().getRemainingShields());
+		System.out.println("Hull: " + originalHull + " => " + remainingHullIntegrity);
+	}
 
-    private void takeHullDamage(Attack shieldedAttack) {
-        remainingHullIntegrity = remainingHullIntegrity - shieldedAttack.hullDamage;
-        if (remainingHullIntegrity < 0) {
-            isDestroyed = true;
-        }
-    }
+	private void takeHullDamage(Attack shieldedAttack) {
+		remainingHullIntegrity = remainingHullIntegrity - shieldedAttack.hullDamage;
+		if (remainingHullIntegrity < 0) {
+			isDestroyed = true;
+		}
+	}
 
-    public int getScoreForFirstTurnChance() {
-    	Crewmember crewmemberManningCockpit = getCockpitModule().getActiveCrewmember();
-    	if (crewmemberManningCockpit != null) {
-    		if (crewmemberManningCockpit.crewmemberClass instanceof PilotClass) {
+	public int getScoreForFirstTurnChance() {
+		Crewmember crewmemberManningCockpit = getCockpitModule().getActiveCrewmember();
+		if (crewmemberManningCockpit != null) {
+			if (crewmemberManningCockpit.crewmemberClass instanceof PilotClass) {
 				IntAbility initiative = (IntAbility) crewmemberManningCockpit.hasAbility("Initiative");
 				if (initiative != null) return 3 + initiative.getAbilityLevel();
 			}
@@ -73,7 +74,7 @@ public abstract class Ship {
 		return 1;
 	}
 
-    public ArrayList<ShipModule> getModulesInList() {
+	public ArrayList<ShipModule> getModulesInList() {
 		return modules.getModulesAsArrayList();
 	}
 
@@ -86,47 +87,47 @@ public abstract class Ship {
 	}
 
 	public Crewmember getCrewmemberAtIndex(int crewIndex) {
-    	return crew.get(crewIndex);
+		return crew.get(crewIndex);
 	}
 
 	// TODO: remove crewmembers when they die. Could have a turn timer to get crewmembers to a hospital in X turns?
 	public void removeCrewmemberAtIndex(int crewIndex) {
-    	crew.remove(crewIndex);
+		crew.remove(crewIndex);
 	}
 
 	public void placeCrewmemberInModule(Crewmember crewmember, int shipModuleIndex) {
-    	modules.placeCrewmemberInModule(crewmember, shipModuleIndex);
+		modules.placeCrewmemberInModule(crewmember, shipModuleIndex);
 	}
 
-    public void addWeaponModule(int weaponModulePower) {
-        modules.addWeaponModule(weaponModulePower);
-    }
-
-    public ArrayList<WeaponModule> getWeaponModules() {
-        return modules.getWeaponModules();
-    }
-
-    public boolean equipWeapon(ShipWeapon newWeapon) {
-        return modules.equipWeapon(newWeapon);
-    }
-
-    public CargoBayModule getCargoBay() {
-        return modules.getCargoBayModule();
-    }
-
-    public CockpitModule getCockpitModule() {
-    	return modules.getCockpitModule();
+	public void addWeaponModule(int weaponModulePower) {
+		modules.addWeaponModule(weaponModulePower);
 	}
 
-    public boolean isDestroyed() {
-        return isDestroyed;
-    }
+	public ArrayList<WeaponModule> getWeaponModules() {
+		return modules.getWeaponModules();
+	}
 
-    public void rechargeShields() {
-        modules.getShieldModule().rechargeShields();
-    }
+	public boolean equipWeapon(ShipWeapon newWeapon) {
+		return modules.equipWeapon(newWeapon);
+	}
 
-    public static abstract class GenericShipBuilder <B extends GenericShipBuilder<B>> {
+	public CargoBayModule getCargoBay() {
+		return modules.getCargoBayModule();
+	}
+
+	public CockpitModule getCockpitModule() {
+		return modules.getCockpitModule();
+	}
+
+	public boolean isDestroyed() {
+		return isDestroyed;
+	}
+
+	public void rechargeShields() {
+		modules.getShieldModule().rechargeShields();
+	}
+
+	public static abstract class GenericShipBuilder<B extends GenericShipBuilder<B>> {
 
 		protected String name;
 		protected int maxCombinedModulePower;
@@ -142,8 +143,8 @@ public abstract class Ship {
 		// ShipModules class is not passed into the builder but is constructed from the modules
 		protected ShipModules modules;
 		// We need to first add the modules to an ArrayList so we can construct the ShipModules class
-        // The use of an ArrayList hopefully makes it easier to add modules in the future.
-        private ArrayList<ShipModule> optionalModulesList = new ArrayList<>();
+		// The use of an ArrayList hopefully makes it easier to add modules in the future.
+		private ArrayList<ShipModule> optionalModulesList = new ArrayList<>();
 
 		GenericShipBuilder(String name,
 						   int maxCombinedModulePower,
@@ -164,13 +165,13 @@ public abstract class Ship {
 		// TODO: think about refactoring this. AIShip might not need this module
 		public B cargoBayModule(CargoBayModule cargoBayModule) {
 			this.cargoBayModule = cargoBayModule;
-            optionalModulesList.add(cargoBayModule);
+			optionalModulesList.add(cargoBayModule);
 			return (B) this;
 		}
 
 		public B weaponModules(ArrayList<WeaponModule> weaponModules) {
 			this.weaponModules = weaponModules;
-            optionalModulesList.addAll(weaponModules);
+			optionalModulesList.addAll(weaponModules);
 			return (B) this;
 		}
 
@@ -191,6 +192,6 @@ public abstract class Ship {
 
 		protected ShipModules generateModules() {
 			return ShipModules.createInstance(maxCombinedModulePower, cockpitModule, engineModule, optionalModulesList);
-        }
+		}
 	}
 }

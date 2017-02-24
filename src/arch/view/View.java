@@ -2,12 +2,12 @@ package arch.view;
 
 public interface View {
 
-    int getIntFromUser();
+	int getIntFromUser();
 
-    int getIntInRangeFromUser(int options);
+	int getIntInRangeFromUser(int options);
 
-    char getCharFromUser();
+	char getCharFromUser();
 
-    String getStringFromUser();
+	String getStringFromUser();
 
 }
