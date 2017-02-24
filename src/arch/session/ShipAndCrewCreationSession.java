@@ -33,12 +33,10 @@ public class ShipAndCrewCreationSession extends Session {
         final int numberOfStartingCrewmembers = 2;
         for (int i = 0; i < numberOfStartingCrewmembers; i++) {
             System.out.println("You have " + (numberOfStartingCrewmembers-i) + " crewmembers left to pick");
-            System.out.println("Available crew:");
-            printAvailableClasses();
             System.out.println("Which class do you pick for crewmember #"+crewCount+"?");
-            int chosenIndex = ConsoleInputHandler.getIntInRangeFromUser(availableClasses.size());
-            CrewmemberClass chosenClass = availableClasses.get(chosenIndex);
-            availableClasses.remove(chosenIndex);
+			System.out.println("Available crew:");
+			CrewmemberClass chosenClass = ConsoleInputHandler.getUserChoiceFromList(availableClasses, "_className");
+            availableClasses.remove(chosenClass);
             String chosenName = ConsoleInputHandler.getNonEmptyStringFromUser("What will you call this " + chosenClass._className +"?");
             crew.add(new Crewmember(chosenName, new Skills(), chosenClass));
             crewCount++;
@@ -69,9 +67,4 @@ public class ShipAndCrewCreationSession extends Session {
         return p1;
     }
 
-    private void printAvailableClasses() {
-        for (int i = 0; i < availableClasses.size(); i++) {
-            System.out.println(i + " : " + availableClasses.get(i)._className);
-        }
-    }
 }

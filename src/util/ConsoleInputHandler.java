@@ -2,6 +2,9 @@ package util;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.function.Predicate;
 
 /*
     This class can be used to take user input through the consoles. It has a
@@ -96,6 +99,36 @@ public class ConsoleInputHandler {
             else if (input == 0) return input;
             else System.out.println("Number out of range!");
         }
+    }
+
+    public static <O> O getUserChoiceFromList(ArrayList<O> objects, String objectAttributeToPrint) {
+        printOptionsAsIndexedList(objects, objectAttributeToPrint);
+        int selection = getIntInRangeFromUser(objects.size());
+        return objects.get(selection);
+    }
+
+    public static <O> void printOptionsAsIndexedList(ArrayList<O> objects, String objectAttributeToPrint) {
+        ArrayList<String> stringsToPrint = new ArrayList<>();
+        for (int i = 0; i < objects.size(); i++) {
+            O o = objects.get(i);
+            Field field = getDesiredField(o, objectAttributeToPrint);
+            if (field != null) {
+                try {
+                    stringsToPrint.add(i + " - " + field.get(o));
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            } else return;
+        }
+        for (String s : stringsToPrint) System.out.println(s);
+    }
+
+    private static <O> Field getDesiredField(O object, String objectAttributeToPrint) {
+        Field[] fields = object.getClass().getFields();
+        for (Field f : fields) {
+            if (f.getName().equals(objectAttributeToPrint)) return f;
+        }
+        return null;
     }
 
 }
