@@ -326,7 +326,7 @@ public class MapSession extends Session {
         }
         if (decision == 'Y' || decision == 'y') {
             System.out.println("Which crewmember would you like to move?");
-            printCrew();
+            printCrewAndMannedModule();
             ArrayList<Crewmember> crewmembers = p1.getCrew();
             int crewIndex = ConsoleInputHandler.getIntInRangeFromUser(crewmembers.size());
             Crewmember crewmemberToMove = crewmembers.get(crewIndex);
@@ -335,21 +335,15 @@ public class MapSession extends Session {
                 System.out.println("There are no mannable modules");
             } else {
                 System.out.println("Which module would you like " + crewmemberToMove.name + " to man?");
-                // TODO:: this could possibly be cleaned up into a function to iterate and print a list
-                // TODO:: which takes a predicate to identify the item to print for an arbitrary object
-                int i = 0;
-                for (MannableShipModule module : mannableModules) {
-                    System.out.println(i + " - " + module.getName());
-                    i++;
-                }
-                int moduleIndex = ConsoleInputHandler.getIntInRangeFromUser(i);
-                mannableModules.get(moduleIndex).assignCrewmember(crewmemberToMove);
+                MannableShipModule moduleToMan = ConsoleInputHandler.getUserChoiceFromList(mannableModules, "getName");
+                moduleToMan.removeCrewmember();
+                moduleToMan.assignCrewmember(crewmemberToMove);
             }
         }
-        printCrew();
+        printCrewAndMannedModule();
     }
 
-    private void printCrew() {
+    private void printCrewAndMannedModule() {
         ArrayList<Crewmember> playerCrew = p1.getCrew();
         int i = 0;
         for (Crewmember member : playerCrew) {
