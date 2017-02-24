@@ -8,8 +8,8 @@
 			<!-- Attacking first will be a function of this skill, and ship engine/power ratings -->
 			<Ability Name="Initiative"
 			         Description="Increased chance to attack first in combat"
-					 Type="Float"
-					 ValuePerLevel="1.25;1.5">
+					 Type="Int"
+					 ValuePerLevel="1;2;3;4">
 			</Ability>
 			<Ability Name="Aerobatics Expert"
 			         Description="Increased chance of dodging attacks"
@@ -55,17 +55,28 @@
 	<!--
 	<Skill Name="Engineering">
 		<Ability>
+			Potential ideas:
+				Increased fuel efficiency when travelling
+				Reduced hull damage? Cheaper hull repairs?
+				Chance to scavenge hull repairs or fuel from fallen enemies/events
 
 		</Ability>
 	</Skill>
 	<Skill Name="Trading">
 		<Ability>
-
+			Potential ideas:
+				Higher sell prices
+				Lower buy prices
+				See more items in markets
 		</Ability>
 	</Skill>
 	<Skill Name="Shields">
 		<Ability>
-
+			Potential ideas:
+				Increased shield recharge
+				Increased shield damage absorption
+				Cheaper shield upgrades
+					Should shields need charging?
 		</Ability>
 	</Skill>
 	-->

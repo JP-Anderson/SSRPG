@@ -8,14 +8,31 @@ public class PreOrderTreeSearcher <E> {
     private Predicate<E> _predicate;
     private Tree<E> _tree;
 
-    public boolean contains(Tree<E> tree, Predicate<E> predicate) {
+    public E getElement(Tree<E> tree, Predicate<E> predicate) {
         _predicate = predicate;
         _tree = tree;
-        return preOrderTreeIterator();
+        return getItem();
     }
 
-    private boolean preOrderTreeIterator() {
-        return preOrderTraversal(_tree.getRoot());
+    public boolean doesTreeContain(Tree<E> tree, Predicate<E> predicate) {
+        _predicate = predicate;
+        _tree = tree;
+        return getItem() != null;
+    }
+
+    private E getItem() {
+        return getItemWithPreOrder(_tree.getRoot());
+    }
+
+    private E getItemWithPreOrder(TreeNode<E> n) {
+        if (_predicate.test(n.getNodeItem())) {
+            return n.getNodeItem();
+        } else {
+            List<TreeNode<E>> children = n.getChildren();
+            if (children != null) {
+                for (TreeNode<E> node : children) preOrderTraversal(node);
+            }
+        } return null;
     }
 
     private boolean preOrderTraversal(TreeNode<E> n) {

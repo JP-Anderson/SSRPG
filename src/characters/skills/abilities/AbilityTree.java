@@ -10,4 +10,8 @@ public class AbilityTree {
 		_tree = tree;
 	}
 
+	public Tree<Ability> getTree() {
+		return _tree;
+	}
+
 }

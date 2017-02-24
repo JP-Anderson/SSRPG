@@ -1,6 +1,7 @@
 package characters;
 
 import characters.classes.CrewmemberClass;
+import characters.skills.abilities.Ability;
 import ship.modules.MannableShipModule;
 
 public class Crewmember {
@@ -17,6 +18,10 @@ public class Crewmember {
         skills = newSkills;
         crewmemberClass = newClass;
         level = 1;
+    }
+
+    public Ability hasAbility(String abilityName) {
+        return crewmemberClass.getAbilityIfItExists(abilityName);
     }
 
     public void setMannedModule(MannableShipModule moduleManned) {

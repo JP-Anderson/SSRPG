@@ -1,5 +1,7 @@
 package arch.session;
 
+import characters.Crewmember;
+import characters.classes.PilotClass;
 import ship.AIShip;
 import util.*;
 import ship.Ship;
@@ -33,7 +35,14 @@ public class ShipBattleSession extends Session {
         for (WeaponModule m : ship2.getWeaponModules()) {
             m.setWeapon(new BurstLaserMk3());
         }
-        currentActiveShip = ship1;
+        currentActiveShip = determineWhichShipGetsFirstTurn();
+        System.out.println(currentActiveShip.name + " is going first.");
+    }
+
+    private Ship determineWhichShipGetsFirstTurn() {
+        return ship1.getScoreForFirstTurnChance() <= ship2.getScoreForFirstTurnChance()
+                ? ship2
+                : ship1;
     }
 
     @Override

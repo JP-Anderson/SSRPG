@@ -2,6 +2,10 @@ package ship;
 
 import characters.Crewmember;
 import java.util.ArrayList;
+
+import characters.classes.PilotClass;
+import characters.skills.abilities.Ability;
+import characters.skills.abilities.IntAbility;
 import ship.modules.*;
 import ship.weapons.ShipWeapon;
 import ship.weapons.Attack;
@@ -57,6 +61,18 @@ public abstract class Ship {
         }
     }
 
+    public int getScoreForFirstTurnChance() {
+    	Crewmember crewmemberManningCockpit = getCockpitModule().getActiveCrewmember();
+    	if (crewmemberManningCockpit != null) {
+    		if (crewmemberManningCockpit.crewmemberClass instanceof PilotClass) {
+				IntAbility initiative = (IntAbility) crewmemberManningCockpit.hasAbility("Initiative");
+				if (initiative != null) return 3 + initiative.getAbilityLevel();
+			}
+			return 3;
+		}
+		return 1;
+	}
+
     public ArrayList<ShipModule> getModulesInList() {
 		return modules.getModulesAsArrayList();
 	}
@@ -97,6 +113,10 @@ public abstract class Ship {
     public CargoBayModule getCargoBay() {
         return modules.getCargoBayModule();
     }
+
+    public CockpitModule getCockpitModule() {
+    	return modules.getCockpitModule();
+	}
 
     public boolean isDestroyed() {
         return isDestroyed;

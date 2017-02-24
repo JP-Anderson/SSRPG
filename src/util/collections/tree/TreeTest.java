@@ -12,9 +12,9 @@ public class TreeTest {
     public static void main(String[] args) {
         Tree<Ability> abilityTree = init();
         PreOrderTreeSearcher<Ability> pots = new PreOrderTreeSearcher<>();
-        if (pots.contains(abilityTree, a -> a._id == 5))
+        if (pots.doesTreeContain(abilityTree, a -> a._id == 5))
             System.out.println("We have FIVE!");
-        if (pots.contains(abilityTree, a -> a._id == 1))
+        if (pots.doesTreeContain(abilityTree, a -> a._id == 1))
             System.out.println("We have ONE!");
     }
 
