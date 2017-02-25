@@ -51,11 +51,9 @@ public class ShipAndCrewCreationSession extends Session {
 		shieldModule.shields(new BasicShieldsMk2());
 		CargoBayModule cargoBayModule = new CargoBayModule("CargoBayModule", 0, 20);
 
-		PlayerShip p1 = new PlayerShip.PlayerShipBuilder(
-				newName,
-				10,
-				cockpitModule,
-				engineModule)
+		PlayerShip p1 = new PlayerShip.PlayerShipBuilder(newName,10)
+				.cockpitModule(cockpitModule)
+				.engineModule(engineModule)
 				.shieldModule(shieldModule)
 				.cargoBayModule(cargoBayModule)
 				.crewCapacity(4)

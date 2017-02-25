@@ -146,14 +146,21 @@ public abstract class Ship {
 		// The use of an ArrayList hopefully makes it easier to add modules in the future.
 		private ArrayList<ShipModule> optionalModulesList = new ArrayList<>();
 
-		GenericShipBuilder(String name,
-						   int maxCombinedModulePower,
-						   CockpitModule cockpitModule,
-						   EngineModule engineModule) {
+		GenericShipBuilder(String name, int maxCombinedModulePower) {
 			this.name = name;
 			this.maxCombinedModulePower = maxCombinedModulePower;
+			if (cockpitModule == null) addDefaultCockpitModule();
+			if (engineModule == null) addDefaultEngineModule();
+		}
+
+		public B cockpitModule(CockpitModule cockpitModule) {
 			this.cockpitModule = cockpitModule;
+			return (B) this;
+		}
+
+		public B engineModule(EngineModule engineModule) {
 			this.engineModule = engineModule;
+			return (B) this;
 		}
 
 		public B shieldModule(ShieldModule shieldModule) {
@@ -192,6 +199,14 @@ public abstract class Ship {
 
 		protected ShipModules generateModules() {
 			return ShipModules.createInstance(maxCombinedModulePower, cockpitModule, engineModule, optionalModulesList);
+		}
+
+		private void addDefaultCockpitModule() {
+			cockpitModule = new CockpitModule("CockpitModule1", 1);
+		}
+
+		private void addDefaultEngineModule() {
+			engineModule = new EngineModule("EnginesModule1", 1, 5);
 		}
 	}
 }

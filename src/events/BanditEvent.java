@@ -28,17 +28,10 @@ public class BanditEvent extends Event {
 	void displayEvent() {
 		System.out.println("You encounter a Bandit!");
 		System.out.println("The Bandit primes its weapons and moves in to attack!");
-
-		CockpitModule cockpitModule = new CockpitModule("CockpitModule1", 1);
-		EngineModule engines = new EngineModule("EnginesModule1", 1, 5);
 		ShieldModule shieldModule = new ShieldModule("ShieldsModule1", 1, 2);
 		shieldModule.shields(new BasicShieldsMk2());
 
-		AIShip s2 = new AIShip.AIShipBuilder(
-				"Bandits",
-				12,
-				cockpitModule,
-				engines)
+		AIShip s2 = new AIShip.AIShipBuilder("Bandits",12)
 				.shieldModule(shieldModule)
 				.maxHullIntegrity(100)
 				.build();

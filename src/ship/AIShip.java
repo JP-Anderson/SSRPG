@@ -17,11 +17,8 @@ public class AIShip extends Ship {
 
 	public static class AIShipBuilder extends Ship.GenericShipBuilder<AIShipBuilder> {
 
-		public AIShipBuilder(String name,
-							 int maxCombinedModulePower,
-							 CockpitModule cockpitModule,
-							 EngineModule engineModule) {
-			super(name, maxCombinedModulePower, cockpitModule, engineModule);
+		public AIShipBuilder(String name, int maxCombinedModulePower) {
+			super(name, maxCombinedModulePower);
 		}
 
 		public AIShip build() {

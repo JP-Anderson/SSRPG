@@ -109,11 +109,8 @@ public class PlayerShip extends Ship {
 
 	public static class PlayerShipBuilder extends Ship.GenericShipBuilder<PlayerShipBuilder> {
 
-		public PlayerShipBuilder(String name,
-								 int maxCombinedModulePower,
-								 CockpitModule cockpitModule,
-								 EngineModule engineModule) {
-			super(name, maxCombinedModulePower, cockpitModule, engineModule);
+		public PlayerShipBuilder(String name, int maxCombinedModulePower) {
+			super(name, maxCombinedModulePower);
 		}
 
 		protected int fuelCapacity = 100;
