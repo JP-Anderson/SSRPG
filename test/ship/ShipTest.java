@@ -7,9 +7,8 @@ import ship.modules.MannableShipModule;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ShipTest {
-
-
-	static PlayerShip testShip;
+	
+	private static PlayerShip testShip;
 
 	@BeforeAll
 	static void setUp() {

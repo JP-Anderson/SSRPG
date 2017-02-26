@@ -11,6 +11,7 @@ public class TreeNode<E> {
 
 	public TreeNode(TreeNode pParent, E pItem) {
 		parent = pParent;
+		if (parent != null) parent.addChild(this);
 		item = pItem;
 		children = new ArrayList<>();
 	}
