@@ -76,6 +76,26 @@ class ShipModulesTest {
 		assertNotNull(ShipModules.createInstance(23, cockpitModule, engineModule, optionalModules));
 	}
 
+	@Test
+	public void getCombinedModulePower() {
+		CockpitModule cockpitModule = cockpitModule(2);
+		EngineModule engineModule = engineModule(6);
+		ShipModules modules = ShipModules.createInstance(10, cockpitModule, engineModule);
+		assertEquals(6, modules.getCombinedModulePower());
+	}
+
+	@Test
+	public void addShieldModule() {
+		CockpitModule cockpitModule = cockpitModule(2);
+		EngineModule engineModule = engineModule(6);
+		ShipModules modules = ShipModules.createInstance(20, cockpitModule, engineModule);
+		assertNull(modules.getShieldModule());
+		ShieldModule newShieldModule = shieldModule(5);
+		modules.setShieldModule(newShieldModule);
+		assertNotNull(modules.getShieldModule());
+		assertEquals(13, modules.getCombinedModulePower());
+	}
+
 	private CockpitModule cockpitModule(int powerRequirement) {
 		return new CockpitModule("TestCockpitModule", powerRequirement);
 	}

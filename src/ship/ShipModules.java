@@ -113,8 +113,22 @@ public class ShipModules {
 	}
 
 	public void setShieldModule(ShieldModule shieldModule) {
+		removeExistingModule(shieldModule);
+		modulesAsArrayList.add(shieldModule);
 		_shieldModule = shieldModule;
 	}
+
+	// This function takes any type of ShipModule, and removes any modules that exist of this type
+	// TODO multiple WeaponModules can be added, until adding a new module exceeds the max supported power
+	private void removeExistingModule(ShipModule moduleToBeAdded) {
+		ShipModule moduleToRemove = modulesAsArrayList
+				.stream()
+				.filter(moduleToBeAdded.getClass() :: isInstance)
+				.findAny()
+				.orElse(null);
+		if (moduleToRemove != null) modulesAsArrayList.remove(moduleToRemove);
+	}
+
 
 	public void addWeaponModule(int weaponModulePower) {
 		if (getCombinedModulePower() + weaponModulePower <= _maxCombinedModulePower) {
