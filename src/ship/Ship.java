@@ -44,7 +44,7 @@ public abstract class Ship {
 	}
 
 	public void sustainFire(Attack attack) {
-		ShieldModule shieldModule = modules.getShieldModule();
+		ShieldModule shieldModule = (ShieldModule) modules.getShipModule(ShieldModule.class);
 		int originalShields = shieldModule.shields().getRemainingShields();
 		int originalHull = remainingHullIntegrity;
 
@@ -113,15 +113,15 @@ public abstract class Ship {
 	}
 
 	public CargoBayModule getCargoBay() {
-		return modules.getCargoBayModule();
+		return (CargoBayModule) modules.getShipModule(CargoBayModule.class);
 	}
 
 	public CockpitModule getCockpitModule() {
-		return modules.getCockpitModule();
+		return (CockpitModule) modules.getShipModule(CockpitModule.class);
 	}
 
 	public EngineModule getEngineModule() {
-		return modules.getEngineModule();
+		return (EngineModule) modules.getShipModule(EngineModule.class);
 	}
 
 	public boolean isDestroyed() {
@@ -129,7 +129,7 @@ public abstract class Ship {
 	}
 
 	public void rechargeShields() {
-		modules.getShieldModule().rechargeShields();
+		((ShieldModule) modules.getShipModule(ShieldModule.class)).rechargeShields();
 	}
 
 	public static abstract class GenericShipBuilder<B extends GenericShipBuilder<B>> {

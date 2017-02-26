@@ -3,10 +3,7 @@ package ship;
 import map.GridMap;
 import map.GridPoint;
 import characters.Crewmember;
-import ship.modules.CargoBayModule;
-import ship.modules.CockpitModule;
-import ship.modules.EngineModule;
-import ship.modules.MannableShipModule;
+import ship.modules.*;
 
 import java.util.ArrayList;
 
@@ -63,7 +60,7 @@ public class PlayerShip extends Ship {
 	}
 
 	public void shipStatus() {
-		CargoBayModule cargo = modules.getCargoBayModule();
+		CargoBayModule cargo = (CargoBayModule) modules.getShipModule(CargoBayModule.class);
 		System.out.println("PlayerShip status:");
 		System.out.println(crew.size() + "/" + crewCapacity + " crew");
 		System.out.println(" CREDS total: " + money);
@@ -71,14 +68,14 @@ public class PlayerShip extends Ship {
 		// TODO: cargo bay is now a module, so need to put this in the module print information function
 		System.out.println(" Cargo Bay: " + cargo.getFilledCapacity() + " units out of " + cargo.getMaxCapacity());
 		System.out.println(" Modules: ");
-		modules.getEngineModule().printInformation();
-		modules.getShieldModule().printInformation();
+		((EngineModule) modules.getShipModule(EngineModule.class)).printInformation();
+		((ShieldModule) modules.getShipModule(ShieldModule.class)).printInformation();
 	}
 
 	public boolean travel(GridPoint gridPoint, int distance) {
 		location = gridPoint;
 		scanner.setShipLocation(gridPoint);
-		int fuelCost = distance * modules.getEngineModule().fuelEfficiency;
+		int fuelCost = distance * ((EngineModule) modules.getShipModule(EngineModule.class)).fuelEfficiency;
 		if (fuelCost <= remainingFuel) {
 			System.out.println("Used " + fuelCost + " fuel.");
 			remainingFuel = remainingFuel - fuelCost;

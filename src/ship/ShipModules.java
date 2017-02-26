@@ -12,24 +12,12 @@ import java.util.stream.Collectors;
 public class ShipModules {
 
 	private int _maxCombinedModulePower;
-
-	//MANDATORY MODULES
-	private CockpitModule _cockpitModule;
-	private EngineModule _engineModule;
-
-	//OPTIONAL MODULES
-	private CargoBayModule _cargoBayModule;
-	private ShieldModule _shieldModule;
-	//Communication module (Trader, Scoundrel?)
-
 	private ArrayList<ShipModule> modulesAsArrayList = new ArrayList<>();
 
 	private ShipModules(int maxCombinedModulePower, CockpitModule cockpitModule, EngineModule engineModule) {
 		_maxCombinedModulePower = maxCombinedModulePower;
-		_cockpitModule = cockpitModule;
-		_engineModule = engineModule;
-		modulesAsArrayList.add(_cockpitModule);
-		modulesAsArrayList.add(_engineModule);
+		modulesAsArrayList.add(cockpitModule);
+		modulesAsArrayList.add(engineModule);
 	}
 
 	public static ShipModules createInstance(int maxCombinedModulePower, CockpitModule cockpitModule, EngineModule engineModule) {
@@ -47,17 +35,14 @@ public class ShipModules {
 	}
 
 	private void setUpOptionalModules(List<ShipModule> optionalModules) {
-		int combinedModulePower = _cockpitModule.getModulePower() + _engineModule.getModulePower();
+		int combinedModulePower = getShipModule(CockpitModule.class).getModulePower()
+								+ getShipModule(EngineModule.class).getModulePower();
 		Iterator<ShipModule> i = optionalModules.iterator();
 		while (i.hasNext()) {
 			ShipModule module = i.next();
 			combinedModulePower = combinedModulePower + module.getModulePower();
 			if (combinedModulePower > _maxCombinedModulePower)
 				throw new IllegalStateException("Optional module " + module.getName() + " has exceeded max module power in Ship.");
-			else if (module.getModuleType() == ShipModule.ShipModuleType.CARGO)
-				_cargoBayModule = (CargoBayModule) module;
-			else if (module.getModuleType() == ShipModule.ShipModuleType.SHIELD)
-				_shieldModule = (ShieldModule) module;
 		}
 		modulesAsArrayList.addAll(optionalModules);
 	}
@@ -84,32 +69,6 @@ public class ShipModules {
 		_maxCombinedModulePower = maxCombinedModulePower;
 	}
 
-	public CockpitModule getCockpitModule() {
-		return _cockpitModule;
-	}
-
-	public void setCockpitModule(CockpitModule cockpitModule) {
-		_cockpitModule = cockpitModule;
-	}
-
-	public EngineModule getEngineModule() {
-		return _engineModule;
-	}
-
-	public void setEngineModule(EngineModule engineModule) {
-		_engineModule = engineModule;
-	}
-
-	public CargoBayModule getCargoBayModule() {
-		return _cargoBayModule;
-	}
-
-	public void setCargoBayModule(CargoBayModule cargoBayModule) {
-		//if (_cargoBayModule != null) removeExistingModule(cargoBayModule);
-		modulesAsArrayList.add(cargoBayModule);
-		_cargoBayModule = cargoBayModule;
-	}
-
 	public ShipModule getShipModule(Class desiredModule) {
 		return getExistingModuleOfType(desiredModule);
 	}
@@ -120,19 +79,6 @@ public class ShipModules {
 			replaceOldModule(newModule, existingModule);
 		} else {
 			addNewModule(newModule);
-		}
-	}
-
-	public ShieldModule getShieldModule() {
-		return (ShieldModule) getExistingModuleOfType(ShieldModule.class);
-	}
-
-	public void setShieldModule(ShieldModule shieldModule) {
-		ShipModule existingModule = getExistingModuleOfType(shieldModule.getClass());
-		if (existingModule != null) {
-			replaceOldModule(shieldModule, existingModule);
-		} else {
-			addNewModule(shieldModule);
 		}
 	}
 
