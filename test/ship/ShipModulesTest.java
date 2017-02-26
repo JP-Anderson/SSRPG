@@ -81,19 +81,64 @@ class ShipModulesTest {
 		CockpitModule cockpitModule = cockpitModule(2);
 		EngineModule engineModule = engineModule(6);
 		ShipModules modules = ShipModules.createInstance(10, cockpitModule, engineModule);
-		assertEquals(6, modules.getCombinedModulePower());
+		assertEquals(8, modules.getCombinedModulePower());
 	}
 
 	@Test
-	public void addShieldModule() {
+	public void tryToAddNewShieldModuleWithEnoughFreePower() {
 		CockpitModule cockpitModule = cockpitModule(2);
 		EngineModule engineModule = engineModule(6);
 		ShipModules modules = ShipModules.createInstance(20, cockpitModule, engineModule);
 		assertNull(modules.getShieldModule());
 		ShieldModule newShieldModule = shieldModule(5);
 		modules.setShieldModule(newShieldModule);
-		assertNotNull(modules.getShieldModule());
+		assertEquals(newShieldModule, modules.getShieldModule());
 		assertEquals(13, modules.getCombinedModulePower());
+	}
+
+	@Test
+	public void tryToAddNewShieldModuleWhichExceedsFreePower() {
+		CockpitModule cockpitModule = cockpitModule(2);
+		EngineModule engineModule = engineModule(6);
+		ShipModules modules = ShipModules.createInstance(10, cockpitModule, engineModule);
+		assertNull(modules.getShieldModule());
+		ShieldModule newShieldModule = shieldModule(5);
+		modules.setShieldModule(newShieldModule);
+		assertNull(modules.getShieldModule());
+		assertEquals(8, modules.getCombinedModulePower());
+	}
+
+	@Test
+	public void tryToReplaceShieldModuleWithEnoughFreePower() {
+		CockpitModule cockpitModule = cockpitModule(2);
+		EngineModule engineModule = engineModule(6);
+		ShipModules modules = ShipModules.createInstance(20, cockpitModule, engineModule);
+		ShieldModule oldShieldModule = shieldModule(5);
+		modules.setShieldModule(oldShieldModule);
+		assertEquals(oldShieldModule, modules.getShieldModule());
+		assertEquals(13, modules.getCombinedModulePower());
+
+		ShieldModule newShieldModule = shieldModule(7);
+		modules.setShieldModule(newShieldModule);
+		assertEquals(newShieldModule, modules.getShieldModule());
+		assertEquals(15, modules.getCombinedModulePower());
+	}
+
+	@Test
+	public void tryToReplaceShieldModuleWithoutEnoughFreePower() {
+		CockpitModule cockpitModule = cockpitModule(4);
+		EngineModule engineModule = engineModule(7);
+		ShipModules modules = ShipModules.createInstance(20, cockpitModule, engineModule);
+		ShieldModule oldShieldModule = shieldModule(5);
+		modules.setShieldModule(oldShieldModule);
+		assertEquals(oldShieldModule, modules.getShieldModule());
+		assertEquals(16, modules.getCombinedModulePower());
+
+		ShieldModule newShieldModule = shieldModule(10);
+		modules.setShieldModule(newShieldModule);
+
+		assertEquals(oldShieldModule, modules.getShieldModule());
+		assertEquals(16, modules.getCombinedModulePower());
 	}
 
 	private CockpitModule cockpitModule(int powerRequirement) {

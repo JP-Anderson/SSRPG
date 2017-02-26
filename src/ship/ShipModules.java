@@ -105,17 +105,44 @@ public class ShipModules {
 	}
 
 	public void setCargoBayModule(CargoBayModule cargoBayModule) {
-		this._cargoBayModule = _cargoBayModule;
+		if (_cargoBayModule != null) removeExistingModule(cargoBayModule);
+		modulesAsArrayList.add(cargoBayModule);
+		_cargoBayModule = cargoBayModule;
 	}
 
 	public ShieldModule getShieldModule() {
-		return _shieldModule;
+		return (ShieldModule) getExistingModuleOfType(ShieldModule.class);
 	}
 
 	public void setShieldModule(ShieldModule shieldModule) {
-		removeExistingModule(shieldModule);
-		modulesAsArrayList.add(shieldModule);
-		_shieldModule = shieldModule;
+		ShipModule existingModule = getExistingModuleOfType(shieldModule.getClass());
+		if (existingModule != null) {
+			replaceOldModule(shieldModule, existingModule);
+		} else {
+			addNewModule(shieldModule);
+		}
+	}
+
+	private ShipModule getExistingModuleOfType(Class module) {
+		return modulesAsArrayList
+				.stream()
+				.filter(module :: isInstance)
+				.findAny()
+				.orElse(null);
+	}
+
+	private void replaceOldModule(ShipModule newModule, ShipModule oldModule) {
+		int powerAfterReplacement = getCombinedModulePower() - oldModule.getModulePower() + newModule.getModulePower();
+		if (powerAfterReplacement <= _maxCombinedModulePower) {
+			modulesAsArrayList.remove(oldModule);
+			modulesAsArrayList.add(newModule);
+		}
+	}
+
+	private void addNewModule(ShipModule module) {
+		if (getCombinedModulePower() + module.getModulePower() <= _maxCombinedModulePower) {
+			modulesAsArrayList.add(module);
+		}
 	}
 
 	// This function takes any type of ShipModule, and removes any modules that exist of this type
