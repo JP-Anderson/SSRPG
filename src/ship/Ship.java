@@ -3,6 +3,7 @@ package ship;
 import characters.Crewmember;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import characters.classes.PilotClass;
 import characters.skills.abilities.Ability;
@@ -103,7 +104,7 @@ public abstract class Ship {
 		modules.addWeaponModule(weaponModulePower);
 	}
 
-	public ArrayList<WeaponModule> getWeaponModules() {
+	public List<WeaponModule> getWeaponModules() {
 		return modules.getWeaponModules();
 	}
 

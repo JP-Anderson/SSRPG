@@ -7,6 +7,7 @@ import ship.weapons.ShipWeapon;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ShipModules {
 
@@ -19,7 +20,6 @@ public class ShipModules {
 	//OPTIONAL MODULES
 	private CargoBayModule _cargoBayModule;
 	private ShieldModule _shieldModule;
-	private ArrayList<WeaponModule> weaponModules = new ArrayList<>();
 	//Communication module (Trader, Scoundrel?)
 
 	private ArrayList<ShipModule> modulesAsArrayList = new ArrayList<>();
@@ -54,8 +54,6 @@ public class ShipModules {
 			combinedModulePower = combinedModulePower + module.getModulePower();
 			if (combinedModulePower > _maxCombinedModulePower)
 				throw new IllegalStateException("Optional module " + module.getName() + " has exceeded max module power in Ship.");
-			else if (module.getModuleType() == ShipModule.ShipModuleType.WEAPON)
-				weaponModules.add((WeaponModule) module);
 			else if (module.getModuleType() == ShipModule.ShipModuleType.CARGO)
 				_cargoBayModule = (CargoBayModule) module;
 			else if (module.getModuleType() == ShipModule.ShipModuleType.SHIELD)
@@ -65,12 +63,7 @@ public class ShipModules {
 	}
 
 	public int getCombinedModulePower() {
-		int power = 0;
 		return modulesAsArrayList.stream().mapToInt(m -> m.getModulePower()).sum();
-//		return modulesAsArrayList.forEach(s -> power += s.getModulePower());
-//		for (ShipModule sm : modulesAsArrayList) {
-//
-//		}
 	}
 
 	public void placeCrewmemberInModule(Crewmember crewmember, int moduleNumber) {
@@ -125,16 +118,20 @@ public class ShipModules {
 
 	public void addWeaponModule(int weaponModulePower) {
 		if (getCombinedModulePower() + weaponModulePower <= _maxCombinedModulePower) {
-			weaponModules.add(new WeaponModule("WeaponModule", weaponModulePower));
+			modulesAsArrayList.add(new WeaponModule("WeaponModule", weaponModulePower));
 		}
 	}
 
-	public ArrayList<WeaponModule> getWeaponModules() {
-		return weaponModules;
+	public List<WeaponModule> getWeaponModules() {
+		return modulesAsArrayList
+				.stream()
+				.filter(WeaponModule.class :: isInstance)
+				.map(WeaponModule.class :: cast)
+				.collect(Collectors.toList());
 	}
 
 	public boolean equipWeapon(ShipWeapon newWeapon) {
-		for (WeaponModule m : weaponModules) {
+		for (WeaponModule m : getWeaponModules()) {
 			if (m.maxWeaponPowerSupported >= newWeapon.requiredWeaponModulePower
 					&& m.getWeapon() == null) {
 				System.out.println("This weapon has been equipped.");
@@ -146,17 +143,13 @@ public class ShipModules {
 		return false;
 	}
 
-	public ArrayList<WeaponModule> getAllWeaponModules() {
-		return weaponModules;
-	}
-
 	public int getWeaponModuleCount() {
-		return weaponModules.size();
+		return getWeaponModules().size();
 	}
 
 	public WeaponModule getWeaponModule(int weaponModuleListIndex) {
 		try {
-			return weaponModules.get(weaponModuleListIndex);
+			return getWeaponModules().get(weaponModuleListIndex);
 		} catch (IndexOutOfBoundsException ie) {
 			return null;
 		}
