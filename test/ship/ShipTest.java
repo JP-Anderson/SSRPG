@@ -18,8 +18,8 @@ class ShipTest {
 
 	@Test
 	void ensureNoParamBuiltShipHasCockpitAndEngineModules() {
-		MannableShipModule cockpit = testShip.modules.getCockpitModule();
-		MannableShipModule engineModule = testShip.modules.getEngineModule();
+		MannableShipModule cockpit = testShip.getCockpitModule();
+		MannableShipModule engineModule = testShip.getEngineModule();
 		assertNotNull(cockpit);
 		assertNotNull(engineModule);
 	}

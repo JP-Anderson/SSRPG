@@ -119,6 +119,10 @@ public abstract class Ship {
 		return modules.getCockpitModule();
 	}
 
+	public EngineModule getEngineModule() {
+		return modules.getEngineModule();
+	}
+
 	public boolean isDestroyed() {
 		return isDestroyed;
 	}
