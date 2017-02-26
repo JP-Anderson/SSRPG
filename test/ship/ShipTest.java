@@ -7,7 +7,7 @@ import ship.modules.MannableShipModule;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ShipTest {
-	
+
 	private static PlayerShip testShip;
 
 	@BeforeAll

@@ -15,7 +15,7 @@ class TreeTest {
 		TreeNode<Integer> three = new TreeNode<>(root,3);
 		TreeNode<Integer> four = new TreeNode<>(two,4);
 		TreeNode<Integer> five = new TreeNode<>(three,5);
-		searchTree = new Tree<Integer>(root);
+		searchTree = new Tree<>(root);
 	}
 
 	@Test

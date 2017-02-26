@@ -15,37 +15,26 @@ public class PreOrderTreeSearcher<E> {
 	}
 
 	public boolean doesTreeContain(Tree<E> tree, Predicate<E> predicate) {
-		_predicate = predicate;
-		_tree = tree;
-		return getItem() != null;
+		return getElement(tree, predicate) != null;
 	}
 
 	private E getItem() {
 		return getItemWithPreOrder(_tree.getRoot());
 	}
 
-	private E getItemWithPreOrder(TreeNode<E> n) {
-		if (_predicate.test(n.getNodeItem())) {
-			return n.getNodeItem();
+	private E getItemWithPreOrder(TreeNode<E> node) {
+		if (_predicate.test(node.getNodeItem())) {
+			return node.getNodeItem();
 		} else {
-			List<TreeNode<E>> children = n.getChildren();
+			List<TreeNode<E>> children = node.getChildren();
 			if (children != null) {
-				for (TreeNode<E> node : children) preOrderTraversal(node);
+				for (TreeNode<E> child : children) {
+					E e = getItemWithPreOrder(child);
+					if (e != null) return e;
+				}
 			}
 		}
 		return null;
-	}
-
-	private boolean preOrderTraversal(TreeNode<E> n) {
-		if (_predicate.test(n.getNodeItem())) {
-			return true;
-		} else {
-			List<TreeNode<E>> children = n.getChildren();
-			if (children != null) {
-				for (TreeNode<E> node : children) preOrderTraversal(node);
-			}
-		}
-		return false;
 	}
 
 }
