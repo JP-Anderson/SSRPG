@@ -47,7 +47,7 @@ public class ShipAndCrewCreationSession extends Session {
 	public PlayerShip generateNewShip() {
 		CockpitModule cockpitModule = new CockpitModule("CockpitModule1", 1);
 		EngineModule engineModule = new EngineModule("EnginesModule1", 1, 5);
-		ShieldModule shieldModule = new ShieldModule("ShieldsModule1", 1, 2);
+		ShieldModule shieldModule = new ShieldModule("ShieldsModule1", 1);
 		shieldModule.shields(new BasicShieldsMk2());
 		CargoBayModule cargoBayModule = new CargoBayModule("CargoBayModule", 0, 20);
 

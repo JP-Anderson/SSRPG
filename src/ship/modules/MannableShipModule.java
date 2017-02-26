@@ -14,7 +14,7 @@ public abstract class MannableShipModule extends ShipModule {
 		if (activeCrewmember == null) {
 			System.out.println("  + Module unmanned");
 		} else {
-			System.out.println("Manned: " + activeCrewmember.name);
+			System.out.println("  + Manned: " + activeCrewmember.name);
 		}
 	}
 

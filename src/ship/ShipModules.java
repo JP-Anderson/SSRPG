@@ -11,7 +11,6 @@ import java.util.List;
 public class ShipModules {
 
 	private int _maxCombinedModulePower;
-	private int combinedModulePower = 0;
 
 	//MANDATORY MODULES
 	private CockpitModule _cockpitModule;
@@ -48,7 +47,7 @@ public class ShipModules {
 	}
 
 	private void setUpOptionalModules(List<ShipModule> optionalModules) {
-		combinedModulePower = _cockpitModule.getModulePower() + _engineModule.getModulePower();
+		int combinedModulePower = _cockpitModule.getModulePower() + _engineModule.getModulePower();
 		Iterator<ShipModule> i = optionalModules.iterator();
 		while (i.hasNext()) {
 			ShipModule module = i.next();
@@ -63,6 +62,15 @@ public class ShipModules {
 				_shieldModule = (ShieldModule) module;
 		}
 		modulesAsArrayList.addAll(optionalModules);
+	}
+
+	public int getCombinedModulePower() {
+		int power = 0;
+		return modulesAsArrayList.stream().mapToInt(m -> m.getModulePower()).sum();
+//		return modulesAsArrayList.forEach(s -> power += s.getModulePower());
+//		for (ShipModule sm : modulesAsArrayList) {
+//
+//		}
 	}
 
 	public void placeCrewmemberInModule(Crewmember crewmember, int moduleNumber) {
@@ -116,8 +124,7 @@ public class ShipModules {
 	}
 
 	public void addWeaponModule(int weaponModulePower) {
-		if (combinedModulePower + weaponModulePower <= _maxCombinedModulePower) {
-			combinedModulePower += weaponModulePower;
+		if (getCombinedModulePower() + weaponModulePower <= _maxCombinedModulePower) {
 			weaponModules.add(new WeaponModule("WeaponModule", weaponModulePower));
 		}
 	}
