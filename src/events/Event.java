@@ -59,7 +59,7 @@ public abstract class Event {
 		ArrayList<Crewmember> survivors = new ArrayList<>();
 		if (RNG.randZeroToOne() <= 0.05) {
 			// need to randomize the classes
-			Crewmember survivor = new Crewmember("Survivor", new Skills(), new PilotClass());
+			Crewmember survivor = new Crewmember("Survivor", new PilotClass());
 			survivors.add(survivor);
 		}
 		return survivors;

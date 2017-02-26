@@ -26,6 +26,9 @@ public abstract class MannableShipModule extends ShipModule {
 	protected Crewmember activeCrewmember = null;
 
 	public void assignCrewmember(Crewmember crewmember) {
+		if (activeCrewmember != null) {
+			activeCrewmember.removeFromCurrentMannedModule();
+		}
 		activeCrewmember = crewmember;
 		crewmember.setMannedModule(this);
 	}
@@ -34,8 +37,14 @@ public abstract class MannableShipModule extends ShipModule {
 		return activeCrewmember;
 	}
 
-	public void removeCrewmember() {
-		activeCrewmember = null;
+	public void setActiveCrewmember(Crewmember crewmember) {
+		activeCrewmember = crewmember;
 	}
 
+	public void removeCrewmember() {
+		if (activeCrewmember != null) {
+			activeCrewmember.removeFromCurrentMannedModule();
+			activeCrewmember = null;
+		}
+	}
 }

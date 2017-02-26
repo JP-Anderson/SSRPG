@@ -7,15 +7,13 @@ import ship.modules.MannableShipModule;
 public class Crewmember {
 
 	public final String name;
-	private final Skills skills;
 	private int level;
 	private MannableShipModule mannedModule;
 
 	public final CrewmemberClass crewmemberClass;
 
-	public Crewmember(String pName, Skills newSkills, CrewmemberClass newClass) {
+	public Crewmember(String pName, CrewmemberClass newClass) {
 		name = pName;
-		skills = newSkills;
 		crewmemberClass = newClass;
 		level = 1;
 	}
@@ -25,7 +23,9 @@ public class Crewmember {
 	}
 
 	public void setMannedModule(MannableShipModule moduleManned) {
+		removeFromCurrentMannedModule();
 		mannedModule = moduleManned;
+		mannedModule.setActiveCrewmember(this);
 	}
 
 	public MannableShipModule getMannedModule() {
@@ -34,7 +34,7 @@ public class Crewmember {
 
 	public void removeFromCurrentMannedModule() {
 		if (mannedModule != null) {
-			mannedModule.removeCrewmember();
+			mannedModule.setActiveCrewmember(null);
 			mannedModule = null;
 		}
 	}

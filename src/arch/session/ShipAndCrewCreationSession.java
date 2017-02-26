@@ -38,7 +38,7 @@ public class ShipAndCrewCreationSession extends Session {
 			CrewmemberClass chosenClass = ConsoleInputHandler.getUserChoiceFromList(availableClasses, "_className");
 			availableClasses.remove(chosenClass);
 			String chosenName = ConsoleInputHandler.getNonEmptyStringFromUser("What will you call this " + chosenClass._className + "?");
-			crew.add(new Crewmember(chosenName, new Skills(), chosenClass));
+			crew.add(new Crewmember(chosenName, chosenClass));
 			crewCount++;
 			System.out.println();
 		}
