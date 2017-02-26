@@ -105,9 +105,22 @@ public class ShipModules {
 	}
 
 	public void setCargoBayModule(CargoBayModule cargoBayModule) {
-		if (_cargoBayModule != null) removeExistingModule(cargoBayModule);
+		//if (_cargoBayModule != null) removeExistingModule(cargoBayModule);
 		modulesAsArrayList.add(cargoBayModule);
 		_cargoBayModule = cargoBayModule;
+	}
+
+	public ShipModule getShipModule(Class desiredModule) {
+		return getExistingModuleOfType(desiredModule);
+	}
+
+	public void setShipModule(ShipModule newModule) {
+		ShipModule existingModule = getExistingModuleOfType(newModule.getClass());
+		if (existingModule != null) {
+			replaceOldModule(newModule, existingModule);
+		} else {
+			addNewModule(newModule);
+		}
 	}
 
 	public ShieldModule getShieldModule() {
@@ -146,11 +159,12 @@ public class ShipModules {
 	}
 
 	// This function takes any type of ShipModule, and removes any modules that exist of this type
+	// If replacing a module, don't call this function, use setRelevantModule
 	// TODO multiple WeaponModules can be added, until adding a new module exceeds the max supported power
-	private void removeExistingModule(ShipModule moduleToBeAdded) {
+	public void removeExistingModule(Class module) {
 		ShipModule moduleToRemove = modulesAsArrayList
 				.stream()
-				.filter(moduleToBeAdded.getClass() :: isInstance)
+				.filter(module.getClass() :: isInstance)
 				.findAny()
 				.orElse(null);
 		if (moduleToRemove != null) modulesAsArrayList.remove(moduleToRemove);

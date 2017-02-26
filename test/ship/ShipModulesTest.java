@@ -89,10 +89,10 @@ class ShipModulesTest {
 		CockpitModule cockpitModule = cockpitModule(2);
 		EngineModule engineModule = engineModule(6);
 		ShipModules modules = ShipModules.createInstance(20, cockpitModule, engineModule);
-		assertNull(modules.getShieldModule());
+		assertNull(modules.getShipModule(ShieldModule.class));
 		ShieldModule newShieldModule = shieldModule(5);
-		modules.setShieldModule(newShieldModule);
-		assertEquals(newShieldModule, modules.getShieldModule());
+		modules.setShipModule(newShieldModule);
+		assertEquals(newShieldModule, modules.getShipModule(ShieldModule.class));
 		assertEquals(13, modules.getCombinedModulePower());
 	}
 
@@ -101,10 +101,10 @@ class ShipModulesTest {
 		CockpitModule cockpitModule = cockpitModule(2);
 		EngineModule engineModule = engineModule(6);
 		ShipModules modules = ShipModules.createInstance(10, cockpitModule, engineModule);
-		assertNull(modules.getShieldModule());
+		assertNull(modules.getShipModule(ShieldModule.class));
 		ShieldModule newShieldModule = shieldModule(5);
-		modules.setShieldModule(newShieldModule);
-		assertNull(modules.getShieldModule());
+		modules.setShipModule(newShieldModule);
+		assertNull(modules.getShipModule(ShieldModule.class));
 		assertEquals(8, modules.getCombinedModulePower());
 	}
 
@@ -114,13 +114,13 @@ class ShipModulesTest {
 		EngineModule engineModule = engineModule(6);
 		ShipModules modules = ShipModules.createInstance(20, cockpitModule, engineModule);
 		ShieldModule oldShieldModule = shieldModule(5);
-		modules.setShieldModule(oldShieldModule);
-		assertEquals(oldShieldModule, modules.getShieldModule());
+		modules.setShipModule(oldShieldModule);
+		assertEquals(oldShieldModule, modules.getShipModule(ShieldModule.class));
 		assertEquals(13, modules.getCombinedModulePower());
 
 		ShieldModule newShieldModule = shieldModule(7);
-		modules.setShieldModule(newShieldModule);
-		assertEquals(newShieldModule, modules.getShieldModule());
+		modules.setShipModule(newShieldModule);
+		assertEquals(newShieldModule, modules.getShipModule(ShieldModule.class));
 		assertEquals(15, modules.getCombinedModulePower());
 	}
 
@@ -130,15 +130,25 @@ class ShipModulesTest {
 		EngineModule engineModule = engineModule(7);
 		ShipModules modules = ShipModules.createInstance(20, cockpitModule, engineModule);
 		ShieldModule oldShieldModule = shieldModule(5);
-		modules.setShieldModule(oldShieldModule);
-		assertEquals(oldShieldModule, modules.getShieldModule());
+		modules.setShipModule(oldShieldModule);
+		assertEquals(oldShieldModule, modules.getShipModule(ShieldModule.class));
 		assertEquals(16, modules.getCombinedModulePower());
 
 		ShieldModule newShieldModule = shieldModule(10);
-		modules.setShieldModule(newShieldModule);
+		modules.setShipModule(newShieldModule);
 
-		assertEquals(oldShieldModule, modules.getShieldModule());
+		assertEquals(oldShieldModule, modules.getShipModule(ShieldModule.class));
 		assertEquals(16, modules.getCombinedModulePower());
+	}
+
+	@Test
+	public void ensureGetGenericShipModuleWorks() {
+		CockpitModule cockpitModule = cockpitModule(4);
+		EngineModule engineModule = engineModule(7);
+		ShipModules modules = ShipModules.createInstance(20, cockpitModule, engineModule);
+
+		CockpitModule cockpitModuleReference = (CockpitModule) modules.getShipModule(CockpitModule.class);
+		assertEquals(cockpitModule, cockpitModuleReference);
 	}
 
 	private CockpitModule cockpitModule(int powerRequirement) {
@@ -156,7 +166,5 @@ class ShipModulesTest {
 	private ShieldModule shieldModule(int powerRequirement) {
 		return new ShieldModule("TestShield", powerRequirement);
 	}
-
-
 
 }
