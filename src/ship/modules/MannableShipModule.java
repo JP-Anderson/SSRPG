@@ -25,25 +25,22 @@ public abstract class MannableShipModule extends ShipModule {
 
 	protected Crewmember activeCrewmember = null;
 
-	public void assignCrewmember(Crewmember crewmember) {
-		if (activeCrewmember != null) {
-			activeCrewmember.removeFromCurrentMannedModule();
+	public boolean assignCrewmember(Crewmember crewmember) {
+		if (crewmember.isManningAModule() || activeCrewmember != null) {
+			return false;
 		}
 		activeCrewmember = crewmember;
-		crewmember.setMannedModule(this);
+		activeCrewmember.manningModule();
+		return true;
 	}
 
 	public Crewmember getActiveCrewmember() {
 		return activeCrewmember;
 	}
 
-	public void setActiveCrewmember(Crewmember crewmember) {
-		activeCrewmember = crewmember;
-	}
-
 	public void removeCrewmember() {
 		if (activeCrewmember != null) {
-			activeCrewmember.removeFromCurrentMannedModule();
+			activeCrewmember.notManningModule();
 			activeCrewmember = null;
 		}
 	}

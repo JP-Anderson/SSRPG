@@ -16,11 +16,11 @@ class MannableShipModuleTest {
 		Crewmember crewmember = firstCrewmember();
 		MannableShipModule module = firstModule();
 		assertEquals(null, module.getActiveCrewmember());
-		assertEquals(null, crewmember.getMannedModule());
+		assertFalse(crewmember.isManningAModule());
 
 		module.assignCrewmember(crewmember);
 		assertEquals(crewmember, module.getActiveCrewmember());
-		assertEquals(module, crewmember.getMannedModule());
+		assertTrue(crewmember.isManningAModule());
 	}
 
 	@Test
@@ -28,38 +28,38 @@ class MannableShipModuleTest {
 		Crewmember crewmember = firstCrewmember();
 		MannableShipModule module = firstModule();
 		assertEquals(null, module.getActiveCrewmember());
-		assertEquals(null, crewmember.getMannedModule());
+		assertFalse(crewmember.isManningAModule());
 
 		module.assignCrewmember(crewmember);
 		assertEquals(crewmember, module.getActiveCrewmember());
-		assertEquals(module, crewmember.getMannedModule());
+		assertTrue(crewmember.isManningAModule());
 
 		module.removeCrewmember();
 		assertEquals(null, module.getActiveCrewmember());
-		assertEquals(null, crewmember.getMannedModule());
+		assertFalse(crewmember.isManningAModule());
 	}
 
 	@Test
-	public void assignAndReassignCrewmember() {
+	public void attemptingToAssignAnAssignedCrewmemberFails() {
 		Crewmember crewmember = firstCrewmember();
 		MannableShipModule firstModule = firstModule();
 		MannableShipModule secondModule = secondModule();
 
 		assertEquals(null, firstModule.getActiveCrewmember());
 		assertEquals(null, secondModule.getActiveCrewmember());
-		assertEquals(null, crewmember.getMannedModule());
+		assertFalse(crewmember.isManningAModule());
 
 		firstModule.assignCrewmember(crewmember);
 
 		assertEquals(crewmember, firstModule.getActiveCrewmember());
 		assertEquals(null, secondModule.getActiveCrewmember());
-		assertEquals(firstModule, crewmember.getMannedModule());
+		assertTrue(crewmember.isManningAModule());
 
-		secondModule.assignCrewmember(crewmember);
+		assertFalse(secondModule.assignCrewmember(crewmember));
 
-		assertEquals(null, firstModule.getActiveCrewmember());
-		assertEquals(crewmember, secondModule.getActiveCrewmember());
-		assertEquals(secondModule, crewmember.getMannedModule());
+		assertEquals(crewmember, firstModule.getActiveCrewmember());
+		assertEquals(null, secondModule.getActiveCrewmember());
+		assertTrue(crewmember.isManningAModule());
 	}
 
 	@Test
@@ -71,18 +71,18 @@ class MannableShipModuleTest {
 		module.assignCrewmember(firstCrewmember);
 
 		assertEquals(firstCrewmember, module.getActiveCrewmember());
-		assertEquals(module, firstCrewmember.getMannedModule());
-		assertEquals(null, secondCrewmember.getMannedModule());
+		assertTrue(firstCrewmember.isManningAModule());
+		assertFalse(secondCrewmember.isManningAModule());
 
-		module.assignCrewmember(secondCrewmember);
+		assertFalse(module.assignCrewmember(secondCrewmember));
 
-		assertEquals(secondCrewmember, module.getActiveCrewmember());
-		assertEquals(null, firstCrewmember.getMannedModule());
-		assertEquals(module, secondCrewmember.getMannedModule());
+		assertEquals(firstCrewmember, module.getActiveCrewmember());
+		assertTrue(firstCrewmember.isManningAModule());
+		assertFalse(secondCrewmember.isManningAModule());
 	}
 
 	@Test
-	public void reassignTwoCrewmembersToEachothersModule() {
+	public void cannotReassignCrewmembersToEachOthersModule() {
 		Crewmember firstCrewmember = firstCrewmember();
 		Crewmember secondCrewmember = secondCrewmember();
 		MannableShipModule firstModule = firstModule();
@@ -93,41 +93,39 @@ class MannableShipModuleTest {
 
 		assertEquals(firstCrewmember, firstModule.getActiveCrewmember());
 		assertEquals(secondCrewmember, secondModule.getActiveCrewmember());
-		assertEquals(firstModule, firstCrewmember.getMannedModule());
-		assertEquals(secondModule, secondCrewmember.getMannedModule());
+		assertTrue(firstCrewmember.isManningAModule());
+		assertTrue(secondCrewmember.isManningAModule());
 
-		firstModule.assignCrewmember(secondCrewmember);
-		secondModule.assignCrewmember(firstCrewmember);
+		assertFalse(firstModule.assignCrewmember(secondCrewmember));
+		assertFalse(secondModule.assignCrewmember(firstCrewmember));
 
-		assertEquals(secondCrewmember, firstModule.getActiveCrewmember());
-		assertEquals(firstCrewmember, secondModule.getActiveCrewmember());
-		assertEquals(secondModule, firstCrewmember.getMannedModule());
-		assertEquals(firstModule, secondCrewmember.getMannedModule());
+		assertEquals(firstCrewmember, firstModule.getActiveCrewmember());
+		assertEquals(secondCrewmember, secondModule.getActiveCrewmember());
+		assertTrue(firstCrewmember.isManningAModule());
+		assertTrue(secondCrewmember.isManningAModule());
 	}
 
-	//TODO IMPLEMENT FUNCTIONALITY TO PASS THIS TEST!!
 	@Test
-	public void assignAndReassignCrewmemberWithSetCrewmemberDoesntBreak() {
-		Crewmember crewmember = firstCrewmember();
-		MannableShipModule firstModule = firstModule();
-		MannableShipModule secondModule = secondModule();
+	public void canAssignCrewmemberToModuleAfterRemovingPreviousCrewmember() {
+		Crewmember firstCrewmember = firstCrewmember();
+		Crewmember secondCrewmember = secondCrewmember();
+		MannableShipModule module = firstModule();
 
-		assertEquals(null, firstModule.getActiveCrewmember());
-		assertEquals(null, secondModule.getActiveCrewmember());
-		assertEquals(null, crewmember.getMannedModule());
+		assertTrue(module.assignCrewmember(firstCrewmember));
 
-		firstModule.assignCrewmember(crewmember);
+		assertFalse(module.assignCrewmember(secondCrewmember));
 
-		assertEquals(crewmember, firstModule.getActiveCrewmember());
-		assertEquals(null, secondModule.getActiveCrewmember());
-		assertEquals(firstModule, crewmember.getMannedModule());
+		assertTrue(firstCrewmember.isManningAModule());
+		assertFalse(secondCrewmember.isManningAModule());
 
-		secondModule.setActiveCrewmember(crewmember);
+		module.removeCrewmember();
 
-		// Fails here, as setActiveCrewmember doesn't reset the first module state
-		assertEquals(null, firstModule.getActiveCrewmember());
-		assertEquals(crewmember, secondModule.getActiveCrewmember());
-		assertEquals(secondModule, crewmember.getMannedModule());
+		assertTrue(module.assignCrewmember(secondCrewmember));
+
+		assertFalse(firstCrewmember.isManningAModule());
+		assertTrue(secondCrewmember.isManningAModule());
+		assertEquals(secondCrewmember, module.getActiveCrewmember());
+
 	}
 
 	private MannableShipModule firstModule() {

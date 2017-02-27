@@ -8,7 +8,7 @@ public class Crewmember {
 
 	public final String name;
 	private int level;
-	private MannableShipModule mannedModule;
+	private boolean isManningModule = false;
 
 	public final CrewmemberClass crewmemberClass;
 
@@ -22,21 +22,16 @@ public class Crewmember {
 		return crewmemberClass.getAbilityIfItExists(abilityName);
 	}
 
-	public void setMannedModule(MannableShipModule moduleManned) {
-		removeFromCurrentMannedModule();
-		mannedModule = moduleManned;
-		mannedModule.setActiveCrewmember(this);
+	public boolean isManningAModule() {
+		return isManningModule;
 	}
 
-	public MannableShipModule getMannedModule() {
-		return mannedModule;
+	public void manningModule() {
+		isManningModule = true;
 	}
 
-	public void removeFromCurrentMannedModule() {
-		if (mannedModule != null) {
-			mannedModule.setActiveCrewmember(null);
-			mannedModule = null;
-		}
+	public void notManningModule() {
+		isManningModule = false;
 	}
 
 }

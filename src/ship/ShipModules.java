@@ -156,6 +156,16 @@ public class ShipModules {
 		}
 	}
 
+	public MannableShipModule getModuleCrewmemberIsManning(Crewmember crewmember) {
+		return modulesAsArrayList
+				.stream()
+				.filter(MannableShipModule.class :: isInstance)
+				.map(MannableShipModule.class :: cast)
+				.filter(m -> m.getActiveCrewmember() == crewmember)
+				.findFirst()
+				.orElse(null);
+	}
+
 	public ArrayList<ShipModule> getModulesAsArrayList() {
 		return modulesAsArrayList;
 	}

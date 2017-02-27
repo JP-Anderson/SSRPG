@@ -75,6 +75,10 @@ public abstract class Ship {
 		return 1;
 	}
 
+	public MannableShipModule getModuleMannedBy(Crewmember crewmember) {
+		return modules.getModuleCrewmemberIsManning(crewmember);
+	}
+
 	public ArrayList<ShipModule> getModulesInList() {
 		return modules.getModulesAsArrayList();
 	}

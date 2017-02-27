@@ -347,7 +347,7 @@ public class MapSession extends Session {
 		ArrayList<Crewmember> playerCrew = p1.getCrew();
 		int i = 0;
 		for (Crewmember member : playerCrew) {
-			MannableShipModule mannedModule = member.getMannedModule();
+			MannableShipModule mannedModule = p1.getModuleMannedBy(member);
 			String mannedModuleName = mannedModule != null ? "Manning " + mannedModule.getName() : "Not manning a module.";
 			System.out.println(i + " - " + member.name + " (" + member.crewmemberClass._className + ") " + mannedModuleName);
 			i++;
