@@ -4,14 +4,17 @@ import util.collections.tree.Tree;
 
 public class AbilityTree {
 
-	private final Tree<Ability> _tree;
+	private int abilitiesUnlocked;
 
-	public AbilityTree(Tree<Ability> tree) {
-		_tree = tree;
+	private final Tree<Ability> tree;
+
+	public AbilityTree(Tree<Ability> newTree) {
+		abilitiesUnlocked = 0;
+		tree = newTree;
 	}
 
 	public Tree<Ability> getTree() {
-		return _tree;
+		return tree;
 	}
 
 }

@@ -13,16 +13,18 @@ import util.collections.tree.TreeNode;
 public class SkillAndAbilityLoader extends XMLLoader {
 
 	public static ArrayList<Skill> loadSkills() {
-		return loadSkillsFromXML();
+		return loadSkillsFromXML("C:\\Workspaces\\SSRPG\\dat\\abilities.xml");
 	}
+
+	public static ArrayList<Skill> loadSkills(String testXmlPath) { return loadSkillsFromXML(testXmlPath); }
 
 	private static int skillCounter = 0;
 	private static int abilityCounter = 0;
 
-	private static ArrayList<Skill> loadSkillsFromXML() {
+	private static ArrayList<Skill> loadSkillsFromXML(String xmlFilePath) {
 		ArrayList<Skill> skills = new ArrayList<>();
 
-		Document xmlDoc = getDocTreeForFile("C:\\Workspaces\\SSRPG\\dat\\abilities.xml");
+		Document xmlDoc = getDocTreeForFile(xmlFilePath);
 		NodeList nodes = xmlDoc.getElementsByTagName("Skill");
 
 		for (int i = 0; i < nodes.getLength(); i++) {
@@ -69,7 +71,6 @@ public class SkillAndAbilityLoader extends XMLLoader {
 			if (xmlChild.getNodeName().equals("Ability")) {
 				Ability childAbility = createAbilityFromNode(xmlChild);
 				TreeNode<Ability> treeNodeChild = new TreeNode<>(treeNode, childAbility);
-				treeNode.addChild(treeNodeChild);
 				recursiveAddAbilitiesToParent(treeNodeChild, xmlChild);
 			}
 		}
@@ -109,6 +110,16 @@ public class SkillAndAbilityLoader extends XMLLoader {
 	private static int assignAbilityID(String abilityName) {
 		abilityCounter++;
 		SkillsHolder.ABILITY_ENUM.put(abilityName, abilityCounter);
+		return abilityCounter;
+	}
+
+	// getters for skill and ability counter, just for testing purposes
+
+	static int getSkillCounter() {
+		return skillCounter;
+	}
+
+	static int getAbilityCounter() {
 		return abilityCounter;
 	}
 }

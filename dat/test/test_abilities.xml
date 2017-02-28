@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Skills>
+	<Skill Name="Skill1">
+		<Ability Name="Skill1 Ability1"
+				 Description="A1 desc"
+				 Type="Float"
+				 ValuePerLevel="1.3;1.6;1.9">
+			<Ability Name="Skill1 Ability2"
+			         Description="A2 desc"
+					 Type="Int"
+					 ValuePerLevel="1;2;3;4">
+			</Ability>
+			<Ability Name="Skill1 Ability3"
+			         Description="A3 desc"
+					 Type="Float"
+					 ValuePerLevel="1.2;1.4;1.6;1.8;2">
+			</Ability>
+		</Ability>
+	</Skill>
+	<Skill Name="Skill2">
+		<Ability Name="Skill2 Ability1"
+			     Description="1"
+				 Type="Int"
+				 ValuePerLevel="1;1;1;1">
+			<Ability Name="Skill2 Ability2"
+					 Description="2"
+					 Type="Float"
+					 ValuePerLevel="0.25;0.5">
+			</Ability>
+			<Ability Name="Skill2 Ability3"
+			         Description="3"
+					 Type="Float"
+					 ValuePerLevel="0.25;0.5">
+				<Ability Name="Skill2 Ability4"
+				         Description="4"
+						 Type="Float"
+						 ValuePerLevel="0.25;0.5">
+					<Ability Name="Skill2 Ability5"
+							 Description="5"
+							 Type="Float"
+							 ValuePerLevel="0.25;0.5">
+					</Ability>
+					<Ability Name="Skill2 Ability6"
+							 Description="6"
+							 Type="Float"
+							 ValuePerLevel="0.25;0.5">
+					</Ability>
+				</Ability>
+			</Ability>
+		</Ability>
+	</Skill>
+</Skills>
