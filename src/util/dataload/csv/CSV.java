@@ -1,6 +1,8 @@
 package util.dataload.csv;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CSV {
 
@@ -16,6 +18,13 @@ public class CSV {
 
 	public ArrayList<String> getZeroIndexedRow(int rowHeight) {
 		return data.get(rowHeight);
+	}
+
+	public List<Integer> getZeroIndexedRowAsInts(int rowHeight) {
+		return data.get(rowHeight)
+				.stream()
+				.map(Integer::parseInt)
+				.collect(Collectors.toList());
 	}
 
 }
