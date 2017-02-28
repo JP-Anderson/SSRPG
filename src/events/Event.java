@@ -1,7 +1,6 @@
 package events;
 
 import characters.Crewmember;
-import characters.Skills;
 import characters.classes.PilotClass;
 import goods.Goods;
 import goods.GoodsForSale;
@@ -59,7 +58,7 @@ public abstract class Event {
 		ArrayList<Crewmember> survivors = new ArrayList<>();
 		if (RNG.randZeroToOne() <= 0.05) {
 			// need to randomize the classes
-			Crewmember survivor = new Crewmember("Survivor", new PilotClass());
+			Crewmember survivor = new Crewmember("Survivor", new PilotClass(), 1);
 			survivors.add(survivor);
 		}
 		return survivors;

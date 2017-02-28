@@ -1,10 +1,8 @@
 package ship.modules;
 
 import characters.Crewmember;
-import characters.classes.PilotClass;
 import characters.classes.ScoundrelClass;
 import characters.classes.WeaponsExpertClass;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -137,11 +135,11 @@ class MannableShipModuleTest {
 	}
 
 	private Crewmember firstCrewmember() {
-		return new Crewmember("Han", new ScoundrelClass());
+		return new Crewmember("Han", new ScoundrelClass(), 1);
 	}
 
 	private Crewmember secondCrewmember() {
-		return new Crewmember("Chewie", new WeaponsExpertClass());
+		return new Crewmember("Chewie", new WeaponsExpertClass(), 1);
 	}
 
 }

@@ -1,10 +1,8 @@
 package arch.session;
 
 import characters.Crewmember;
-import characters.Skills;
 import characters.classes.*;
 import ship.PlayerShip;
-import ship.ShipModules;
 import ship.modules.*;
 import ship.shields.BasicShieldsMk2;
 import util.ConsoleInputHandler;
@@ -38,7 +36,7 @@ public class ShipAndCrewCreationSession extends Session {
 			CrewmemberClass chosenClass = ConsoleInputHandler.getUserChoiceFromList(availableClasses, "_className");
 			availableClasses.remove(chosenClass);
 			String chosenName = ConsoleInputHandler.getNonEmptyStringFromUser("What will you call this " + chosenClass._className + "?");
-			crew.add(new Crewmember(chosenName, chosenClass));
+			crew.add(new Crewmember(chosenName, chosenClass, 1));
 			crewCount++;
 			System.out.println();
 		}
