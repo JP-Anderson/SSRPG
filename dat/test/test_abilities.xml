@@ -33,8 +33,7 @@
 					 ValuePerLevel="0.25;0.5">
 				<Ability Name="Skill2 Ability4"
 				         Description="4"
-						 Type="Float"
-						 ValuePerLevel="0.25;0.5">
+						 Type="Boolean">
 					<Ability Name="Skill2 Ability5"
 							 Description="5"
 							 Type="Float"

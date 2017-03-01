@@ -7,6 +7,11 @@ public class BooleanAbility extends Ability {
 	}
 
 	@Override
+	public boolean isFullyUnlocked() {
+		return unlocked;
+	}
+
+	@Override
 	public void levelUp() {
 		unlocked = true;
 	}

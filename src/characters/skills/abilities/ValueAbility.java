@@ -7,7 +7,7 @@ public abstract class ValueAbility extends Ability {
 
 	public final int _levels;
 
-	private int abilityLevel = 0;
+	protected int abilityLevel = 0;
 
 	public ValueAbility(int id, String name, String description, String levelValueString) {
 		super(id, name, description);
@@ -27,6 +27,11 @@ public abstract class ValueAbility extends Ability {
 	@Override
 	public boolean isUnlocked() {
 		return abilityLevel > 0;
+	}
+
+	@Override
+	public boolean isFullyUnlocked() {
+		return abilityLevel == _levels;
 	}
 
 	/*

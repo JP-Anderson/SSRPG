@@ -19,6 +19,8 @@ public abstract class Ability {
 		return unlocked;
 	}
 
+	public abstract boolean isFullyUnlocked();
+
 	public abstract void levelUp();
 
 }
