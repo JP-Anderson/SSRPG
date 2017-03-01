@@ -28,9 +28,10 @@ public class AbilityTree {
 		- Abilities which have been unlocked but are not upgraded to the maximum level
 	 */
 	public ArrayList<Ability> getUpgradeableAbilities() {
-		return matcher.getMatchingNodesAndUnbox(tree, node -> node.getParent() == null
-															|| node.getParent().getNodeItem().isUnlocked()
-															&& ! node.getNodeItem().isFullyUnlocked());
+		return matcher.getMatchingNodesAndUnbox(tree,
+				node -> node.getParent() == null
+						|| node.getParent().getNodeItem().isUnlocked()
+						&& ! node.getNodeItem().isFullyUnlocked());
 	}
 
 	/*
