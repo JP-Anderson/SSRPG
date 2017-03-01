@@ -42,5 +42,5 @@ class SkillAndAbilityLoaderTest {
 		assertEquals(2, SkillAndAbilityLoader.getSkillCounter());
 		assertEquals(9, SkillAndAbilityLoader.getAbilityCounter());
 	}
-	
+
 }

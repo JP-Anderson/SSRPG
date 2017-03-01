@@ -22,6 +22,7 @@ public class SkillAndAbilityLoader extends XMLLoader {
 	private static int abilityCounter = 0;
 
 	private static ArrayList<Skill> loadSkillsFromXML(String xmlFilePath) {
+		resetSkillAndAbilityTrackers();
 		ArrayList<Skill> skills = new ArrayList<>();
 
 		Document xmlDoc = getDocTreeForFile(xmlFilePath);
@@ -32,6 +33,13 @@ public class SkillAndAbilityLoader extends XMLLoader {
 		}
 
 		return skills;
+	}
+
+	private static void resetSkillAndAbilityTrackers() {
+		skillCounter = 0;
+		abilityCounter = 0;
+		SkillsHolder.ABILITY_ENUM.clear();
+		SkillsHolder.SKILLS_ENUM.clear();
 	}
 
 	private static Skill generateSkillFromNode(Node node) {
