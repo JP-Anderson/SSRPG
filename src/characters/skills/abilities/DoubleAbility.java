@@ -1,5 +1,7 @@
 package characters.skills.abilities;
 
+import characters.exceptions.AbilityNotUnlockedException;
+
 public class DoubleAbility extends ValueAbility {
 
 	double[] levelValues;
@@ -7,6 +9,12 @@ public class DoubleAbility extends ValueAbility {
 	public DoubleAbility(int id, String name, String description, String levelValueString) {
 		super(id, name, description, levelValueString);
 		retrieveDoublesFromString(levelValueString);
+	}
+
+	@Override
+	public Double getAbilityValue() {
+		if (isUnlocked()) return levelValues[abilityLevel-1];
+		else throw new AbilityNotUnlockedException(_name);
 	}
 
 	private void retrieveDoublesFromString(String levelValueString) {

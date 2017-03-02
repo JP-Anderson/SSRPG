@@ -1,11 +1,10 @@
 package characters.skills.abilities;
 
-/**
- * Created by Jp on 11/02/2017.
- */
+import characters.exceptions.AbilityAtMaxLevelException;
+
 public abstract class ValueAbility extends Ability {
 
-	public final int _levels;
+	protected final int _levels;
 
 	protected int abilityLevel = 0;
 
@@ -14,19 +13,25 @@ public abstract class ValueAbility extends Ability {
 		_levels = countNumberOfValuesInStringList(levelValueString);
 	}
 
+	public abstract Number getAbilityValue();
+
 	public int getAbilityLevel() {
 		return abilityLevel;
 	}
 
 	public void levelUp() {
-		if (abilityLevel < _levels) {
+		if (!isFullyUnlocked()) {
 			abilityLevel++;
+			if (!isUnlocked()) unlocked = true;
+		} else {
+			throw new AbilityAtMaxLevelException(abilityLevel);
 		}
 	}
 
 	@Override
 	public boolean isUnlocked() {
-		return abilityLevel > 0;
+		if (!unlocked) unlocked = abilityLevel > 0;
+		return unlocked;
 	}
 
 	@Override
