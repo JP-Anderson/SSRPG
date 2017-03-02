@@ -21,6 +21,6 @@ public abstract class Ability {
 
 	public abstract boolean isFullyUnlocked();
 
-	public abstract void levelUp();
+	protected abstract void levelUp();
 
 }

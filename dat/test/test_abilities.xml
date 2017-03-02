@@ -21,7 +21,7 @@
 		<Ability Name="Skill2 Ability1"
 			     Description="1"
 				 Type="Int"
-				 ValuePerLevel="1;1;1;1">
+				 ValuePerLevel="1;2;3;4">
 			<Ability Name="Skill2 Ability2"
 					 Description="2"
 					 Type="Float"

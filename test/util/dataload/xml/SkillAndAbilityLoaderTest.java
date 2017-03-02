@@ -38,7 +38,6 @@ class SkillAndAbilityLoaderTest {
 		ArrayList<TreeNode<Ability>> fourthLevelNodes = (ArrayList<TreeNode<Ability>>) skill2Ability4.getChildren();
 		assertEquals(2, fourthLevelNodes.size());
 
-
 		assertEquals(2, SkillAndAbilityLoader.getSkillCounter());
 		assertEquals(9, SkillAndAbilityLoader.getAbilityCounter());
 	}
