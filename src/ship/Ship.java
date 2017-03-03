@@ -15,7 +15,7 @@ import ship.weapons.Attack;
 
 public abstract class Ship {
 
-	private static View view;
+	protected static View view;
 	
 	public final String name;
 	ShipModules modules;

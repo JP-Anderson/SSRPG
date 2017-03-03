@@ -148,12 +148,12 @@ public class ShipModules {
 		for (WeaponModule m : getWeaponModules()) {
 			if (m.maxWeaponPowerSupported >= newWeapon.requiredWeaponModulePower
 					&& m.getWeapon() == null) {
-				System.out.println("This weapon has been equipped.");
+				view.outputHandler.sendStringToView("This weapon has been equipped.");
 				m.setWeapon(newWeapon);
 				return true;
 			}
 		}
-		System.out.println("Cannot equip weapon.");
+		view.outputHandler.sendStringToView("Cannot equip weapon.");
 		return false;
 	}
 

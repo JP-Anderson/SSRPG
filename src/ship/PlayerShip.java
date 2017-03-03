@@ -39,7 +39,7 @@ public class PlayerShip extends Ship {
 
 	public void initialiseMap(GridPoint startLocation, GridMap map) {
 		location = startLocation;
-		scanner = Scanner.getScanner(scannerStrength, map, startLocation);
+		scanner = Scanner.getScanner(view, scannerStrength, map, startLocation);
 	}
 
 	public GridPoint getLocation() {
@@ -53,13 +53,13 @@ public class PlayerShip extends Ship {
 
 	public void shipStatus() {
 		CargoBayModule cargo = (CargoBayModule) modules.getShipModule(CargoBayModule.class);
-		System.out.println("PlayerShip status:");
-		System.out.println(crew.size() + "/" + crewCapacity + " crew");
-		System.out.println(" CREDS total: " + money);
-		System.out.println(" Remaining Fuel: " + remainingFuel + "/" + fuelCapacity);
+		view.outputHandler.sendStringToView("PlayerShip status:");
+		view.outputHandler.sendStringToView(crew.size() + "/" + crewCapacity + " crew");
+		view.outputHandler.sendStringToView(" CREDS total: " + money);
+		view.outputHandler.sendStringToView(" Remaining Fuel: " + remainingFuel + "/" + fuelCapacity);
 		// TODO: cargo bay is now a module, so need to put this in the module print information function
-		System.out.println(" Cargo Bay: " + cargo.getFilledCapacity() + " units out of " + cargo.getMaxCapacity());
-		System.out.println(" Modules: ");
+		view.outputHandler.sendStringToView(" Cargo Bay: " + cargo.getFilledCapacity() + " units out of " + cargo.getMaxCapacity());
+		view.outputHandler.sendStringToView(" Modules: ");
 		((EngineModule) modules.getShipModule(EngineModule.class)).printInformation();
 		((ShieldModule) modules.getShipModule(ShieldModule.class)).printInformation();
 	}
@@ -69,7 +69,7 @@ public class PlayerShip extends Ship {
 		scanner.setShipLocation(gridPoint);
 		int fuelCost = distance * ((EngineModule) modules.getShipModule(EngineModule.class)).fuelEfficiency;
 		if (fuelCost <= remainingFuel) {
-			System.out.println("Used " + fuelCost + " fuel.");
+			view.outputHandler.sendStringToView("Used " + fuelCost + " fuel.");
 			remainingFuel = remainingFuel - fuelCost;
 			return true;
 		}

@@ -54,7 +54,7 @@ public abstract class Event {
 	protected void getUserInput() {
 		//TODO: move this into a UI/console input class
 		if (outcome.getCrewReward().size() > 0) {
-			System.out.println(crewPrompt + "? (Y/N)");
+			view.outputHandler.sendStringToView(crewPrompt + "? (Y/N)");
 			char decision = view.inputHandler.getCharFromUser("");
 			if (decision != 'Y' && decision != 'y') {
 				outcome.removeCrewReward();
@@ -62,7 +62,7 @@ public abstract class Event {
 		}
 		if (outcome.getGoodsReward().size() > 0) {
 			Goods newGoods = outcome.getGoodsReward().get(0);
-			System.out.println(goodsPrompt.replace("$", newGoods.name) + "? (Y/N)");
+			view.outputHandler.sendStringToView(goodsPrompt.replace("$", newGoods.name) + "? (Y/N)");
 			char decision = view.inputHandler.getCharFromUser("");
 			if (decision != 'Y' && decision != 'y') {
 				outcome.removeGoodsReward();
