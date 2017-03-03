@@ -1,9 +1,12 @@
 package characters.classes;
 
+import characters.exceptions.AbilityException;
 import characters.skills.Skill;
 import characters.skills.SkillsHolder;
 import characters.skills.abilities.*;
 import util.collections.tree.PreOrderTreeSearcher;
+
+import java.util.ArrayList;
 
 public abstract class CrewmemberClass {
 
@@ -21,6 +24,10 @@ public abstract class CrewmemberClass {
 		skill = SkillsHolder.getSkill(_className);
 	}
 
+	public ArrayList<Ability> getUpgradeableAbilities() {
+		return skill._abilities.getUpgradeableAbilities();
+	}
+
 	public Ability getAbilityIfItExists(String abilityName) {
 		PreOrderTreeSearcher<Ability> treeSearcher = new PreOrderTreeSearcher<>();
 		return treeSearcher.getElement(
@@ -33,6 +40,10 @@ public abstract class CrewmemberClass {
 		return treeSearcher.doesTreeContain(
 				skill._abilities.getTree(),
 				a -> a._name.equals(abilityName) && a.isUnlocked());
+	}
+
+	public void upgradeAbility(int upgradeableAbilityIndex) throws AbilityException {
+		skill._abilities.upgradeAbility(upgradeableAbilityIndex);
 	}
 
 }

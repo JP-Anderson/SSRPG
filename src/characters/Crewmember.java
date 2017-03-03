@@ -1,12 +1,15 @@
 package characters;
 
 import characters.classes.CrewmemberClass;
+import characters.exceptions.AbilityException;
 import characters.skills.abilities.Ability;
+
+import java.util.ArrayList;
 
 public class Crewmember {
 
 	public final String name;
-	public Level level;
+	private Level level;
 	private boolean isManningModule = false;
 
 	public final CrewmemberClass crewmemberClass;
@@ -15,6 +18,27 @@ public class Crewmember {
 		name = pName;
 		crewmemberClass = newClass;
 		level = new Level(startingLevel);
+	}
+
+	public void gainExperience(int xp) {
+		level.gainExperience(xp);
+	}
+
+	public Level getLevel() {
+		return level;
+	}
+
+	public ArrayList<Ability> getUpgradeableAbilities() {
+		return crewmemberClass.getUpgradeableAbilities();
+	}
+
+	public boolean tryToLevelUpAbility(int upgradeableAbilityIndex) {
+		try {
+			crewmemberClass.upgradeAbility(upgradeableAbilityIndex);
+		} catch(AbilityException ae) {
+			return false;
+		}
+		return true;
 	}
 
 	public Ability hasAbility(String abilityName) {
