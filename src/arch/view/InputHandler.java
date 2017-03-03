@@ -1,33 +1,19 @@
 package arch.view;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.util.ArrayList;
 
 public interface InputHandler {
 
-	static int getIntFromUser() {
-		throw new NotImplementedException();
-	};
+	int getIntFromUser(String prompt);
 
-	static int getIntInRangeFromUser(int options) {
-		throw new NotImplementedException();
-	};
+	int getIntInRangeFromUser(int options);
 
-	static char getCharFromUser() {
-		throw new NotImplementedException();
-	};
+	char getCharFromUser(String prompt);
 
-	static String getNonEmptyStringFromUser() {
-		throw new NotImplementedException();
-	}
+	String getNonEmptyStringFromUser(String prompt);
 
-	static String getStringFromUser() {
-		throw new NotImplementedException();
-	};
+	String getStringFromUser(String prompt);
 
-	static <O> O getUserChoiceFromList(ArrayList<O> objects, String objectAttributeToPrint) {
-		throw new NotImplementedException();
-	}
+	<O> O getUserChoiceFromList(ArrayList<O> objects, String objectAttributeToPrint);
 
 }

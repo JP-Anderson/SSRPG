@@ -23,7 +23,7 @@ public class EventRunner {
 		}
 		int newBalance = player.getMoney() + outcome.getMoneyReward();
 		System.out.println("CREDS " + player.getMoney() + " --> " + newBalance);
-		sleep(2);
+		sleep(1);
 
 		player.setMoney(newBalance);
 		printTwoRows();

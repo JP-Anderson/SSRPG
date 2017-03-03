@@ -1,11 +1,11 @@
 package arch.session;
 
+import arch.view.InputHandler;
 import characters.Crewmember;
 import characters.classes.*;
 import ship.PlayerShip;
 import ship.modules.*;
 import ship.shields.BasicShieldsMk2;
-import arch.view.ConsoleInputHandler;
 
 import java.util.ArrayList;
 
@@ -15,8 +15,8 @@ public class ShipAndCrewCreationSession extends Session {
 	private ArrayList<CrewmemberClass> availableClasses;
 	private String newName;
 
-	public ShipAndCrewCreationSession() {
-		super("ShipAndCrewCreationSession");
+	public ShipAndCrewCreationSession(InputHandler injectedView) {
+		super(injectedView, "ShipAndCrewCreationSession");
 		availableClasses = new ArrayList<>();
 		availableClasses.add(new PilotClass());
 		availableClasses.add(new ScoundrelClass());
@@ -25,7 +25,7 @@ public class ShipAndCrewCreationSession extends Session {
 
 	@Override
 	public void run() {
-		newName = ConsoleInputHandler.getNonEmptyStringFromUser("What would you like to call your ship?");
+		newName = view.getNonEmptyStringFromUser("What would you like to call your ship?");
 		crew = new ArrayList<>();
 		int crewCount = 1;
 		final int numberOfStartingCrewmembers = 2;
@@ -33,9 +33,9 @@ public class ShipAndCrewCreationSession extends Session {
 			System.out.println("You have " + (numberOfStartingCrewmembers - i) + " crewmembers left to pick");
 			System.out.println("Which class do you pick for crewmember #" + crewCount + "?");
 			System.out.println("Available crew:");
-			CrewmemberClass chosenClass = ConsoleInputHandler.getUserChoiceFromList(availableClasses, "_className");
+			CrewmemberClass chosenClass = view.getUserChoiceFromList(availableClasses, "_className");
 			availableClasses.remove(chosenClass);
-			String chosenName = ConsoleInputHandler.getNonEmptyStringFromUser("What will you call this " + chosenClass._className + "?");
+			String chosenName = view.getNonEmptyStringFromUser("What will you call this " + chosenClass._className + "?");
 			crew.add(new Crewmember(chosenName, chosenClass, 1));
 			crewCount++;
 			System.out.println();

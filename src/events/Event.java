@@ -1,44 +1,60 @@
 package events;
 
+import arch.session.interaction.Interaction;
+import arch.session.interaction.TextInteraction;
+import arch.view.InputHandler;
 import characters.Crewmember;
 import characters.classes.PilotClass;
 import goods.Goods;
 import goods.GoodsForSale;
 import goods.GoodsList;
 import ship.PlayerShip;
-import arch.view.ConsoleInputHandler;
 import util.RNG;
 
 import java.util.ArrayList;
 
 public abstract class Event {
 
-	abstract void initialize();
+	protected InputHandler view;
+	protected Interaction rootInteraction;
+
+	protected Event(InputHandler injectedView) {
+		view = injectedView;
+		rootInteraction = TextInteraction.createStartingInteraction(injectedView, getEventIntroductionMessage());
+	}
+
+	protected abstract String getEventIntroductionMessage();
+
+	//region Template Methods
+	abstract void initializeOutcome();
+
+	abstract void initializeInteractionTree();
 
 	abstract void displayEvent();
 
-	abstract EventOutcome generateOutcome();
+	abstract EventOutcome getOutcome();
+	//endregion
 
-	protected PlayerShip _playerShip;
+	protected PlayerShip playerShip;
 	protected EventOutcome outcome;
 
 	protected String crewPrompt = "Would you like to take the survivor";
 	protected String goodsPrompt = "Would you like to take the $";
 
-
 	public final EventOutcome transpire(PlayerShip playerShip) {
 		setPlayerPlayerShip(playerShip);
-		initialize();
+		initializeOutcome();
+		initializeInteractionTree();
 		displayEvent();
 		getUserInput();
-		return generateOutcome();
+		return getOutcome();
 	}
 
 	protected void getUserInput() {
 		//TODO: move this into a UI/console input class
 		if (outcome.getCrewReward().size() > 0) {
 			System.out.println(crewPrompt + "? (Y/N)");
-			char decision = ConsoleInputHandler.getCharFromUser("");
+			char decision = view.getCharFromUser("");
 			if (decision != 'Y' && decision != 'y') {
 				outcome.removeCrewReward();
 			}
@@ -46,7 +62,7 @@ public abstract class Event {
 		if (outcome.getGoodsReward().size() > 0) {
 			Goods newGoods = outcome.getGoodsReward().get(0);
 			System.out.println(goodsPrompt.replace("$", newGoods.name) + "? (Y/N)");
-			char decision = ConsoleInputHandler.getCharFromUser("");
+			char decision = view.getCharFromUser("");
 			if (decision != 'Y' && decision != 'y') {
 				outcome.removeGoodsReward();
 			}
@@ -57,7 +73,7 @@ public abstract class Event {
 	protected final ArrayList<Crewmember> generateCrewMembers(double chanceOfCrewmember) {
 		ArrayList<Crewmember> survivors = new ArrayList<>();
 		if (RNG.randZeroToOne() <= 0.05) {
-			// need to randomize the classes
+			// TODO need to randomize the classes
 			Crewmember survivor = new Crewmember("Survivor", new PilotClass(), 1);
 			survivors.add(survivor);
 		}
@@ -75,7 +91,7 @@ public abstract class Event {
 	}
 
 	private void setPlayerPlayerShip(PlayerShip playerShip) {
-		_playerShip = playerShip;
+		this.playerShip = playerShip;
 	}
 
 }

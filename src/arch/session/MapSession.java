@@ -1,6 +1,6 @@
 package arch.session;
 
-import arch.view.ConsoleInputHandler;
+import arch.view.InputHandler;
 import ship.*;
 import map.*;
 import goods.*;
@@ -22,8 +22,8 @@ public class MapSession extends Session {
 	private PlayerShip p1;
 	private ArrayList<GoodsForSale> goods;
 
-	public MapSession(PlayerShip crewedPlayerShip) {
-		super("MapSession");
+	public MapSession(InputHandler injectedView, PlayerShip crewedPlayerShip) {
+		super(injectedView, "MapSession");
 		p1 = crewedPlayerShip;
 
 		GridPoint start = new GridPoint(3, 6);
@@ -43,7 +43,7 @@ public class MapSession extends Session {
 
 			printCurrentLocation();
 
-			String input = ConsoleInputHandler.getStringFromUser("");
+			String input = view.getStringFromUser("");
 
 			if (input.equalsIgnoreCase("scan")) {
 				p1.scan();
@@ -116,7 +116,7 @@ public class MapSession extends Session {
 		if (location instanceof Planet) {
 
 			System.out.print("Buying or selling?: ");
-			char tradeChoice = ConsoleInputHandler.getCharFromUser("");
+			char tradeChoice = view.getCharFromUser("");
 
 			Planet planet = (Planet) location;
 
@@ -135,7 +135,7 @@ public class MapSession extends Session {
 				}
 
 				int goodsCount = availableGoods.size();
-				int choice = ConsoleInputHandler.getIntInRangeFromUser(goodsCount);
+				int choice = view.getIntInRangeFromUser(goodsCount);
 
 				GoodsForSale selectedGoods = availableGoods.get(choice);
 				int goodsValue = selectedGoods.getPurchaseValue();
@@ -145,7 +145,7 @@ public class MapSession extends Session {
 				System.out.println("--> You can afford " + numberCanAfford);
 
 
-				int quantity = ConsoleInputHandler.getIntFromUser("");
+				int quantity = view.getIntFromUser("");
 
 				CargoBayModule playerCargo = p1.getCargoBay();
 				int cargoSize = playerCargo.getFilledCapacity();
@@ -182,7 +182,7 @@ public class MapSession extends Session {
 						System.out.println(" " + (goodsIndex++) + " - " + pg.getQuantity() + "x +" + pg.name + " : " + localValueOfGoods + " CREDS  " + profitString + legal);
 					}
 
-					int choice = ConsoleInputHandler.getIntInRangeFromUser(cargo.size());
+					int choice = view.getIntInRangeFromUser(cargo.size());
 
 					PurchasedGoods selectedGoods = cargo.get(choice);
 					int quantityOwned = selectedGoods.getQuantity();
@@ -200,7 +200,7 @@ public class MapSession extends Session {
 						System.out.println("--> You will break even on this sale.");
 					}
 
-					int quantitySold = ConsoleInputHandler.getIntFromUser("");
+					int quantitySold = view.getIntFromUser("");
 
 					if (quantitySold <= quantityOwned) {
 						int totalMoneyMade = localValueOfGoods * quantitySold;
@@ -223,8 +223,8 @@ public class MapSession extends Session {
 		while (true) {
 			System.out.println("Select a square to travel to: ('A-Z','0-9'):");
 			int y = 2;
-			char xChar = ConsoleInputHandler.getCharFromUser("x");
-			y = ConsoleInputHandler.getIntFromUser("y");
+			char xChar = view.getCharFromUser("x");
+			y = view.getIntFromUser("y");
 
 			int x = xLetters.indexOf(xChar);
 
@@ -249,9 +249,7 @@ public class MapSession extends Session {
 					for (int jumps = 0; jumps < distance; jumps++) {
 						double eventRoll = RNG.randZeroToOne();
 						if (eventRoll <= 0.15) {
-							EventRunner.run(new ShipwreckEvent(), p1);
-						} else if (eventRoll >= 0.16 && eventRoll <= 0.3) {
-							EventRunner.run(new BanditEvent(), p1);
+							EventRunner.run(new BanditEvent(view), p1);
 						}
 						System.out.println("You jump to the next sector.");
 						System.out.println(distance - jumps + " sectors away.");
@@ -298,13 +296,13 @@ public class MapSession extends Session {
 
 			int availableFuelSpace = p1.getFuelCapacity() - p1.getRemainingFuel();
 
-			int quantityBought = ConsoleInputHandler.getIntFromUser("");
+			int quantityBought = view.getIntFromUser("");
 			int cost = quantityBought * FUEL_COST;
 			if (quantityBought <= availableFuelSpace) {
 				if (cost <= p1.getMoney()) {
 					System.out.println();
 					System.out.println("Are you sure you want to buy " + quantityBought + " fuel for " + cost + " CREDS? (Y/N)");
-					char decision = ConsoleInputHandler.getCharFromUser("");
+					char decision = view.getCharFromUser("");
 					if (decision == 'Y' || decision == 'y') {
 						p1.setRemainingFuel(p1.getRemainingFuel() + quantityBought);
 						System.out.println("You now have " + p1.getRemainingFuel() + "/" + p1.getFuelCapacity() + " fuel remaining.");
@@ -321,7 +319,7 @@ public class MapSession extends Session {
 		char decision = 'n';
 		while (true) {
 			System.out.println("Would you like to move a crewmember? (Y/N)");
-			decision = ConsoleInputHandler.getCharFromUser("");
+			decision = view.getCharFromUser("");
 			// TODO write a function to take a range of acceptable chars to make these checks shorter
 			if (decision == 'Y' || decision == 'y' || decision == 'N' || decision == 'n') break;
 		}
@@ -329,14 +327,14 @@ public class MapSession extends Session {
 			System.out.println("Which crewmember would you like to move?");
 			printCrewAndMannedModule();
 			ArrayList<Crewmember> crewmembers = p1.getCrew();
-			int crewIndex = ConsoleInputHandler.getIntInRangeFromUser(crewmembers.size());
+			int crewIndex = view.getIntInRangeFromUser(crewmembers.size());
 			Crewmember crewmemberToMove = crewmembers.get(crewIndex);
 			ArrayList<MannableShipModule> mannableModules = p1.getMannableShipModulesAsList();
 			if (mannableModules.size() <= 0) {
 				System.out.println("There are no mannable modules");
 			} else {
 				System.out.println("Which module would you like " + crewmemberToMove.name + " to man?");
-				MannableShipModule moduleToMan = ConsoleInputHandler.getUserChoiceFromList(mannableModules, "getName");
+				MannableShipModule moduleToMan = view.getUserChoiceFromList(mannableModules, "getName");
 				moduleToMan.removeCrewmember();
 				moduleToMan.assignCrewmember(crewmemberToMove);
 			}

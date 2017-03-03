@@ -1,14 +1,17 @@
 package arch.session;
 
+import arch.view.InputHandler;
+
 public abstract class Session {
 
 	public final String name;
-	//private InputHandler view;
+	public final InputHandler view;
 
-	public Session(String sessionName) {
+	public Session(InputHandler injectedView, String sessionName) {
 		name = sessionName;
+		view = injectedView;
 	}
 
-	protected abstract void run();
+	public abstract void run();
 
 }

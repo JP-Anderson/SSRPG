@@ -1,12 +1,11 @@
 package arch.session;
 
-import arch.view.ConsoleInputHandler;
+import arch.view.InputHandler;
 import ship.AIShip;
 import ship.Ship;
 import ship.PlayerShip;
 import ship.modules.*;
 import ship.weapons.*;
-import arch.view.ShipBattleView;
 
 import java.util.ArrayList;
 
@@ -17,10 +16,8 @@ public class ShipBattleSession extends Session {
 
 	private Ship currentActiveShip;
 
-	private ShipBattleView view;
-
-	public ShipBattleSession(Ship newShip1, Ship newShip2) {
-		super("ShipBattleSession");
+	public ShipBattleSession(InputHandler injectedView, Ship newShip1, Ship newShip2) {
+		super(injectedView, "ShipBattleSession");
 		ship1 = newShip1;
 		ship1.addWeaponModule(3);
 		ship2 = newShip2;
@@ -136,7 +133,7 @@ public class ShipBattleSession extends Session {
 
 		@Override
 		int chooseWeaponAtIndex(int weaponCount) {
-			return ConsoleInputHandler.getIntInRangeFromUser(weaponCount);
+			return view.getIntInRangeFromUser(weaponCount);
 		}
 
 		@Override

@@ -16,7 +16,7 @@ public class ConsoleInputHandler implements InputHandler {
 	/*
 		Internal function which passes user input into the public functions
 	*/
-	private static String readFromBufferedReader(String promptMessage) {
+	private String readFromBufferedReader(String promptMessage) {
 		prompt(promptMessage);
 		String line = "";
 		try {
@@ -32,21 +32,21 @@ public class ConsoleInputHandler implements InputHandler {
 		Prints a provided String prompt to the user.
 		This function is called before taking any input.
 	*/
-	private static void prompt(String promptMessage) {
+	private void prompt(String promptMessage) {
 		System.out.print(promptMessage + ">> ");
 	}
 
 	/*
 		Returns the user input as a String.
 	 */
-	public static String getStringFromUser(String promptMessage) {
+	public String getStringFromUser(String promptMessage) {
 		return readFromBufferedReader(promptMessage);
 	}
 
 	/*
 		Get non empty String from user.
 	 */
-	public static String getNonEmptyStringFromUser(String promptMessage) {
+	public String getNonEmptyStringFromUser(String promptMessage) {
 		while (true) {
 			String input = readFromBufferedReader(promptMessage);
 			if (input.equals("")) {
@@ -60,7 +60,7 @@ public class ConsoleInputHandler implements InputHandler {
 	/*
 		Only accepts a single lower or uppercase letter from the user.
 	*/
-	public static char getCharFromUser(String promptMessage) {
+	public char getCharFromUser(String promptMessage) {
 		while (true) {
 			String input = readFromBufferedReader(promptMessage);
 			if (input.equals("")) {
@@ -79,7 +79,7 @@ public class ConsoleInputHandler implements InputHandler {
 	/*
 		Only accepts an integer from the user.
 	*/
-	public static Integer getIntFromUser(String promptMessage) {
+	public int getIntFromUser(String promptMessage) {
 		while (true) {
 			String input = readFromBufferedReader(promptMessage);
 			try {
@@ -94,7 +94,7 @@ public class ConsoleInputHandler implements InputHandler {
 		Only accepts an integer greater than or equal to zero, and less
 		than the provided number of options.
 	 */
-	public static int getIntInRangeFromUser(int options) {
+	public int getIntInRangeFromUser(int options) {
 		while (true) {
 			int input = getIntFromUser("");
 			if (input >= 0 && input < options) return input;
@@ -108,13 +108,13 @@ public class ConsoleInputHandler implements InputHandler {
 		have the provided attribute name, an indexed list will be printed, using the specified attribute value.
 		Then takes an int from the user and returns the item at that index.
 	*/
-	public static <O> O getUserChoiceFromList(ArrayList<O> objects, String objectAttributeToPrint) {
+	public <O> O getUserChoiceFromList(ArrayList<O> objects, String objectAttributeToPrint) {
 		printOptionsAsIndexedList(objects, objectAttributeToPrint);
 		int selection = getIntInRangeFromUser(objects.size());
 		return objects.get(selection);
 	}
 
-	private static <O> void printOptionsAsIndexedList(ArrayList<O> objects, String objectAttributeToPrint) {
+	private <O> void printOptionsAsIndexedList(ArrayList<O> objects, String objectAttributeToPrint) {
 		MemberType memberType = checkObjectContainsValue(objects.get(0), objectAttributeToPrint);
 		if (memberType == MemberType.NULL) return;
 		ArrayList<String> stringsToPrint = new ArrayList<>();
@@ -128,7 +128,7 @@ public class ConsoleInputHandler implements InputHandler {
 
 	private enum MemberType {FIELD, METHOD, NULL}
 
-	private static <O> MemberType checkObjectContainsValue(O object, String objectAttributeToPrint) {
+	private <O> MemberType checkObjectContainsValue(O object, String objectAttributeToPrint) {
 		Field f = getDesiredField(object, objectAttributeToPrint);
 		if (f != null) return MemberType.FIELD;
 		Method m = getDesiredMethod(object, objectAttributeToPrint);
@@ -136,7 +136,7 @@ public class ConsoleInputHandler implements InputHandler {
 		return MemberType.NULL;
 	}
 
-	private static <O> Field getDesiredField(O object, String objectAttributeToPrint) {
+	private <O> Field getDesiredField(O object, String objectAttributeToPrint) {
 		Field[] fields = object.getClass().getFields();
 		for (Field f : fields) {
 			if (f.getName().equals(objectAttributeToPrint)) return f;
@@ -144,7 +144,7 @@ public class ConsoleInputHandler implements InputHandler {
 		return null;
 	}
 
-	private static <O> Method getDesiredMethod(O object, String objectMethodToUse) {
+	private <O> Method getDesiredMethod(O object, String objectMethodToUse) {
 		Method[] methods = object.getClass().getMethods();
 		for (Method m : methods) {
 			if (m.getName().equals(objectMethodToUse) && m.getReturnType().equals(String.class)) {
@@ -154,7 +154,7 @@ public class ConsoleInputHandler implements InputHandler {
 		return null;
 	}
 
-	private static <O> ArrayList<String> getFieldListFromObjects(ArrayList<O> objects, String objectAttributeToPrint) {
+	private <O> ArrayList<String> getFieldListFromObjects(ArrayList<O> objects, String objectAttributeToPrint) {
 		ArrayList<String> stringsToPrint = new ArrayList<>();
 		for (int i = 0; i < objects.size(); i++) {
 			O o = objects.get(i);
@@ -170,7 +170,7 @@ public class ConsoleInputHandler implements InputHandler {
 		return stringsToPrint;
 	}
 
-	private static <O> ArrayList<String> getMethodResultsFromObjects(ArrayList<O> objects, String objectAttributeToPrint) {
+	private <O> ArrayList<String> getMethodResultsFromObjects(ArrayList<O> objects, String objectAttributeToPrint) {
 		ArrayList<String> stringsToPrint = new ArrayList<>();
 		for (int i = 0; i < objects.size(); i++) {
 			O o = objects.get(i);

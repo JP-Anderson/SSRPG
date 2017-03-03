@@ -1,4 +1,5 @@
 import arch.session.ShipAndCrewCreationSession;
+import arch.view.ConsoleInputHandler;
 import ship.*;
 import arch.session.MapSession;
 
@@ -9,10 +10,11 @@ public class Game {
 
 	public static void main(String[] args) {
 
-		ShipAndCrewCreationSession c = new ShipAndCrewCreationSession();
+		ConsoleInputHandler view = new ConsoleInputHandler();
+		ShipAndCrewCreationSession c = new ShipAndCrewCreationSession(view);
 		c.run();
 		PlayerShip player = c.generateNewShip();
-		MapSession mmm = new MapSession(player);
+		MapSession mmm = new MapSession(view, player);
 		mmm.run();
 	}
 
