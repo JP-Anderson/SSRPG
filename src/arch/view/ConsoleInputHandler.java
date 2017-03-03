@@ -1,4 +1,4 @@
-package util;
+package arch.view;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 	This class can be used to take user input through the consoles. It has a
     number of functions for validating user input of various types.
  */
-public class ConsoleInputHandler {
+public class ConsoleInputHandler implements InputHandler {
 
 	/*
 		Internal function which passes user input into the public functions
@@ -87,6 +87,19 @@ public class ConsoleInputHandler {
 			} catch (NumberFormatException e) {
 				System.out.println("Enter a number");
 			}
+		}
+	}
+
+	/*
+		Only accepts an integer greater than or equal to zero, and less
+		than the provided number of options.
+	 */
+	public static int getIntInRangeFromUser(int options) {
+		while (true) {
+			int input = getIntFromUser("");
+			if (input >= 0 && input < options) return input;
+			else if (input == 0) return input;
+			else System.out.println("Number out of range!");
 		}
 	}
 
@@ -171,15 +184,6 @@ public class ConsoleInputHandler {
 			} else return null;
 		}
 		return stringsToPrint;
-	}
-
-	public static int getIntInRangeFromUser(int options) {
-		while (true) {
-			int input = getIntFromUser("");
-			if (input >= 0 && input < options) return input;
-			else if (input == 0) return input;
-			else System.out.println("Number out of range!");
-		}
 	}
 
 }

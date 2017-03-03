@@ -5,7 +5,7 @@ import characters.classes.*;
 import ship.PlayerShip;
 import ship.modules.*;
 import ship.shields.BasicShieldsMk2;
-import util.ConsoleInputHandler;
+import arch.view.ConsoleInputHandler;
 
 import java.util.ArrayList;
 

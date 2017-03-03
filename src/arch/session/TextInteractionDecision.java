@@ -1,6 +1,6 @@
 package arch.session;
 
-import util.ConsoleInputHandler;
+import arch.view.ConsoleInputHandler;
 
 import java.util.ArrayList;
 

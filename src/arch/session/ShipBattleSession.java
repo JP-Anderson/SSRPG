@@ -1,9 +1,7 @@
 package arch.session;
 
-import characters.Crewmember;
-import characters.classes.PilotClass;
+import arch.view.ConsoleInputHandler;
 import ship.AIShip;
-import util.*;
 import ship.Ship;
 import ship.PlayerShip;
 import ship.modules.*;

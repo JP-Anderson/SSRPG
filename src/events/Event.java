@@ -6,7 +6,7 @@ import goods.Goods;
 import goods.GoodsForSale;
 import goods.GoodsList;
 import ship.PlayerShip;
-import util.ConsoleInputHandler;
+import arch.view.ConsoleInputHandler;
 import util.RNG;
 
 import java.util.ArrayList;
