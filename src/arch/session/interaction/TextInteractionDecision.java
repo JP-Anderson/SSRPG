@@ -1,5 +1,6 @@
 package arch.session.interaction;
 
+import arch.view.ConsoleIOHandler;
 import arch.view.InputHandler;
 import java.util.ArrayList;
 
@@ -7,7 +8,7 @@ public class TextInteractionDecision extends TextInteraction {
 
 	protected ArrayList<String> userOptions;
 
-	public static TextInteraction createStartingInteraction(InputHandler injectedView, String message, ArrayList<String> usersOptions) {
+	public static TextInteraction createStartingInteraction(ConsoleIOHandler injectedView, String message, ArrayList<String> usersOptions) {
 		return new TextInteractionDecision(injectedView, null, message, usersOptions);
 	}
 
@@ -15,28 +16,28 @@ public class TextInteractionDecision extends TextInteraction {
 		return new TextInteractionDecision(previous.view, previous, message, usersOptions);
 	}
 
-	protected TextInteractionDecision(InputHandler injectedView, Interaction previous, String messageToUser, ArrayList<String> usersOptions) {
+	protected TextInteractionDecision(ConsoleIOHandler injectedView, Interaction previous, String messageToUser, ArrayList<String> usersOptions) {
 		super(injectedView, previous, messageToUser);
 		userOptions = usersOptions;
 	}
 
 	@Override
 	protected void interaction() {
-		System.out.println(messageToUser);
+		view.outputHandler.sendStringToView(messageToUser);
 		printUserOptions();
 		int option = getIntIndexFromUser(userOptions.size());
 		next(option);
 	}
 
 	private void printUserOptions() {
-		System.out.println("Options:");
+		view.outputHandler.sendStringToView("Options:");
 		for (String option : userOptions) {
-			System.out.println(option);
+			view.outputHandler.sendStringToView(option);
 		}
 	}
 
 	private int getIntIndexFromUser(int maxIndex) {
-		return view.getIntInRangeFromUser(maxIndex);
+		return view.inputHandler.getIntInRangeFromUser(maxIndex);
 	}
 
 }

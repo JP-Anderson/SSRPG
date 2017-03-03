@@ -1,12 +1,13 @@
 package arch.session.interaction;
 
+import arch.view.ConsoleIOHandler;
 import arch.view.InputHandler;
 
 public class TextInteraction extends Interaction {
 
 	protected String messageToUser;
 
-	public static TextInteraction createStartingInteraction(InputHandler injectedView, String message) {
+	public static TextInteraction createStartingInteraction(ConsoleIOHandler injectedView, String message) {
 		return new TextInteraction(injectedView, null, message);
 	}
 
@@ -14,13 +15,13 @@ public class TextInteraction extends Interaction {
 		return new TextInteraction(previous.view, previous, message);
 	}
 
-	protected TextInteraction(InputHandler injectedView, Interaction previous, String message) {
+	protected TextInteraction(ConsoleIOHandler injectedView, Interaction previous, String message) {
 		super(injectedView, previous);
 		messageToUser = message;
 	}
 
 	protected void interaction() {
-		System.out.println(messageToUser);
+		view.outputHandler.sendStringToView(messageToUser);
 		next(0);
 	}
 

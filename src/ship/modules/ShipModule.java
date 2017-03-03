@@ -1,16 +1,21 @@
 package ship.modules;
 
+import arch.view.View;
+
 public abstract class ShipModule {
 
 	public enum ShipModuleType {
 		COCKPIT, ENGINE, CARGO, SHIELD, WEAPON
 	}
 
+	View view;
+
 	protected final String _name;
 	protected final ShipModuleType _moduleType;
 	protected final int _modulePower;
 
-	public ShipModule(String name, ShipModuleType moduleType, int modulePower) {
+	public ShipModule(View view, String name, ShipModuleType moduleType, int modulePower) {
+		this.view = view;
 		_name = name;
 		_moduleType = moduleType;
 		_modulePower = modulePower;

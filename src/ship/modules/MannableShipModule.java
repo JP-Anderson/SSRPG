@@ -1,20 +1,21 @@
 package ship.modules;
 
+import arch.view.View;
 import characters.Crewmember;
 
 public abstract class MannableShipModule extends ShipModule {
 
-	public MannableShipModule(String name, ShipModuleType moduleType, int modulePower) {
-		super(name, moduleType, modulePower);
+	public MannableShipModule(View view, String name, ShipModuleType moduleType, int modulePower) {
+		super(view, name, moduleType, modulePower);
 	}
 
 	@Override
 	public void printInformation() {
-		System.out.println(" - MODULE [" + _name + "]");
+		view.outputHandler.sendStringToView(" - MODULE [" + _name + "]");
 		if (activeCrewmember == null) {
-			System.out.println("  + Module unmanned");
+			view.outputHandler.sendStringToView("  + Module unmanned");
 		} else {
-			System.out.println("  + Manned: " + activeCrewmember.name);
+			view.outputHandler.sendStringToView("  + Manned: " + activeCrewmember.name);
 		}
 	}
 

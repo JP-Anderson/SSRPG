@@ -1,5 +1,6 @@
 package ship;
 
+import arch.view.View;
 import characters.Crewmember;
 import ship.modules.*;
 import ship.weapons.ShipWeapon;
@@ -11,25 +12,37 @@ import java.util.stream.Collectors;
 
 public class ShipModules {
 
+	private View view;
 	private int _maxCombinedModulePower;
 	private ArrayList<ShipModule> modulesAsArrayList = new ArrayList<>();
 
-	private ShipModules(int maxCombinedModulePower, CockpitModule cockpitModule, EngineModule engineModule) {
+	private ShipModules(View view,
+						int maxCombinedModulePower,
+						CockpitModule cockpitModule,
+						EngineModule engineModule) {
+		this.view = view;
 		_maxCombinedModulePower = maxCombinedModulePower;
 		modulesAsArrayList.add(cockpitModule);
 		modulesAsArrayList.add(engineModule);
 	}
 
-	public static ShipModules createInstance(int maxCombinedModulePower, CockpitModule cockpitModule, EngineModule engineModule) {
+	public static ShipModules createInstance(View view,
+											 int maxCombinedModulePower,
+											 CockpitModule cockpitModule,
+											 EngineModule engineModule) {
 		if (cockpitModule == null) throw new IllegalArgumentException("Need a cockpit module");
 		if (engineModule == null) throw new IllegalArgumentException("Need an engine module");
 		if (maxCombinedModulePower < cockpitModule.getModulePower() + engineModule.getModulePower())
 			throw new IllegalStateException("Max supported module power is not high enough for selected cockpit and engine modules");
-		return new ShipModules(maxCombinedModulePower, cockpitModule, engineModule);
+		return new ShipModules(view, maxCombinedModulePower, cockpitModule, engineModule);
 	}
 
-	public static ShipModules createInstance(int maxPower, CockpitModule cockpitModule, EngineModule engineModule, List<ShipModule> optionalModules) {
-		ShipModules shipModules = createInstance(maxPower, cockpitModule, engineModule);
+	public static ShipModules createInstance(View view,
+											 int maxPower,
+											 CockpitModule cockpitModule,
+											 EngineModule engineModule,
+											 List<ShipModule> optionalModules) {
+		ShipModules shipModules = createInstance(view, maxPower, cockpitModule, engineModule);
 		if (optionalModules != null && optionalModules.size() > 0) shipModules.setUpOptionalModules(optionalModules);
 		return shipModules;
 	}
@@ -119,7 +132,7 @@ public class ShipModules {
 
 	public void addWeaponModule(int weaponModulePower) {
 		if (getCombinedModulePower() + weaponModulePower <= _maxCombinedModulePower) {
-			modulesAsArrayList.add(new WeaponModule("WeaponModule", weaponModulePower));
+			modulesAsArrayList.add(new WeaponModule(view, "WeaponModule", weaponModulePower));
 		}
 	}
 

@@ -1,5 +1,6 @@
 package ship;
 
+import arch.view.ConsoleIOHandler;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ship.modules.MannableShipModule;
@@ -10,9 +11,11 @@ class ShipTest {
 
 	private static PlayerShip testShip;
 
+	private static ConsoleIOHandler consoleIOHandler = new ConsoleIOHandler();
+
 	@BeforeAll
 	static void setUp() {
-		testShip = new PlayerShip.PlayerShipBuilder("TestShip",10).build();
+		testShip = new PlayerShip.PlayerShipBuilder(consoleIOHandler, "TestShip",10).build();
 	}
 
 	@Test

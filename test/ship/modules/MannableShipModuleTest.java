@@ -1,5 +1,6 @@
 package ship.modules;
 
+import arch.view.ConsoleIOHandler;
 import characters.Crewmember;
 import characters.classes.ScoundrelClass;
 import characters.classes.WeaponsExpertClass;
@@ -8,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MannableShipModuleTest {
+
+	private ConsoleIOHandler consoleIOHandler = new ConsoleIOHandler();
 
 	@Test
 	public void assignCrewmemberSimpleCase() {
@@ -94,8 +97,14 @@ class MannableShipModuleTest {
 		assertTrue(firstCrewmember.isManningAModule());
 		assertTrue(secondCrewmember.isManningAModule());
 
-		assertFalse(firstModule.assignCrewmember(secondCrewmember));
-		assertFalse(secondModule.assignCrewmember(firstCrewmember));
+		firstModule.assignCrewmember(secondCrewmember);
+
+		assertEquals(firstCrewmember, firstModule.getActiveCrewmember());
+		assertEquals(secondCrewmember, secondModule.getActiveCrewmember());
+		assertTrue(firstCrewmember.isManningAModule());
+		assertTrue(secondCrewmember.isManningAModule());
+
+		secondModule.assignCrewmember(firstCrewmember);
 
 		assertEquals(firstCrewmember, firstModule.getActiveCrewmember());
 		assertEquals(secondCrewmember, secondModule.getActiveCrewmember());
@@ -127,11 +136,11 @@ class MannableShipModuleTest {
 	}
 
 	private MannableShipModule firstModule() {
-		return new CockpitModule("Cockpit", 4);
+		return new CockpitModule(consoleIOHandler, "Cockpit", 4);
 	}
 
 	private MannableShipModule secondModule() {
-		return new WeaponModule("Weapon", 3);
+		return new WeaponModule(consoleIOHandler, "Weapon", 3);
 	}
 
 	private Crewmember firstCrewmember() {

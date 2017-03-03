@@ -1,5 +1,6 @@
 package ship.modules;
 
+import arch.view.View;
 import goods.PurchasedGoods;
 
 import java.util.List;
@@ -11,15 +12,15 @@ public class CargoBayModule extends MannableShipModule {
 	private int filledCapacity;
 	private List<PurchasedGoods> cargo;
 
-	public CargoBayModule(String moduleName, int powerRequirement, int newCapacity) {
-		super(moduleName, ShipModuleType.CARGO, powerRequirement);
+	public CargoBayModule(View view, String moduleName, int powerRequirement, int newCapacity) {
+		super(view, moduleName, ShipModuleType.CARGO, powerRequirement);
 		capacity = newCapacity;
 		filledCapacity = 0;
 		cargo = new ArrayList<PurchasedGoods>();
 	}
 
-	public CargoBayModule(String moduleName, int powerRequirement, int newCapacity, List<PurchasedGoods> newCargo) {
-		super(moduleName, ShipModuleType.CARGO, powerRequirement);
+	public CargoBayModule(View view, String moduleName, int powerRequirement, int newCapacity, List<PurchasedGoods> newCargo) {
+		super(view, moduleName, ShipModuleType.CARGO, powerRequirement);
 		capacity = newCapacity;
 		filledCapacity = newCargo.size();
 		cargo = newCargo;

@@ -2,6 +2,7 @@ package events;
 
 import arch.session.interaction.Interaction;
 import arch.session.interaction.TextInteraction;
+import arch.view.ConsoleIOHandler;
 import arch.view.InputHandler;
 import characters.Crewmember;
 import characters.classes.PilotClass;
@@ -15,10 +16,10 @@ import java.util.ArrayList;
 
 public abstract class Event {
 
-	protected InputHandler view;
+	protected ConsoleIOHandler view;
 	protected Interaction rootInteraction;
 
-	protected Event(InputHandler injectedView) {
+	protected Event(ConsoleIOHandler injectedView) {
 		view = injectedView;
 		rootInteraction = TextInteraction.createStartingInteraction(injectedView, getEventIntroductionMessage());
 	}
@@ -54,7 +55,7 @@ public abstract class Event {
 		//TODO: move this into a UI/console input class
 		if (outcome.getCrewReward().size() > 0) {
 			System.out.println(crewPrompt + "? (Y/N)");
-			char decision = view.getCharFromUser("");
+			char decision = view.inputHandler.getCharFromUser("");
 			if (decision != 'Y' && decision != 'y') {
 				outcome.removeCrewReward();
 			}
@@ -62,7 +63,7 @@ public abstract class Event {
 		if (outcome.getGoodsReward().size() > 0) {
 			Goods newGoods = outcome.getGoodsReward().get(0);
 			System.out.println(goodsPrompt.replace("$", newGoods.name) + "? (Y/N)");
-			char decision = view.getCharFromUser("");
+			char decision = view.inputHandler.getCharFromUser("");
 			if (decision != 'Y' && decision != 'y') {
 				outcome.removeGoodsReward();
 			}

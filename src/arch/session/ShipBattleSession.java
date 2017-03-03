@@ -1,5 +1,6 @@
 package arch.session;
 
+import arch.view.ConsoleIOHandler;
 import arch.view.InputHandler;
 import ship.AIShip;
 import ship.Ship;
@@ -16,7 +17,7 @@ public class ShipBattleSession extends Session {
 
 	private Ship currentActiveShip;
 
-	public ShipBattleSession(InputHandler injectedView, Ship newShip1, Ship newShip2) {
+	public ShipBattleSession(ConsoleIOHandler injectedView, Ship newShip1, Ship newShip2) {
 		super(injectedView, "ShipBattleSession");
 		ship1 = newShip1;
 		ship1.addWeaponModule(3);
@@ -31,7 +32,7 @@ public class ShipBattleSession extends Session {
 			m.setWeapon(new BurstLaserMk3());
 		}
 		currentActiveShip = determineWhichShipGetsFirstTurn();
-		System.out.println(currentActiveShip.name + " is going first.");
+		view.outputHandler.sendStringToView(currentActiveShip.name + " is going first.");
 	}
 
 	private Ship determineWhichShipGetsFirstTurn() {
@@ -47,10 +48,10 @@ public class ShipBattleSession extends Session {
 			try {
 				Thread.sleep(1500);
 			} catch (InterruptedException e) {
-				System.out.println("got interrupted!");
+				view.outputHandler.sendStringToView("got interrupted!");
 			}
 		}
-		System.out.println("Fight over.");
+		view.outputHandler.sendStringToView("Fight over.");
 
 	}
 
@@ -77,7 +78,7 @@ public class ShipBattleSession extends Session {
 
 		void defencePhase() {
 			currentActiveShip.rechargeShields();
-			System.out.println("Defence phase.");
+			view.outputHandler.sendStringToView("Defence phase.");
 		}
 
 		boolean weaponCheckPhase() {
@@ -86,9 +87,9 @@ public class ShipBattleSession extends Session {
 					if (m.getBaseTurnsTilWeaponReady() == 0) {
 						return true;
 					} else {
-						System.out.println(m.getWeapon().name + " will be ready to fire in "
+						view.outputHandler.sendStringToView(m.getWeapon().name + " will be ready to fire in "
 								+ m.getBaseTurnsTilWeaponReady() + " turns.");
-						System.out.println(m.getBaseTurnsTilWeaponReady());
+						view.outputHandler.sendStringToView(Integer.toString(m.getBaseTurnsTilWeaponReady()));
 						m.decrementTurnsTilWeaponReady();
 					}
 				}
@@ -98,13 +99,13 @@ public class ShipBattleSession extends Session {
 
 		void attackPhase() {
 			ArrayList<WeaponModule> readyWeapons = new ArrayList<>();
-			if (isPlayer()) System.out.println("Charged weapons:");
+			if (isPlayer()) view.outputHandler.sendStringToView("Charged weapons:");
 			int i = 0;
 			for (WeaponModule m : currentActiveShip.getWeaponModules()) {
 				if (m.getWeapon() != null) {
 					if (m.getBaseTurnsTilWeaponReady() == 0) {
 						readyWeapons.add(m);
-						if (isPlayer()) System.out.println("(" + i + ") " + m.getWeapon().name);
+						if (isPlayer()) view.outputHandler.sendStringToView("(" + i + ") " + m.getWeapon().name);
 						i++;
 					}
 				}
@@ -116,7 +117,7 @@ public class ShipBattleSession extends Session {
 			WeaponModule m = readyWeapons.get(choice);
 			Attack a = m.attack();
 			if (a != null) {
-				System.out.println(a.hullDamage + "," + a.shieldDamage + "," + a.accuracy);
+				view.outputHandler.sendStringToView(a.hullDamage + "," + a.shieldDamage + "," + a.accuracy);
 				Ship shipToAttack = currentActiveShip == ship1 ? ship2 : ship1;
 				shipToAttack.sustainFire(a);
 			}
@@ -133,7 +134,7 @@ public class ShipBattleSession extends Session {
 
 		@Override
 		int chooseWeaponAtIndex(int weaponCount) {
-			return view.getIntInRangeFromUser(weaponCount);
+			return view.inputHandler.getIntInRangeFromUser(weaponCount);
 		}
 
 		@Override

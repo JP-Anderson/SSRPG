@@ -1,5 +1,6 @@
 package ship;
 
+import arch.view.View;
 import map.GridMap;
 import map.GridPoint;
 import characters.Crewmember;
@@ -13,7 +14,6 @@ public class PlayerShip extends Ship {
 	private int remainingFuel;
 	private int scannerStrength;
 	private Scanner scanner;
-	//private ArrayList<Crewmember> crew;
 	private GridPoint location;
 	private int money;
 
@@ -25,20 +25,12 @@ public class PlayerShip extends Ship {
 		return money;
 	}
 
-	private PlayerShip(PlayerShipBuilder builder) {
-		super(builder);
+	private PlayerShip(View view, PlayerShipBuilder builder) {
+		super(view, builder);
 		fuelCapacity = builder.fuelCapacity;
 		remainingFuel = fuelCapacity;
 		scannerStrength = builder.scannerStrength;
 		money = builder.money;
-	}
-
-	public PlayerShip(String pName, ShipModules modules, int fuel, int crewCap) {
-		super(pName, modules);
-		fuelCapacity = fuel;
-		remainingFuel = fuel;
-		crewCapacity = crewCap;
-		crew = new ArrayList<>();
 	}
 
 	public void initialiseCrew(ArrayList<Crewmember> newCrew) {
@@ -106,8 +98,8 @@ public class PlayerShip extends Ship {
 
 	public static class PlayerShipBuilder extends Ship.GenericShipBuilder<PlayerShipBuilder> {
 
-		public PlayerShipBuilder(String name, int maxCombinedModulePower) {
-			super(name, maxCombinedModulePower);
+		public PlayerShipBuilder(View view, String name, int maxCombinedModulePower) {
+			super(view, name, maxCombinedModulePower);
 		}
 
 		protected int fuelCapacity = 100;
@@ -130,7 +122,7 @@ public class PlayerShip extends Ship {
 		}
 
 		public PlayerShip build() {
-			return new PlayerShip(this);
+			return new PlayerShip(view, this);
 		}
 
 	}

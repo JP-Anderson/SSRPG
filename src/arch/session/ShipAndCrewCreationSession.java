@@ -1,5 +1,6 @@
 package arch.session;
 
+import arch.view.ConsoleIOHandler;
 import arch.view.InputHandler;
 import characters.Crewmember;
 import characters.classes.*;
@@ -15,7 +16,7 @@ public class ShipAndCrewCreationSession extends Session {
 	private ArrayList<CrewmemberClass> availableClasses;
 	private String newName;
 
-	public ShipAndCrewCreationSession(InputHandler injectedView) {
+	public ShipAndCrewCreationSession(ConsoleIOHandler injectedView) {
 		super(injectedView, "ShipAndCrewCreationSession");
 		availableClasses = new ArrayList<>();
 		availableClasses.add(new PilotClass());
@@ -25,31 +26,31 @@ public class ShipAndCrewCreationSession extends Session {
 
 	@Override
 	public void run() {
-		newName = view.getNonEmptyStringFromUser("What would you like to call your ship?");
+		newName = view.inputHandler.getNonEmptyStringFromUser("What would you like to call your ship?");
 		crew = new ArrayList<>();
 		int crewCount = 1;
 		final int numberOfStartingCrewmembers = 2;
 		for (int i = 0; i < numberOfStartingCrewmembers; i++) {
-			System.out.println("You have " + (numberOfStartingCrewmembers - i) + " crewmembers left to pick");
-			System.out.println("Which class do you pick for crewmember #" + crewCount + "?");
-			System.out.println("Available crew:");
-			CrewmemberClass chosenClass = view.getUserChoiceFromList(availableClasses, "_className");
+			view.outputHandler.sendStringToView("You have " + (numberOfStartingCrewmembers - i) + " crewmembers left to pick");
+			view.outputHandler.sendStringToView("Which class do you pick for crewmember #" + crewCount + "?");
+			view.outputHandler.sendStringToView("Available crew:");
+			CrewmemberClass chosenClass = view.inputHandler.getUserChoiceFromList(availableClasses, "_className");
 			availableClasses.remove(chosenClass);
-			String chosenName = view.getNonEmptyStringFromUser("What will you call this " + chosenClass._className + "?");
+			String chosenName = view.inputHandler.getNonEmptyStringFromUser("What will you call this " + chosenClass._className + "?");
 			crew.add(new Crewmember(chosenName, chosenClass, 1));
 			crewCount++;
-			System.out.println();
+			view.outputHandler.sendStringToView("");
 		}
 	}
 
 	public PlayerShip generateNewShip() {
-		CockpitModule cockpitModule = new CockpitModule("CockpitModule1", 1);
-		EngineModule engineModule = new EngineModule("EnginesModule1", 1, 5);
-		ShieldModule shieldModule = new ShieldModule("ShieldsModule1", 1);
+		CockpitModule cockpitModule = new CockpitModule(view, "CockpitModule1", 1);
+		EngineModule engineModule = new EngineModule(view, "EnginesModule1", 1, 5);
+		ShieldModule shieldModule = new ShieldModule(view, "ShieldsModule1", 1);
 		shieldModule.shields(new BasicShieldsMk2());
-		CargoBayModule cargoBayModule = new CargoBayModule("CargoBayModule", 0, 20);
+		CargoBayModule cargoBayModule = new CargoBayModule(view, "CargoBayModule", 0, 20);
 
-		PlayerShip p1 = new PlayerShip.PlayerShipBuilder(newName,10)
+		PlayerShip p1 = new PlayerShip.PlayerShipBuilder(view, newName,10)
 				.cockpitModule(cockpitModule)
 				.engineModule(engineModule)
 				.shieldModule(shieldModule)

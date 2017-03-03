@@ -1,5 +1,6 @@
 package ship.modules;
 
+import arch.view.View;
 import ship.weapons.Attack;
 import ship.shields.ShieldSystem;
 
@@ -7,8 +8,8 @@ public class ShieldModule extends MannableShipModule {
 
 	private ShieldSystem shields;
 
-	public ShieldModule(String newName, int powerRequirement) {
-		super(newName, ShipModuleType.SHIELD, powerRequirement);
+	public ShieldModule(View view, String newName, int powerRequirement) {
+		super(view, newName, ShipModuleType.SHIELD, powerRequirement);
 		shields = null;
 	}
 
@@ -24,12 +25,12 @@ public class ShieldModule extends MannableShipModule {
 	public void printInformation() {
 		super.printInformation();
 		if (shields == null) {
-			System.out.println("Empty Shield Module ... PWR = [" + _modulePower + "]");
-			System.out.println("No shields.");
+			view.outputHandler.sendStringToView("Empty Shield Module ... PWR = [" + _modulePower + "]");
+			view.outputHandler.sendStringToView("No shields.");
 		} else {
-			System.out.println("  + SHIELD POWER [" + _modulePower + "]");
-			System.out.println("  + RMNG SHIELDS [" + shields.getRemainingShields() + "]");
-			System.out.println("  + MAXM SHIELDS [" + shields.getMaxShields() + "]");
+			view.outputHandler.sendStringToView("  + SHIELD POWER [" + _modulePower + "]");
+			view.outputHandler.sendStringToView("  + RMNG SHIELDS [" + shields.getRemainingShields() + "]");
+			view.outputHandler.sendStringToView("  + MAXM SHIELDS [" + shields.getMaxShields() + "]");
 
 		}
 	}

@@ -1,5 +1,6 @@
 package ship;
 
+import arch.view.View;
 import characters.Crewmember;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ import ship.weapons.Attack;
 
 public abstract class Ship {
 
+	private static View view;
+	
 	public final String name;
 	ShipModules modules;
 	int maxHullIntegrity;
@@ -25,7 +28,8 @@ public abstract class Ship {
 
 	private boolean isDestroyed;
 
-	protected Ship(GenericShipBuilder builder) {
+	protected Ship(View view, GenericShipBuilder builder) {
+		Ship.view = view;
 		name = builder.name;
 		modules = builder.generateModules();
 		maxHullIntegrity = builder.maxHullIntegrity;
@@ -34,7 +38,6 @@ public abstract class Ship {
 		crewCapacity = builder.crewCapacity;
 	}
 
-	//TODO remove this once AIShip builder has been created and we no longer need public constructors
 	Ship(String shipName, ShipModules shipModules) {
 		name = shipName;
 		modules = shipModules;
@@ -48,12 +51,12 @@ public abstract class Ship {
 		int originalShields = shieldModule.shields().getRemainingShields();
 		int originalHull = remainingHullIntegrity;
 
-		System.out.println("Attack: sD " + attack.shieldDamage + " hD " + attack.hullDamage);
+		view.outputHandler.sendStringToView("Attack: sD " + attack.shieldDamage + " hD " + attack.hullDamage);
 		Attack shieldedAttack = shieldModule.shieldAttack(attack);
-		System.out.println("Shielded Attack: sD " + shieldedAttack.shieldDamage + " hD " + shieldedAttack.hullDamage);
+		view.outputHandler.sendStringToView("Shielded Attack: sD " + shieldedAttack.shieldDamage + " hD " + shieldedAttack.hullDamage);
 		takeHullDamage(shieldedAttack);
-		System.out.println("Shields: " + originalShields + " => " + shieldModule.shields().getRemainingShields());
-		System.out.println("Hull: " + originalHull + " => " + remainingHullIntegrity);
+		view.outputHandler.sendStringToView("Shields: " + originalShields + " => " + shieldModule.shields().getRemainingShields());
+		view.outputHandler.sendStringToView("Hull: " + originalHull + " => " + remainingHullIntegrity);
 	}
 
 	private void takeHullDamage(Attack shieldedAttack) {
@@ -138,6 +141,7 @@ public abstract class Ship {
 
 	public static abstract class GenericShipBuilder<B extends GenericShipBuilder<B>> {
 
+		protected View view;
 		protected String name;
 		protected int maxCombinedModulePower;
 		protected CockpitModule cockpitModule;
@@ -155,7 +159,8 @@ public abstract class Ship {
 		// The use of an ArrayList hopefully makes it easier to add modules in the future.
 		private ArrayList<ShipModule> optionalModulesList = new ArrayList<>();
 
-		GenericShipBuilder(String name, int maxCombinedModulePower) {
+		GenericShipBuilder(View view, String name, int maxCombinedModulePower) {
+			this.view = view;
 			this.name = name;
 			this.maxCombinedModulePower = maxCombinedModulePower;
 			if (cockpitModule == null) addDefaultCockpitModule();
@@ -207,15 +212,15 @@ public abstract class Ship {
 		}
 
 		protected ShipModules generateModules() {
-			return ShipModules.createInstance(maxCombinedModulePower, cockpitModule, engineModule, optionalModulesList);
+			return ShipModules.createInstance(view, maxCombinedModulePower, cockpitModule, engineModule, optionalModulesList);
 		}
 
 		private void addDefaultCockpitModule() {
-			cockpitModule = new CockpitModule("CockpitModule1", 1);
+			cockpitModule = new CockpitModule(view, "CockpitModule1", 1);
 		}
 
 		private void addDefaultEngineModule() {
-			engineModule = new EngineModule("EnginesModule1", 1, 5);
+			engineModule = new EngineModule(view, "EnginesModule1", 1, 5);
 		}
 	}
 }

@@ -1,13 +1,14 @@
 package events;
 
 import arch.session.interaction.Interaction;
+import arch.view.ConsoleIOHandler;
 import arch.view.InputHandler;
 import goods.*;
 import util.RNG;
 
 public class ShipwreckEvent extends Event {
 
-	public ShipwreckEvent(InputHandler injectedView) {
+	public ShipwreckEvent(ConsoleIOHandler injectedView) {
 		super(injectedView);
 	}
 

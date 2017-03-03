@@ -4,6 +4,7 @@ import arch.session.interaction.ComplexInteraction;
 import arch.session.interaction.Interaction;
 import arch.session.ShipBattleSession;
 import arch.session.interaction.TextInteraction;
+import arch.view.ConsoleIOHandler;
 import arch.view.InputHandler;
 import goods.Goods;
 import ship.AIShip;
@@ -13,7 +14,7 @@ import util.RNG;
 
 public class BanditEvent extends Event {
 
-	public BanditEvent(InputHandler injectedView) {
+	public BanditEvent(ConsoleIOHandler injectedView) {
 		super(injectedView);
 	}
 
@@ -52,37 +53,16 @@ public class BanditEvent extends Event {
 
 	@Override
 	void displayEvent() {
-		//System.out.println("You encounter a Bandit!");
-		//System.out.println("The Bandit primes its weapons and moves in to attack!");
-//		ShieldModule shieldModule = new ShieldModule("ShieldsModule1", 1);
-//		shieldModule.shields(new BasicShieldsMk2());
-//
-//		AIShip s2 = new AIShip.AIShipBuilder("Bandits",12)
-//				.shieldModule(shieldModule)
-//				.maxHullIntegrity(100)
-//				.build();
-//
-//		ShipBattleSession sbs = new ShipBattleSession(view, playerShip, s2);
-//		sbs.run();
-
-//		System.out.println("There is " + outcome.getMoneyReward() + " CREDS.");
-//		if (outcome.getCrewReward().size() > 0) {
-//			System.out.println("There is a survivor who was taken prisoner by the Bandits!");
-//		}
-//		if (outcome.getGoodsReward().size() > 0) {
-//			Goods newGoods = outcome.getGoodsReward().get(0);
-//			System.out.println("There is one unit of " + newGoods.name + " salvageable in the hold.");
-//		}
 		rootInteraction.run();
 	}
 
 	private class BanditEventRunnable implements Runnable {
 		@Override
 		public void run() {
-			ShieldModule shieldModule = new ShieldModule("ShieldsModule1", 1);
+			ShieldModule shieldModule = new ShieldModule(view, "ShieldsModule1", 1);
 			shieldModule.shields(new BasicShieldsMk2());
 
-			AIShip s2 = new AIShip.AIShipBuilder("Bandits",12)
+			AIShip s2 = new AIShip.AIShipBuilder(view, "Bandits",12)
 					.shieldModule(shieldModule)
 					.maxHullIntegrity(100)
 					.build();

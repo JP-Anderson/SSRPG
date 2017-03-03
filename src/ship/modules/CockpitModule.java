@@ -1,9 +1,11 @@
 package ship.modules;
 
+import arch.view.View;
+
 public class CockpitModule extends MannableShipModule {
 
-	public CockpitModule(String name, int powerRequirement) {
-		super(name, ShipModuleType.COCKPIT, powerRequirement);
+	public CockpitModule(View view, String name, int powerRequirement) {
+		super(view, name, ShipModuleType.COCKPIT, powerRequirement);
 	}
 
 	@Override

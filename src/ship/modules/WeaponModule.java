@@ -1,5 +1,6 @@
 package ship.modules;
 
+import arch.view.View;
 import ship.weapons.*;
 import util.RNG;
 
@@ -9,8 +10,8 @@ public class WeaponModule extends MannableShipModule {
 	private ShipWeapon loadedWeapon;
 	private int baseTurnsTilWeaponReady;
 
-	public WeaponModule(String newName, int maxWeaponPower) {
-		super(newName, ShipModuleType.WEAPON, maxWeaponPower);
+	public WeaponModule(View view, String newName, int maxWeaponPower) {
+		super(view, newName, ShipModuleType.WEAPON, maxWeaponPower);
 		maxWeaponPowerSupported = maxWeaponPower;
 		loadedWeapon = null;
 	}
@@ -30,17 +31,17 @@ public class WeaponModule extends MannableShipModule {
 	@Override
 	public void printInformation() {
 		super.printInformation();
-		System.out.println("  + POWER [" + maxWeaponPowerSupported + "]");
+		view.outputHandler.sendStringToView("  + POWER [" + maxWeaponPowerSupported + "]");
 	}
 
 	public boolean setWeapon(ShipWeapon weapon) {
 		if (maxWeaponPowerSupported >= weapon.requiredWeaponModulePower) {
 			baseTurnsTilWeaponReady = weapon.cooldown;
 			loadedWeapon = weapon;
-			System.out.println("Equipped " + weapon.name + ".");
+			view.outputHandler.sendStringToView("Equipped " + weapon.name + ".");
 			return true;
 		} else {
-			System.out.println("Couldn't equip " + weapon.name + ".");
+			view.outputHandler.sendStringToView("Couldn't equip " + weapon.name + ".");
 			return false;
 		}
 	}
@@ -49,7 +50,7 @@ public class WeaponModule extends MannableShipModule {
 		if (loadedWeapon != null && baseTurnsTilWeaponReady == 0)
 			if (rollForAttackHitChance())
 				return new Attack(loadedWeapon.shieldDamage, loadedWeapon.hullDamage, 0.9, loadedWeapon.weaponType);
-		System.out.println("MISS!");
+		view.outputHandler.sendStringToView("MISS!");
 		return null;
 	}
 

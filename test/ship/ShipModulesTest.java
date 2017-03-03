@@ -1,5 +1,6 @@
 package ship;
 
+import arch.view.ConsoleIOHandler;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,20 +11,22 @@ import java.util.Arrays;
 
 
 class ShipModulesTest {
+	
+	private static ConsoleIOHandler consoleIOHandler = new ConsoleIOHandler();
 
 	@Test
 	public void exceptionThrownForMandatoryModulesExceedingPowerRequirement() {
 		CockpitModule cockpitModule = cockpitModule(4);
 		EngineModule engineModule = engineModule(7);
 		assertThrows(IllegalStateException.class,
-				() -> ShipModules.createInstance(10, cockpitModule, engineModule));
+				() -> ShipModules.createInstance(consoleIOHandler, 10, cockpitModule, engineModule));
 	}
 
 	@Test
 	public void shipModuleCreationWorksWithModulesEqualToMaxPowerRequirement() {
 		CockpitModule cockpitModule = cockpitModule(4);
 		EngineModule engineModule = engineModule(6);
-		assertNotNull(ShipModules.createInstance(10, cockpitModule, engineModule));
+		assertNotNull(ShipModules.createInstance(consoleIOHandler, 10, cockpitModule, engineModule));
 	}
 
 	@Test
@@ -34,7 +37,7 @@ class ShipModulesTest {
 		ArrayList<ShipModule> optionalModules = new ArrayList<>();
 		optionalModules.add(weaponModule);
 		assertThrows(IllegalStateException.class,
-				() -> ShipModules.createInstance(10, cockpitModule, engineModule, optionalModules));
+				() -> ShipModules.createInstance(consoleIOHandler, 10, cockpitModule, engineModule, optionalModules));
 	}
 
 	@Test
@@ -44,7 +47,7 @@ class ShipModulesTest {
 		WeaponModule weaponModule = weaponModule(3);
 		ArrayList<ShipModule> optionalModules = new ArrayList<>();
 		optionalModules.add(weaponModule);
-		assertNotNull(ShipModules.createInstance(13, cockpitModule, engineModule, optionalModules));
+		assertNotNull(ShipModules.createInstance(consoleIOHandler, 13, cockpitModule, engineModule, optionalModules));
 	}
 
 	@Test
@@ -59,7 +62,7 @@ class ShipModulesTest {
 		optionalModules.add(weaponModule2);
 		optionalModules.add(shieldModule);
 		assertThrows(IllegalStateException.class,
-				() -> ShipModules.createInstance(20, cockpitModule, engineModule, optionalModules));
+				() -> ShipModules.createInstance(consoleIOHandler, 20, cockpitModule, engineModule, optionalModules));
 	}
 
 	@Test
@@ -73,14 +76,14 @@ class ShipModulesTest {
 		optionalModules.add(weaponModule);
 		optionalModules.add(weaponModule2);
 		optionalModules.add(shieldModule);
-		assertNotNull(ShipModules.createInstance(23, cockpitModule, engineModule, optionalModules));
+		assertNotNull(ShipModules.createInstance(consoleIOHandler, 23, cockpitModule, engineModule, optionalModules));
 	}
 
 	@Test
 	public void getCombinedModulePower() {
 		CockpitModule cockpitModule = cockpitModule(2);
 		EngineModule engineModule = engineModule(6);
-		ShipModules modules = ShipModules.createInstance(10, cockpitModule, engineModule);
+		ShipModules modules = ShipModules.createInstance(consoleIOHandler, 10, cockpitModule, engineModule);
 		assertEquals(8, modules.getCombinedModulePower());
 	}
 
@@ -88,7 +91,7 @@ class ShipModulesTest {
 	public void tryToAddNewShieldModuleWithEnoughFreePower() {
 		CockpitModule cockpitModule = cockpitModule(2);
 		EngineModule engineModule = engineModule(6);
-		ShipModules modules = ShipModules.createInstance(20, cockpitModule, engineModule);
+		ShipModules modules = ShipModules.createInstance(consoleIOHandler, 20, cockpitModule, engineModule);
 		assertNull(modules.getShipModule(ShieldModule.class));
 		ShieldModule newShieldModule = shieldModule(5);
 		modules.setShipModule(newShieldModule);
@@ -100,7 +103,7 @@ class ShipModulesTest {
 	public void tryToAddNewShieldModuleWhichExceedsFreePower() {
 		CockpitModule cockpitModule = cockpitModule(2);
 		EngineModule engineModule = engineModule(6);
-		ShipModules modules = ShipModules.createInstance(10, cockpitModule, engineModule);
+		ShipModules modules = ShipModules.createInstance(consoleIOHandler, 10, cockpitModule, engineModule);
 		assertNull(modules.getShipModule(ShieldModule.class));
 		ShieldModule newShieldModule = shieldModule(5);
 		modules.setShipModule(newShieldModule);
@@ -112,7 +115,7 @@ class ShipModulesTest {
 	public void tryToReplaceShieldModuleWithEnoughFreePower() {
 		CockpitModule cockpitModule = cockpitModule(2);
 		EngineModule engineModule = engineModule(6);
-		ShipModules modules = ShipModules.createInstance(20, cockpitModule, engineModule);
+		ShipModules modules = ShipModules.createInstance(consoleIOHandler, 20, cockpitModule, engineModule);
 		ShieldModule oldShieldModule = shieldModule(5);
 		modules.setShipModule(oldShieldModule);
 		assertEquals(oldShieldModule, modules.getShipModule(ShieldModule.class));
@@ -128,7 +131,7 @@ class ShipModulesTest {
 	public void tryToReplaceShieldModuleWithoutEnoughFreePower() {
 		CockpitModule cockpitModule = cockpitModule(4);
 		EngineModule engineModule = engineModule(7);
-		ShipModules modules = ShipModules.createInstance(20, cockpitModule, engineModule);
+		ShipModules modules = ShipModules.createInstance(consoleIOHandler, 20, cockpitModule, engineModule);
 		ShieldModule oldShieldModule = shieldModule(5);
 		modules.setShipModule(oldShieldModule);
 		assertEquals(oldShieldModule, modules.getShipModule(ShieldModule.class));
@@ -145,26 +148,26 @@ class ShipModulesTest {
 	public void ensureGetGenericShipModuleWorks() {
 		CockpitModule cockpitModule = cockpitModule(4);
 		EngineModule engineModule = engineModule(7);
-		ShipModules modules = ShipModules.createInstance(20, cockpitModule, engineModule);
+		ShipModules modules = ShipModules.createInstance(consoleIOHandler, 20, cockpitModule, engineModule);
 
 		CockpitModule cockpitModuleReference = (CockpitModule) modules.getShipModule(CockpitModule.class);
 		assertEquals(cockpitModule, cockpitModuleReference);
 	}
 
 	private CockpitModule cockpitModule(int powerRequirement) {
-		return new CockpitModule("TestCockpitModule", powerRequirement);
+		return new CockpitModule(consoleIOHandler, "TestCockpitModule", powerRequirement);
 	}
 
 	private EngineModule engineModule(int powerRequirement) {
-		return new EngineModule("TestEnginesModule", powerRequirement, 5);
+		return new EngineModule(consoleIOHandler, "TestEnginesModule", powerRequirement, 5);
 	}
 
 	private WeaponModule weaponModule(int powerRequirement) {
-		return new WeaponModule("TestWeaponModule", powerRequirement);
+		return new WeaponModule(consoleIOHandler, "TestWeaponModule", powerRequirement);
 	}
 
 	private ShieldModule shieldModule(int powerRequirement) {
-		return new ShieldModule("TestShield", powerRequirement);
+		return new ShieldModule(consoleIOHandler, "TestShield", powerRequirement);
 	}
 
 }

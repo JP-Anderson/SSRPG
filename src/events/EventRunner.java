@@ -1,5 +1,6 @@
 package events;
 
+import arch.view.ConsoleIOHandler;
 import ship.PlayerShip;
 import characters.Crewmember;
 import goods.GoodsForSale;
@@ -7,22 +8,25 @@ import goods.PurchasedGoods;
 
 public class EventRunner {
 
-	public static void run(Event event, PlayerShip player) {
+	private static ConsoleIOHandler view;
+
+	public static void run(ConsoleIOHandler newView, Event event, PlayerShip player) {
+		view = newView;
 		EventOutcome outcome = event.transpire(player);
 		sleep(2);
 		for (GoodsForSale g : outcome.getGoodsReward()) {
 			//player.getCargoBay().addCargo(g);
 			if (!player.getCargoBay().isFull()) {
 				player.getCargoBay().addCargo(new PurchasedGoods(g, 1, null));
-				System.out.println("Adding " + g.name + ".");
-			} else System.out.println("No space for " + g.name + ".");
+				view.outputHandler.sendStringToView("Adding " + g.name + ".");
+			} else view.outputHandler.sendStringToView("No space for " + g.name + ".");
 		}
 		for (Crewmember c : outcome.getCrewReward()) {
 			player.getCrew().add(c);
-			System.out.println("Adding to crew.");
+			view.outputHandler.sendStringToView("Adding to crew.");
 		}
 		int newBalance = player.getMoney() + outcome.getMoneyReward();
-		System.out.println("CREDS " + player.getMoney() + " --> " + newBalance);
+		view.outputHandler.sendStringToView("CREDS " + player.getMoney() + " --> " + newBalance);
 		sleep(1);
 
 		player.setMoney(newBalance);
@@ -40,8 +44,8 @@ public class EventRunner {
 	}
 
 	private static void printTwoRows() {
-		System.out.println();
-		System.out.println();
+		view.outputHandler.sendStringToView("");
+		view.outputHandler.sendStringToView("");
 	}
 
 }
