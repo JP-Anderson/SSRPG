@@ -1,16 +1,14 @@
 package events;
 
 import arch.session.interaction.ComplexInteraction;
-import arch.session.interaction.Interaction;
 import arch.session.ShipBattleSession;
 import arch.session.interaction.TextInteraction;
 import arch.view.ConsoleIOHandler;
-import arch.view.InputHandler;
 import goods.Goods;
 import ship.AIShip;
 import ship.modules.ShieldModule;
 import ship.shields.BasicShieldsMk2;
-import util.RNG;
+import util.rng.RNG;
 
 public class BanditEvent extends Event {
 
@@ -25,7 +23,7 @@ public class BanditEvent extends Event {
 
 	@Override
 	void initializeOutcome() {
-		int moneyReward = RNG.randInt(200, 4400);
+		int moneyReward = rand.randInt(200, 4400);
 		outcome = new EventOutcome(moneyReward, generateCrewMembers(0.025), generateGoods(0.45));
 	}
 

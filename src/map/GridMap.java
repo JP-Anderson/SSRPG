@@ -1,7 +1,7 @@
 package map;
 
 import ship.PlayerShip;
-import util.RNG;
+import util.rng.RNG;
 
 import java.util.ArrayList;
 
@@ -18,8 +18,9 @@ public class GridMap {
 	}
 
 	public void placePlayer(PlayerShip playerShip) {
-		int randomX = RNG.randInt(0, width);
-		int randomY = RNG.randInt(0, height);
+		RNG rand = new RNG();
+		int randomX = rand.randInt(0, width);
+		int randomY = rand.randInt(0, height);
 		playerShip.setLocation(new GridPoint(randomX, randomY));
 	}
 

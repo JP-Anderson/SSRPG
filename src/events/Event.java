@@ -3,14 +3,13 @@ package events;
 import arch.session.interaction.Interaction;
 import arch.session.interaction.TextInteraction;
 import arch.view.ConsoleIOHandler;
-import arch.view.InputHandler;
 import characters.Crewmember;
 import characters.classes.PilotClass;
 import goods.Goods;
 import goods.GoodsForSale;
 import goods.GoodsList;
 import ship.PlayerShip;
-import util.RNG;
+import util.rng.RNG;
 
 import java.util.ArrayList;
 
@@ -18,8 +17,10 @@ public abstract class Event {
 
 	protected ConsoleIOHandler view;
 	protected Interaction rootInteraction;
+	protected RNG rand;
 
 	protected Event(ConsoleIOHandler injectedView) {
+		rand = new RNG();
 		view = injectedView;
 		rootInteraction = TextInteraction.createStartingInteraction(injectedView, getEventIntroductionMessage());
 	}
@@ -73,7 +74,7 @@ public abstract class Event {
 
 	protected final ArrayList<Crewmember> generateCrewMembers(double chanceOfCrewmember) {
 		ArrayList<Crewmember> survivors = new ArrayList<>();
-		if (RNG.randZeroToOne() <= 0.05) {
+		if (rand.randZeroToOne() <= 0.05) {
 			// TODO need to randomize the classes
 			Crewmember survivor = new Crewmember("Survivor", new PilotClass(), 1);
 			survivors.add(survivor);
@@ -83,9 +84,9 @@ public abstract class Event {
 
 	protected final ArrayList<GoodsForSale> generateGoods(double chanceOfGoods) {
 		ArrayList<GoodsForSale> goods = new ArrayList<>();
-		if (RNG.randZeroToOne() <= chanceOfGoods) {
+		if (rand.randZeroToOne() <= chanceOfGoods) {
 			int possibleGoods = GoodsList.GOODS.length;
-			GoodsForSale survivingGoods = GoodsList.GOODS[RNG.randInt(0, possibleGoods)];
+			GoodsForSale survivingGoods = GoodsList.GOODS[rand.randInt(0, possibleGoods)];
 			goods.add(survivingGoods);
 		}
 		return goods;

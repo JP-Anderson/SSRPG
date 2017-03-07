@@ -2,7 +2,8 @@ package ship.modules;
 
 import arch.view.View;
 import ship.weapons.*;
-import util.RNG;
+import util.rng.RNG;
+import util.rng.RandomNumberGenerator;
 
 public class WeaponModule extends MannableShipModule {
 
@@ -46,17 +47,23 @@ public class WeaponModule extends MannableShipModule {
 		}
 	}
 
-	public Attack attack() {
-		if (loadedWeapon != null && baseTurnsTilWeaponReady == 0)
-			if (rollForAttackHitChance())
-				return new Attack(loadedWeapon.shieldDamage, loadedWeapon.hullDamage, 0.9, loadedWeapon.weaponType);
-		view.outputHandler.sendStringToView("MISS!");
+	public Attack attack(RandomNumberGenerator randomNumGenerator) {
+		if (loadedWeapon != null && baseTurnsTilWeaponReady == 0) {
+			if (rollForAttackHitChance(randomNumGenerator)) {
+				return new Attack(
+						loadedWeapon.shieldDamage,
+						loadedWeapon.hullDamage,
+						loadedWeapon.baseHitChance,
+						loadedWeapon.weaponType);
+			}
+			view.outputHandler.sendStringToView("MISS!");
+		}
 		return null;
 	}
 
-	private boolean rollForAttackHitChance() {
+	private boolean rollForAttackHitChance(RandomNumberGenerator randomNumGenerator) {
 		double hitChance = loadedWeapon.baseHitChance;
-		double roll = RNG.randZeroToOne();
+		double roll = randomNumGenerator.randZeroToOne();
 		if (roll <= hitChance) return true;
 		else return false;
 	}

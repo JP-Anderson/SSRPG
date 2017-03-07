@@ -1,16 +1,15 @@
 package arch.session;
 
 import arch.view.ConsoleIOHandler;
-import arch.view.InputHandler;
 import ship.*;
 import map.*;
 import goods.*;
 import ship.modules.CargoBayModule;
 import ship.modules.MannableShipModule;
 import util.dataload.csv.*;
-import util.*;
 import events.*;
 import characters.*;
+import util.rng.RNG;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -248,7 +247,7 @@ public class MapSession extends Session {
 				boolean canTravel = p1.travel(destination, distance);
 				if (canTravel) {
 					for (int jumps = 0; jumps < distance; jumps++) {
-						double eventRoll = RNG.randZeroToOne();
+						double eventRoll = rand.randZeroToOne();
 						if (eventRoll <= 0.15) {
 							EventRunner.run(view, new BanditEvent(view), p1);
 						}

@@ -1,8 +1,8 @@
-package util;
+package util.rng;
 
 import java.util.Random;
 
-public class RNG {
+public class RNG implements RandomNumberGenerator {
 	/**
 	 * Returns a pseudo-random number between min and max, inclusive.
 	 * The difference between min and max can be at most
@@ -14,9 +14,9 @@ public class RNG {
 	 * @see java.util.Random#nextInt(int)
 	 */
 
-	public static Random random = new Random();
+	private Random random = new Random();
 
-	public static int randInt(int min, int max) {
+	public int randInt(int min, int max) {
 		// nextInt is normally exclusive of the top value,
 		// so add 1 to make it inclusive
 		int randomNum = random.nextInt((max - min) + 1) + min;
@@ -24,7 +24,7 @@ public class RNG {
 		return randomNum;
 	}
 
-	public static double randZeroToOne() {
+	public double randZeroToOne() {
 		return random.nextDouble();
 	}
 }

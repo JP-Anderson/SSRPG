@@ -2,7 +2,7 @@ package characters;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import util.RNG;
+import util.rng.RNG;
 import util.dataload.csv.CSV;
 import util.dataload.csv.CSVReader;
 
@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class LevelTest {
 
 	static ArrayList<Integer> xpForLevels;
+	RNG rand = new RNG();
 
 	@BeforeAll
 	public static void loadXpForLevels() {
@@ -78,7 +79,7 @@ class LevelTest {
 		Level level = newLevel();
 
 		int startingLevel = level.getLevel();
-		int numberOfLevelsToIncrease = RNG.randInt(1,2);
+		int numberOfLevelsToIncrease = rand.randInt(1,2);
 		int targetLevel = startingLevel + numberOfLevelsToIncrease;
 		int requiredXpToAdvance = getRequiredXpFromLevelXToLevelY(startingLevel, targetLevel);
 		level.gainExperience(requiredXpToAdvance);
@@ -86,7 +87,7 @@ class LevelTest {
 
 		assertEquals(targetLevel, startingLevel);
 
-		numberOfLevelsToIncrease = RNG.randInt(1,2);
+		numberOfLevelsToIncrease = rand.randInt(1,2);
 		targetLevel = startingLevel + numberOfLevelsToIncrease;
 		requiredXpToAdvance = getRequiredXpFromLevelXToLevelY(startingLevel, targetLevel);
 		level.gainExperience(requiredXpToAdvance);
@@ -94,7 +95,7 @@ class LevelTest {
 
 		assertEquals(targetLevel, startingLevel);
 
-		numberOfLevelsToIncrease = RNG.randInt(1,2);
+		numberOfLevelsToIncrease = rand.randInt(1,2);
 		targetLevel = startingLevel + numberOfLevelsToIncrease;
 		requiredXpToAdvance = getRequiredXpFromLevelXToLevelY(startingLevel, targetLevel);
 		level.gainExperience(requiredXpToAdvance);
@@ -102,7 +103,7 @@ class LevelTest {
 
 		assertEquals(targetLevel, startingLevel);
 
-		numberOfLevelsToIncrease = RNG.randInt(1,4);
+		numberOfLevelsToIncrease = rand.randInt(1,4);
 		targetLevel = startingLevel + numberOfLevelsToIncrease;
 		requiredXpToAdvance = getRequiredXpFromLevelXToLevelY(startingLevel, targetLevel);
 		level.gainExperience(requiredXpToAdvance);

@@ -1,10 +1,8 @@
 package events;
 
-import arch.session.interaction.Interaction;
 import arch.view.ConsoleIOHandler;
-import arch.view.InputHandler;
 import goods.*;
-import util.RNG;
+import util.rng.RNG;
 
 public class ShipwreckEvent extends Event {
 
@@ -19,7 +17,7 @@ public class ShipwreckEvent extends Event {
 
 	@Override
 	void initializeOutcome() {
-		int moneyReward = RNG.randInt(20, 1500);
+		int moneyReward = rand.randInt(20, 1500);
 		outcome = new EventOutcome(moneyReward, generateCrewMembers(0.05), generateGoods(0.25));
 		goodsPrompt = "Would you like to take the $ from the wreckage";
 	}

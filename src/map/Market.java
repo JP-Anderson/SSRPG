@@ -1,7 +1,7 @@
 package map;
 
 import goods.*;
-import util.RNG;
+import util.rng.RNG;
 import util.dataload.csv.*;
 
 import java.util.ArrayList;
@@ -47,7 +47,8 @@ public class Market {
 			boolean goodsNotAlreadyChosen = false;
 			int cycles = 0;
 			while (!goodsNotAlreadyChosen) {
-				int random = RNG.randInt(0, probabilityTotal - 1);
+				RNG rand = new RNG();
+				int random = rand.randInt(0, probabilityTotal - 1);
 				//System.out.println("Random: " + random);
 				int goodsIndex = getGood(random, probabilityTotal);
 				if (selectedGoods[goodsIndex] == false) {

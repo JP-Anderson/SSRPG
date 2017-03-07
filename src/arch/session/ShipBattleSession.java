@@ -115,7 +115,7 @@ public class ShipBattleSession extends Session {
 			int choice = chooseWeaponAtIndex(weaponCount);
 
 			WeaponModule m = readyWeapons.get(choice);
-			Attack a = m.attack();
+			Attack a = m.attack(rand);
 			if (a != null) {
 				view.outputHandler.sendStringToView(a.hullDamage + "," + a.shieldDamage + "," + a.accuracy);
 				Ship shipToAttack = currentActiveShip == ship1 ? ship2 : ship1;
