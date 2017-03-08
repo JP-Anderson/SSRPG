@@ -24,7 +24,10 @@ public class BanditEvent extends Event {
 	@Override
 	void initializeOutcome() {
 		int moneyReward = rand.randInt(200, 4400);
-		outcome = new EventOutcome(moneyReward, generateCrewMembers(0.025), generateGoods(0.45));
+		//Should we assign xp here, or should battles generate XP?
+		//Will we ever have a battle not related to an "Event"?
+		int xpReward = rand.randInt(100,150);
+		outcome = new EventOutcome(moneyReward, xpReward, generateCrewMembers(0.025), generateGoods(0.45));
 	}
 
 	@Override

@@ -9,7 +9,6 @@ import ship.modules.MannableShipModule;
 import util.dataload.csv.*;
 import events.*;
 import characters.*;
-import util.rng.RNG;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +56,8 @@ public class MapSession extends Session {
 				printCargo();
 			} else if (input.equalsIgnoreCase("fuel")) {
 				fuelSequence();
+			} else if (input.equalsIgnoreCase("station")) {
+				crewStationsSequence();
 			} else if (input.equalsIgnoreCase("crew")) {
 				crewSequence();
 			} else {
@@ -315,7 +316,7 @@ public class MapSession extends Session {
 		} else view.outputHandler.sendStringToView("There is nowhere to refuel here.");
 	}
 
-	private void crewSequence() {
+	private void crewStationsSequence() {
 		char decision = 'n';
 		while (true) {
 			view.outputHandler.sendStringToView("Would you like to move a crewmember? (Y/N)");
@@ -353,9 +354,23 @@ public class MapSession extends Session {
 		}
 	}
 
+	private void crewSequence() {
+		//TODO: expand this to allow user to select crewmember to view in more detail
+		// for now just checking the xp works (outside of unit tests!) so this is fine
+		ArrayList<Crewmember> playerCrew = p1.getCrew();
+		int i = 0;
+		for (Crewmember member : playerCrew) {
+			String memberInfo = i + " - " + member.name + " LVL " + member.getLevel().getLevel() + " "
+					+ member.crewmemberClass._className + ". "
+					+ member.getLevel().getRemainingXpForNextLevel() + " xp til level " + (member.getLevel().getLevel()+1);
+			view.outputHandler.sendStringToView(memberInfo);
+			i++;
+		}
+	}
+
 	private void consoleInformation(String input) {
 		view.outputHandler.sendStringToView("Command \"" + input + "\" not recognised.");
-		view.outputHandler.sendStringToView("Available commands: [scan] [trade] [travel] [ship] [cargo] [fuel] [crew]");
+		view.outputHandler.sendStringToView("Available commands: [scan] [trade] [travel] [ship] [crew] [cargo] [fuel] [station]");
 	}
 
 	private void sleep(int seconds) {

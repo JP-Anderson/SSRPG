@@ -96,6 +96,12 @@ public class PlayerShip extends Ship {
 		return modules.getMannableModulesAsList();
 	}
 
+	public void giveExperienceToAllCrewmembers(int xpReward) {
+		for (Crewmember crewmember : crew) {
+			crewmember.gainExperience(xpReward);
+		}
+	}
+
 	public static class PlayerShipBuilder extends Ship.GenericShipBuilder<PlayerShipBuilder> {
 
 		public PlayerShipBuilder(View view, String name, int maxCombinedModulePower) {

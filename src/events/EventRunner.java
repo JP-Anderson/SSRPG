@@ -27,6 +27,10 @@ public class EventRunner {
 		}
 		int newBalance = player.getMoney() + outcome.getMoneyReward();
 		view.outputHandler.sendStringToView("CREDS " + player.getMoney() + " --> " + newBalance);
+		if (outcome.getXpReward() > 0) {
+			player.giveExperienceToAllCrewmembers(outcome.getXpReward());
+			view.outputHandler.sendStringToView("Everyone got " + outcome.getXpReward() + " xp!");
+		}
 		sleep(1);
 
 		player.setMoney(newBalance);
