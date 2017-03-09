@@ -24,6 +24,14 @@ public abstract class CrewmemberClass {
 		skill = SkillsHolder.getSkill(_className);
 	}
 
+	public int availableAbilityUpgrades() {
+		return skill._abilities.getAvailablePointsToAssign();
+	}
+	
+	public void incrementAvailableAbilityUpgrades() {
+		skill._abilities.levelUp();
+	}
+
 	public ArrayList<Ability> getUpgradeableAbilities() {
 		return skill._abilities.getUpgradeableAbilities();
 	}

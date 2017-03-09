@@ -360,9 +360,12 @@ public class MapSession extends Session {
 		ArrayList<Crewmember> playerCrew = p1.getCrew();
 		int i = 0;
 		for (Crewmember member : playerCrew) {
+			String upgradeAvailable = member.availableAbilityUpgrades() > 0 ? " (Upgrades available!)" : "";
 			String memberInfo = i + " - " + member.name + " LVL " + member.getLevel().getLevel() + " "
 					+ member.crewmemberClass._className + ". "
-					+ member.getLevel().getRemainingXpForNextLevel() + " xp til level " + (member.getLevel().getLevel()+1);
+					+ member.getLevel().getRemainingXpForNextLevel()
+					+ " xp til level " + (member.getLevel().getLevel()+1)
+					+ upgradeAvailable;
 			view.outputHandler.sendStringToView(memberInfo);
 			i++;
 		}

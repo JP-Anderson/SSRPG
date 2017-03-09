@@ -54,6 +54,10 @@ public class AbilityTree {
 		return upgradeableAbilities;
 	}
 
+	public int getAvailablePointsToAssign() {
+		return possibleSkillPoints - abilitiesUnlocked;
+	}
+
 	private void updateUpgradeableAbilities() {
 		upgradeableAbilities =  matcher.getMatchingNodesAndUnbox(tree,
 				node -> node.getParent() == null
@@ -72,4 +76,5 @@ public class AbilityTree {
 	protected int getPossibleSkillPoints() {
 		return possibleSkillPoints;
 	}
+
 }

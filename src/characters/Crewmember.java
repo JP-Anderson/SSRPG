@@ -21,11 +21,19 @@ public class Crewmember {
 	}
 
 	public void gainExperience(int xp) {
+		int startingLevel = level.getLevel();
 		level.gainExperience(xp);
+		if (level.getLevel() > startingLevel) {
+			crewmemberClass.incrementAvailableAbilityUpgrades();
+		}
 	}
 
 	public Level getLevel() {
 		return level;
+	}
+
+	public int availableAbilityUpgrades() {
+		return crewmemberClass.availableAbilityUpgrades();
 	}
 
 	public ArrayList<Ability> getUpgradeableAbilities() {
