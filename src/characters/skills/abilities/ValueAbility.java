@@ -8,8 +8,11 @@ public abstract class ValueAbility extends Ability {
 
 	protected int abilityLevel = 0;
 
+	protected String levelValues;
+
 	public ValueAbility(int id, String name, String description, String levelValueString) {
 		super(id, name, description);
+		levelValues = levelValueString;
 		_levels = countNumberOfValuesInStringList(levelValueString);
 	}
 
@@ -43,10 +46,14 @@ public abstract class ValueAbility extends Ability {
 		This function counts the number of values in a semicolon delimited list
 		i starts at 1 as all lists will contain one value, for each semicolon it adds to i
 	 */
-	private static int countNumberOfValuesInStringList(String list) {
+	private int countNumberOfValuesInStringList(String list) {
 		int i = 1;
 		for (char c : list.toCharArray()) if (c == ';') i++;
 		return i;
+	}
+
+	public String getValuesString() {
+		return levelValues;
 	}
 
 }

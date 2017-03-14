@@ -29,7 +29,7 @@ public final class SkillsHolder {
 	public static Skill getSkill(String skillName) {
 		if (skills == null) loadSkills();
 		for (Skill s : skills) {
-			if (s._name.equals(skillName)) return s;
+			if (s._name.equals(skillName)) return new SkillCopier().copySkill(s);
 		}
 		return null;
 	}
