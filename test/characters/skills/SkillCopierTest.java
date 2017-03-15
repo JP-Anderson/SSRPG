@@ -6,6 +6,8 @@ import characters.skills.abilities.IntAbility;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import util.collections.tree.PreOrderTreeMatcher;
+import util.collections.tree.strategies.PreOrderTreeTraversal;
+import util.collections.tree.visitors.CounterVisitor;
 import util.dataload.xml.SkillAndAbilityLoader;
 
 import java.util.ArrayList;
@@ -17,7 +19,29 @@ class SkillCopierTest {
 	private ArrayList<Skill> skills = SkillAndAbilityLoader.loadSkills("C:\\Workspaces\\SSRPG\\dat\\test\\test_abilities.xml");
 
 	@Test
-	void copiedSkillHasNonEquivalentReference() {
+	public void copiedSkillTreeHasCorrectNodeCount() {
+		Skill skill = skills.get(1);
+		SkillCopier copier = new SkillCopier();
+		Skill skillCopy = copier.copySkill(skill);
+
+		CounterVisitor<Ability> counterVisitor = new CounterVisitor<>();
+		PreOrderTreeTraversal<Ability> treeTraverser = new PreOrderTreeTraversal<>(skill._abilities.getTree(), counterVisitor);
+		treeTraverser.traverseTree();
+
+		// Having to create a visitor and initialising the traverser with it is probably a design that needs to be changed
+		// Means traversers cannot be reused
+		// and visitors will have to be reset or prevented from reuse
+		// TODO: Will wrap these in a future commit, ignoring from this commit for now.
+		CounterVisitor<Ability> counterVisitor2 = new CounterVisitor<>();
+		PreOrderTreeTraversal<Ability> treeTraverser2 = new PreOrderTreeTraversal<>(skill._abilities.getTree(), counterVisitor2);
+		treeTraverser2.traverseTree();
+
+		assertTrue(counterVisitor.getCount() == 6);
+		assertTrue(counterVisitor2.getCount() == 6);
+	}
+
+	@Test
+	public void copiedSkillHasNonEquivalentReference() {
 		Skill skill = skills.get(1);
 		SkillCopier copier = new SkillCopier();
 		Skill skillCopy = copier.copySkill(skill);
@@ -25,7 +49,7 @@ class SkillCopierTest {
 	}
 
 	@Test
-	void copiedRootNodeReferenceIsDifferent() {
+	public void copiedRootNodeReferenceIsDifferent() {
 		Skill skill = skills.get(1);
 		Skill skillCopy = copySkill(skill);
 		assertNotEquals(
@@ -34,7 +58,7 @@ class SkillCopierTest {
 	}
 
 	@Test
-	void copiedRootNodeValuesAreIdentical() {
+	public void copiedRootNodeValuesAreIdentical() {
 		Skill skill = skills.get(1);
 		Skill skillCopy = copySkill(skill);
 		IntAbility root = (IntAbility) skill._abilities.getTree().getRoot().getNodeItem();
@@ -45,7 +69,7 @@ class SkillCopierTest {
 	}
 
 	@Test
-	void copiedBranchNodeValuesHaveDifferentReference() {
+	public void copiedBranchNodeValuesHaveDifferentReference() {
 		Skill skill = skills.get(1);
 		Skill skillCopy = copySkill(skill);
 
@@ -62,7 +86,7 @@ class SkillCopierTest {
 	}
 
 	@Test
-	void copiedBranchNodeValuesAreIdentical() {
+	public void copiedBranchNodeValuesAreIdentical() {
 		Skill skill = skills.get(1);
 		Skill skillCopy = copySkill(skill);
 
@@ -81,7 +105,7 @@ class SkillCopierTest {
 	}
 
 	@Test
-	void copiedLeafNodeValuesHaveDifferentReference() {
+	public void copiedLeafNodeValuesHaveDifferentReference() {
 		Skill skill = skills.get(1);
 		Skill skillCopy = copySkill(skill);
 
@@ -98,7 +122,7 @@ class SkillCopierTest {
 	}
 
 	@Test
-	void copiedLeafNodeValuesAreIdentical() {
+	public void copiedLeafNodeValuesAreIdentical() {
 		Skill skill = skills.get(1);
 		Skill skillCopy = copySkill(skill);
 
