@@ -22,7 +22,7 @@ class MatcherVisitorTest {
 	@Test
 	public void matcherVisitorWithPreOrderGetsCorrectAbilityForRoot() {
 		String rootAbilityName = "Skill2 Ability1";
-		MatcherVisitor<Ability> matcherVisitor = getMatcherSearchingForAbilityWithName(rootAbilityName);
+		MatcherVisitor<Ability> matcherVisitor = getMatcherResultsForAbilityWithName(rootAbilityName);
 		ArrayList<TreeNode<Ability>> matches = matcherVisitor.getMatches();
 
 		assertTrue(matches.size() == 1);
@@ -32,7 +32,7 @@ class MatcherVisitorTest {
 	@Test
 	public void matcherVisitorWithPreOrderGetsCorrectAbilityForBranch() {
 		String branchAbilityName = "Skill2 Ability3";
-		MatcherVisitor<Ability> matcherVisitor = getMatcherSearchingForAbilityWithName(branchAbilityName);
+		MatcherVisitor<Ability> matcherVisitor = getMatcherResultsForAbilityWithName(branchAbilityName);
 		ArrayList<TreeNode<Ability>> matches = matcherVisitor.getMatches();
 
 		assertTrue(matches.size() == 1);
@@ -42,14 +42,14 @@ class MatcherVisitorTest {
 	@Test
 	public void matcherVisitorWithPreOrderGetsCorrectAbilityForLeaf() {
 		String leafAbilityName = "Skill2 Ability6";
-		MatcherVisitor<Ability> matcherVisitor = getMatcherSearchingForAbilityWithName(leafAbilityName);
+		MatcherVisitor<Ability> matcherVisitor = getMatcherResultsForAbilityWithName(leafAbilityName);
 		ArrayList<TreeNode<Ability>> matches = matcherVisitor.getMatches();
 
 		assertTrue(matches.size() == 1);
 		assertTrue(matches.get(0).getNodeItem()._name.equals(leafAbilityName));
 	}
 
-	private MatcherVisitor<Ability> getMatcherSearchingForAbilityWithName(String abilityName) {
+	private MatcherVisitor<Ability> getMatcherResultsForAbilityWithName(String abilityName) {
 		Tree<Ability> testTree = getSkillTwoTestTree();
 		MatcherVisitor<Ability> matcherVisitor = createMatcherForAbilityWithName(abilityName);
 		PreOrderTreeTraversal<Ability> traversalStrategy = new PreOrderTreeTraversal<>(testTree, matcherVisitor);
@@ -65,7 +65,7 @@ class MatcherVisitorTest {
 
 	@Test
 	public void matcherVisitorWithPreOrderFindsAllDoubleAbilities() {
-		MatcherVisitor<Ability> matcherVisitor = getMatcherSearchingForDoubleAbility();
+		MatcherVisitor<Ability> matcherVisitor = getMatcherResultsForDoubleAbility();
 		ArrayList<TreeNode<Ability>> matches = matcherVisitor.getMatches();
 
 		assertTrue(matches.size() == 4);
@@ -73,13 +73,13 @@ class MatcherVisitorTest {
 
 	@Test
 	public void matcherVisitorWithPreOrderFindsAllBooleanAbilities() {
-		MatcherVisitor<Ability> matcherVisitor = getMatcherSearchingForBooleanAbility();
+		MatcherVisitor<Ability> matcherVisitor = getMatcherResultsForBooleanAbility();
 		ArrayList<TreeNode<Ability>> matches = matcherVisitor.getMatches();
 
 		assertTrue(matches.size() == 1);
 	}
 
-	private MatcherVisitor<Ability> getMatcherSearchingForDoubleAbility() {
+	private MatcherVisitor<Ability> getMatcherResultsForDoubleAbility() {
 		Tree<Ability> testTree = getSkillTwoTestTree();
 		Predicate<TreeNode<Ability>> matchAbilityOnType = tn -> tn.getNodeItem() instanceof DoubleAbility;
 		MatcherVisitor<Ability> matcherVisitor = new MatcherVisitor<>(matchAbilityOnType);
@@ -89,7 +89,7 @@ class MatcherVisitorTest {
 		return matcherVisitor;
 	}
 
-	private MatcherVisitor<Ability> getMatcherSearchingForBooleanAbility() {
+	private MatcherVisitor<Ability> getMatcherResultsForBooleanAbility() {
 		Tree<Ability> testTree = getSkillTwoTestTree();
 		Predicate<TreeNode<Ability>> matchAbilityOnType = tn -> tn.getNodeItem() instanceof BooleanAbility;
 		MatcherVisitor<Ability> matcherVisitor = new MatcherVisitor<>(matchAbilityOnType);
