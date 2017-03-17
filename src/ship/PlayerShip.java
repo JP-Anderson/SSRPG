@@ -39,7 +39,7 @@ public class PlayerShip extends Ship {
 
 	public void initialiseMap(GridPoint startLocation, GridMap map) {
 		location = startLocation;
-		scanner = Scanner.getScanner(view, scannerStrength, map, startLocation);
+		scanner = Scanner.getScanner(scannerStrength, map, startLocation);
 	}
 
 	public GridPoint getLocation() {
