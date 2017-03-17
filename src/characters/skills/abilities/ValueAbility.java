@@ -4,7 +4,7 @@ import characters.exceptions.AbilityAtMaxLevelException;
 
 public abstract class ValueAbility extends Ability {
 
-	protected final int _levels;
+	protected final int levels;
 
 	protected int abilityLevel = 0;
 
@@ -13,7 +13,7 @@ public abstract class ValueAbility extends Ability {
 	public ValueAbility(int id, String name, String description, String levelValueString) {
 		super(id, name, description);
 		levelValues = levelValueString;
-		_levels = countNumberOfValuesInStringList(levelValueString);
+		levels = countNumberOfValuesInStringList(levelValueString);
 	}
 
 	public abstract Number getAbilityValue();
@@ -21,6 +21,8 @@ public abstract class ValueAbility extends Ability {
 	public int getAbilityLevel() {
 		return abilityLevel;
 	}
+
+	public int getMaxAbilityLevel() { return levels; }
 
 	public void levelUp() {
 		if (!isFullyUnlocked()) {
@@ -39,7 +41,7 @@ public abstract class ValueAbility extends Ability {
 
 	@Override
 	public boolean isFullyUnlocked() {
-		return abilityLevel == _levels;
+		return abilityLevel == levels;
 	}
 
 	/*

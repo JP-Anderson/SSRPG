@@ -54,4 +54,8 @@ public abstract class CrewmemberClass {
 		skill._abilities.upgradeAbility(upgradeableAbilityIndex);
 	}
 
+	public Skill getSkill() {
+		return skill;
+	}
+
 }

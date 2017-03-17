@@ -6,6 +6,7 @@ import map.*;
 import goods.*;
 import ship.modules.CargoBayModule;
 import ship.modules.MannableShipModule;
+import util.collections.tree.AbilitiesConsoleTreePrinter;
 import util.dataload.csv.*;
 import events.*;
 import characters.*;
@@ -317,7 +318,7 @@ public class MapSession extends Session {
 	}
 
 	private void crewStationsSequence() {
-		char decision = 'n';
+		char decision;
 		while (true) {
 			view.outputHandler.sendStringToView("Would you like to move a crewmember? (Y/N)");
 			decision = view.inputHandler.getCharFromUser("");
@@ -355,8 +356,13 @@ public class MapSession extends Session {
 	}
 
 	private void crewSequence() {
-		//TODO: expand this to allow user to select crewmember to view in more detail
-		// for now just checking the xp works (outside of unit tests!) so this is fine
+		char decision;
+		while (true) {
+			view.outputHandler.sendStringToView("Would you like to view a crewmembers abilities? (Y/N)");
+			decision = view.inputHandler.getCharFromUser("");
+			// TODO write a function to take a range of acceptable chars to make these checks shorter
+			if (decision == 'Y' || decision == 'y' || decision == 'N' || decision == 'n') break;
+		}
 		ArrayList<Crewmember> playerCrew = p1.getCrew();
 		int i = 0;
 		for (Crewmember member : playerCrew) {
@@ -369,6 +375,13 @@ public class MapSession extends Session {
 			view.outputHandler.sendStringToView(memberInfo);
 			i++;
 		}
+		if (decision == 'Y' || decision == 'y') {
+			view.outputHandler.sendStringToView("Which character would you like to view?");
+			int choice = view.inputHandler.getIntInRangeFromUser(2);
+			AbilitiesConsoleTreePrinter treePrinter = new AbilitiesConsoleTreePrinter();
+			treePrinter.printTree(playerCrew.get(choice).crewmemberClass.getSkill()._abilities.getTree());
+		}
+
 	}
 
 	private void consoleInformation(String input) {

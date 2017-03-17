@@ -19,7 +19,7 @@ public class IntAbility extends ValueAbility {
 
 	private void retrieveIntegersFromString(String levelValueString) {
 		String[] strings = levelValueString.split(";");
-		levelValues = new int[_levels];
+		levelValues = new int[levels];
 		for (int i = 0; i < strings.length; i++) {
 			levelValues[i] = Integer.parseInt(strings[i]);
 		}

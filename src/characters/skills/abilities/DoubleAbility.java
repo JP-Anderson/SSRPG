@@ -19,7 +19,7 @@ public class DoubleAbility extends ValueAbility {
 
 	private void retrieveDoublesFromString(String levelValueString) {
 		String[] strings = levelValueString.split(";");
-		levelValues = new double[_levels];
+		levelValues = new double[levels];
 		for (int i = 0; i < strings.length; i++) {
 			levelValues[i] = Double.parseDouble(strings[i]);
 		}

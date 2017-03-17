@@ -39,7 +39,7 @@ class AbilityTest {
 	@Test
 	public void canUpgradeIntAbilityUntilMaxLevel() {
 		IntAbility intAbility = getIntAbility();
-		int levels = intAbility._levels;
+		int levels = intAbility.levels;
 
 		for (int i = 0; i < levels-1; i++) {
 			intAbility.levelUp();
@@ -57,7 +57,7 @@ class AbilityTest {
 	@Test
 	public void canUpgradeDoubleAbilityUntilMaxLevel() {
 		DoubleAbility doubleAbility = getDoubleAbility();
-		int levels = doubleAbility._levels;
+		int levels = doubleAbility.levels;
 
 		doubleAbility.levelUp();
 		assertTrue(doubleAbility.isUnlocked());
