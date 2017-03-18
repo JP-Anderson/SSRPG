@@ -1,6 +1,7 @@
 package arch.session;
 
 import arch.view.ConsoleIOHandler;
+import characters.skills.abilities.Ability;
 import ship.*;
 import map.*;
 import goods.*;
@@ -250,7 +251,7 @@ public class MapSession extends Session {
 				if (canTravel) {
 					for (int jumps = 0; jumps < distance; jumps++) {
 						double eventRoll = rand.randZeroToOne();
-						if (eventRoll <= 0.15) {
+						if (eventRoll <= 0.85) {
 							EventRunner.run(view, new BanditEvent(view), p1);
 						}
 						view.outputHandler.sendStringToView("You jump to the next sector.");
@@ -377,9 +378,25 @@ public class MapSession extends Session {
 		}
 		if (decision == 'Y' || decision == 'y') {
 			view.outputHandler.sendStringToView("Which character would you like to view?");
-			int choice = view.inputHandler.getIntInRangeFromUser(2);
+			int choice = view.inputHandler.getIntInRangeFromUser(playerCrew.size());
+			Crewmember crewmember = playerCrew.get(choice);
 			AbilitiesConsoleTreePrinter treePrinter = new AbilitiesConsoleTreePrinter();
-			treePrinter.printTree(playerCrew.get(choice).crewmemberClass.getSkill()._abilities.getTree());
+			treePrinter.printTree(crewmember.crewmemberClass.getSkill()._abilities.getTree());
+			if (crewmember.availableAbilityUpgrades() > 0) {
+				view.outputHandler.sendStringToView("Level up available!");
+				view.outputHandler.sendStringToView("Would you like to level up? (Y/N)");
+				char decision2;
+				while (true) {
+					decision2 = view.inputHandler.getCharFromUser("");
+					if (decision2 == 'Y' || decision2 == 'y' || decision2 == 'N' || decision2 == 'n') break;
+				}
+				if (decision2 == 'Y' || decision2 == 'y') {
+					ArrayList<Ability> availableUpgrades = crewmember.getUpgradeableAbilities();
+					Ability chosenAbility = view.inputHandler.getUserChoiceFromList(availableUpgrades, "_name");
+					int indexOfAbility = availableUpgrades.indexOf(chosenAbility);
+					crewmember.tryToLevelUpAbility(indexOfAbility);
+				}
+			}
 		}
 
 	}
