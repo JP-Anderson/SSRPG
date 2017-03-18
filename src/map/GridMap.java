@@ -1,5 +1,7 @@
 package map;
 
+import map.gridsquares.EmptyGridSquare;
+import map.gridsquares.GridSquare;
 import ship.PlayerShip;
 import util.rng.RNG;
 

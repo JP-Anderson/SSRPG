@@ -2,6 +2,8 @@ package arch.session;
 
 import arch.view.ConsoleIOHandler;
 import characters.skills.abilities.Ability;
+import map.gridsquares.GridSquare;
+import map.gridsquares.Planet;
 import ship.*;
 import map.*;
 import goods.*;

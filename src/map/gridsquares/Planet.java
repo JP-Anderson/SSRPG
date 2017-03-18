@@ -1,4 +1,7 @@
-package map;
+package map.gridsquares;
+
+import map.GridPoint;
+import map.Market;
 
 public class Planet extends GridSquare {
 

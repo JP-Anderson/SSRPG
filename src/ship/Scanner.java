@@ -2,8 +2,8 @@ package ship;
 
 import map.GridMap;
 import map.GridPoint;
-import map.GridSquare;
-import map.EmptyGridSquare;
+import map.gridsquares.GridSquare;
+import map.gridsquares.EmptyGridSquare;
 
 import java.util.ArrayList;
 

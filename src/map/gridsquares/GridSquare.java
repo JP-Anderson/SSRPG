@@ -1,4 +1,6 @@
-package map;
+package map.gridsquares;
+
+import map.GridPoint;
 
 public abstract class GridSquare {
 
