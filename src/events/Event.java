@@ -74,7 +74,7 @@ public abstract class Event {
 
 	protected final ArrayList<Crewmember> generateCrewMembers(double chanceOfCrewmember) {
 		ArrayList<Crewmember> survivors = new ArrayList<>();
-		if (rand.randZeroToOne() <= 0.05) {
+		if (rand.randZeroToOne() <= chanceOfCrewmember) {
 			// TODO need to randomize the classes
 			Crewmember survivor = new Crewmember("Survivor", new PilotClass(), 1);
 			survivors.add(survivor);
