@@ -21,15 +21,14 @@ public class EventRunner {
 				view.outputHandler.sendStringToView("Adding " + g.name + ".");
 			} else view.outputHandler.sendStringToView("No space for " + g.name + ".");
 		}
-		for (Crewmember c : outcome.getCrewReward()) {
-			player.getCrew().add(c);
-			view.outputHandler.sendStringToView("Adding to crew.");
-		}
 		int newBalance = player.getMoney() + outcome.getMoneyReward();
 		view.outputHandler.sendStringToView("CREDS " + player.getMoney() + " --> " + newBalance);
 		if (outcome.getXpReward() > 0) {
 			player.giveExperienceToAllCrewmembers(outcome.getXpReward());
 			view.outputHandler.sendStringToView("Everyone got " + outcome.getXpReward() + " xp!");
+		}
+		for (Crewmember c : outcome.getCrewReward()) {
+			player.getCrew().add(c);
 		}
 		sleep(1);
 
