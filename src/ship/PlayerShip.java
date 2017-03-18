@@ -102,6 +102,10 @@ public class PlayerShip extends Ship {
 		}
 	}
 
+	public boolean hasSpaceInCrew() {
+		return crew.size() < crewCapacity;
+	}
+
 	public static class PlayerShipBuilder extends Ship.GenericShipBuilder<PlayerShipBuilder> {
 
 		public PlayerShipBuilder(View view, String name, int maxCombinedModulePower) {

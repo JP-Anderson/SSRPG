@@ -55,11 +55,16 @@ public abstract class Event {
 	protected void getUserInput() {
 		//TODO: move this into a UI/console input class
 		if (outcome.getCrewReward().size() > 0) {
-			view.outputHandler.sendStringToView(crewPrompt + "? (Y/N)");
-			char decision = view.inputHandler.getCharFromUser("");
-			if (decision != 'Y' && decision != 'y') {
-				outcome.removeCrewReward();
+			if (playerShip.hasSpaceInCrew()) {
+				view.outputHandler.sendStringToView(crewPrompt + "? (Y/N)");
+				char decision = view.inputHandler.getCharFromUser("");
+				if (decision != 'Y' && decision != 'y') {
+					outcome.removeCrewReward();
+				}
+			} else {
+				view.outputHandler.sendStringToView("There is no space for the survivor!");
 			}
+
 		}
 		if (outcome.getGoodsReward().size() > 0) {
 			Goods newGoods = outcome.getGoodsReward().get(0);
