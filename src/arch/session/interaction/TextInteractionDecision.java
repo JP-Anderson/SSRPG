@@ -8,11 +8,11 @@ public class TextInteractionDecision extends TextInteraction {
 
 	protected ArrayList<String> userOptions;
 
-	public static TextInteraction createStartingInteraction(ConsoleIOHandler injectedView, String message, ArrayList<String> usersOptions) {
+	public static TextInteractionDecision createStartingInteraction(ConsoleIOHandler injectedView, String message, ArrayList<String> usersOptions) {
 		return new TextInteractionDecision(injectedView, null, message, usersOptions);
 	}
 
-	public static TextInteraction createAdditionalInteraction(Interaction previous, String message, ArrayList<String> usersOptions) {
+	public static TextInteractionDecision createAdditionalInteraction(Interaction previous, String message, ArrayList<String> usersOptions) {
 		return new TextInteractionDecision(previous.view, previous, message, usersOptions);
 	}
 
