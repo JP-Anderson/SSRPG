@@ -52,11 +52,6 @@ public class BanditEvent extends Event {
 		}
 	}
 
-	@Override
-	void displayEvent() {
-		rootInteraction.run();
-	}
-
 	private class BanditEventRunnable implements Runnable {
 		@Override
 		public void run() {

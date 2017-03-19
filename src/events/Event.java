@@ -32,7 +32,9 @@ public abstract class Event {
 
 	abstract void initializeInteractionTree();
 
-	abstract void displayEvent();
+	protected void displayEvent() {
+		rootInteraction.run();
+	};
 
 	abstract EventOutcome getOutcome();
 	//endregion
