@@ -18,6 +18,11 @@ public class Crewmember {
 		name = pName;
 		crewmemberClass = newClass;
 		level = new Level(startingLevel);
+		if (level.getLevel() > 1) {
+			for (int i = 1; i < level.getLevel(); i++) {
+				crewmemberClass.incrementAvailableAbilityUpgrades();
+			}
+		}
 	}
 
 	public void gainExperience(int xp) {
