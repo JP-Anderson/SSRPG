@@ -24,7 +24,10 @@ public class Crewmember {
 		int startingLevel = level.getLevel();
 		level.gainExperience(xp);
 		if (level.getLevel() > startingLevel) {
-			crewmemberClass.incrementAvailableAbilityUpgrades();
+			int levelsGained = level.getLevel() - startingLevel;
+			for (int i = 0; i < levelsGained; i++ ) {
+				crewmemberClass.incrementAvailableAbilityUpgrades();
+			}
 		}
 	}
 
