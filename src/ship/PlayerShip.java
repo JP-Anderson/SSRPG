@@ -106,6 +106,13 @@ public class PlayerShip extends Ship {
 		return crew.size() < crewCapacity;
 	}
 
+	public double getContrabandCargoRatio() {
+		CargoBayModule cargoBayModule = (CargoBayModule) modules.getShipModule(CargoBayModule.class);
+		if (cargoBayModule != null) return cargoBayModule.contrabandCargoRatio();
+		// TODO : need to handle the event of no cargo bay module, probably just skip the event
+		return 0;
+	}
+
 	public static class PlayerShipBuilder extends Ship.GenericShipBuilder<PlayerShipBuilder> {
 
 		public PlayerShipBuilder(View view, String name, int maxCombinedModulePower) {

@@ -253,8 +253,10 @@ public class MapSession extends Session {
 				if (canTravel) {
 					for (int jumps = 0; jumps < distance; jumps++) {
 						double eventRoll = rand.randZeroToOne();
-						if (eventRoll <= 0.85) {
+						if (eventRoll >= 0.97) {
 							EventRunner.run(view, new BanditEvent(view), p1);
+						} else if (eventRoll < 0.3) {
+							EventRunner.run(view, new CargoCheckEvent(view), p1);
 						}
 						view.outputHandler.sendStringToView("You jump to the next sector.");
 						view.outputHandler.sendStringToView(distance - jumps + " sectors away.");

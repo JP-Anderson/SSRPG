@@ -1,6 +1,7 @@
 package ship.modules;
 
 import arch.view.View;
+import goods.Goods;
 import goods.PurchasedGoods;
 
 import java.util.List;
@@ -68,6 +69,15 @@ public class CargoBayModule extends MannableShipModule {
 		if (newCapacity >= filledCapacity) {
 			capacity = newCapacity;
 		}
+	}
+
+	public double contrabandCargoRatio() {
+		int contrabandCount = 0;
+		for (Goods good : cargo) {
+			if (!good.legal) contrabandCount++;
+		}
+		if (cargo.size() == 0) return 0;
+		return contrabandCount/cargo.size();
 	}
 
 }
