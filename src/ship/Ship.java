@@ -70,7 +70,7 @@ public abstract class Ship {
 		Crewmember crewmemberManningCockpit = getCockpitModule().getActiveCrewmember();
 		if (crewmemberManningCockpit != null) {
 			if (crewmemberManningCockpit.crewmemberClass instanceof PilotClass) {
-				IntAbility initiative = (IntAbility) crewmemberManningCockpit.hasAbility("Initiative");
+				IntAbility initiative = (IntAbility) crewmemberManningCockpit.tryAndGetAbility("Initiative");
 				if (initiative != null) return 3 + initiative.getAbilityLevel();
 			}
 			return 3;
@@ -80,6 +80,20 @@ public abstract class Ship {
 
 	public MannableShipModule getModuleMannedBy(Crewmember crewmember) {
 		return modules.getModuleCrewmemberIsManning(crewmember);
+	}
+
+	public boolean checkAnyCrewmemberHasAbility(String abilityName) {
+		for (Crewmember crewmember : crew) if (crewmember.hasAbility(abilityName)) return true;
+		return false;
+	}
+
+	public Ability getAbilityIfUnlockedForAnyCrewmember(String abilityName) {
+		Ability ability = null;
+		for (Crewmember crewmember : crew) {
+			ability = crewmember.tryAndGetAbility(abilityName);
+			if (ability != null) return ability;
+		}
+		return null;
 	}
 
 	public ArrayList<ShipModule> getModulesInList() {

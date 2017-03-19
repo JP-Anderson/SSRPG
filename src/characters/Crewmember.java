@@ -49,8 +49,12 @@ public class Crewmember {
 		return true;
 	}
 
-	public Ability hasAbility(String abilityName) {
+	public Ability tryAndGetAbility(String abilityName) {
 		return crewmemberClass.getAbilityIfItExists(abilityName);
+	}
+
+	public boolean hasAbility(String abilityName) {
+		return crewmemberClass.getAbilityIfItExists(abilityName) != null;
 	}
 
 	public boolean isManningAModule() {
