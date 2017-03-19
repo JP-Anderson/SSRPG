@@ -14,6 +14,8 @@ public class EventRunner {
 		view = newView;
 		EventOutcome outcome = event.transpire(player);
 		sleep(2);
+		if (outcome instanceof EmptyEventOutcome) return;
+
 		for (GoodsForSale g : outcome.getGoodsReward()) {
 			//player.getCargoBay().addCargo(g);
 			if (!player.getCargoBay().isFull()) {

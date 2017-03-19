@@ -56,6 +56,8 @@ public abstract class Event {
 
 	protected void getUserInput() {
 		//TODO: move this into a UI/console input class
+		if (outcome instanceof EmptyEventOutcome) return;
+
 		if (outcome.getCrewReward().size() > 0) {
 			if (playerShip.hasSpaceInCrew()) {
 				view.outputHandler.sendStringToView(crewPrompt + "? (Y/N)");
