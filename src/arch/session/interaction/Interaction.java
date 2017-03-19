@@ -14,7 +14,7 @@ public abstract class Interaction extends Session {
 	protected Interaction(ConsoleIOHandler injectedView, Interaction previousInteraction) {
 		super(injectedView, "Interaction");
 		if (previousInteraction != null) {
-			previousInteraction.setNextInteractions(this);
+			previousInteraction.getNextInteractions().add(this);
 			previous = previousInteraction;
 		}
 		nextInteractions = new ArrayList<Interaction>();

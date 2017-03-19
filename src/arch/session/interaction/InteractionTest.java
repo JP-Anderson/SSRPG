@@ -19,7 +19,7 @@ public class InteractionTest {
 
 		ArrayList<Interaction> next1 = new ArrayList<Interaction>();
 		next1.add(i2);
-		i1.setNextInteractions(next1);
+		//i1.setNextInteractions(next1);
 
 
 		TextInteraction i3 = new TextInteraction(inputHandler, i2, "This is selected by Option 0.");
