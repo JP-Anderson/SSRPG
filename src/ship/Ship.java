@@ -83,7 +83,11 @@ public abstract class Ship {
 	}
 
 	public boolean checkAnyCrewmemberHasAbility(String abilityName) {
-		for (Crewmember crewmember : crew) if (crewmember.hasAbility(abilityName)) return true;
+		for (Crewmember crewmember : crew) {
+			if (crewmember.hasAbility(abilityName)) {
+				return true;
+			}
+		}
 		return false;
 	}
 
