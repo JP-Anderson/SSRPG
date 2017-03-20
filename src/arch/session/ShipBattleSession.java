@@ -22,15 +22,11 @@ public class ShipBattleSession extends Session {
 		ship1 = newShip1;
 		ship1.addWeaponModule(3);
 		ship2 = newShip2;
-		ship2.addWeaponModule(2);
 
 		for (WeaponModule m : ship1.getWeaponModules()) {
 			m.setWeapon(new RailGun());
 		}
 
-		for (WeaponModule m : ship2.getWeaponModules()) {
-			m.setWeapon(new BurstLaserMk3());
-		}
 		currentActiveShip = determineWhichShipGetsFirstTurn();
 		view.outputHandler.sendStringToView(currentActiveShip.name + " is going first.");
 	}

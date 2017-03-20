@@ -1,9 +1,17 @@
 package events;
 
+import arch.session.ShipBattleSession;
+import arch.session.interaction.ComplexInteraction;
 import arch.session.interaction.TextInteraction;
 import arch.session.interaction.TextInteractionDecision;
 import arch.view.ConsoleIOHandler;
 import characters.skills.abilities.ValueAbility;
+import ship.AIShip;
+import ship.modules.ShieldModule;
+import ship.modules.WeaponModule;
+import ship.shields.AdvancedShieldsMk8;
+import ship.shields.BasicShieldsMk2;
+import ship.weapons.HeavyRocket;
 
 import java.util.ArrayList;
 
@@ -38,8 +46,11 @@ public class CargoCheckEvent extends Event {
 				interaction1_requestToCargoCheck, "A large team of droids and officers begin searching through your hold...");
 		//TextInteraction interaction3_fight = TextInteraction.createAdditionalInteraction()
 
-		TextInteraction todo = TextInteraction.createAdditionalInteraction(
-				interaction1_requestToCargoCheck, "TODO: add a fight here");
+		TextInteraction interaction_fightStarts = TextInteraction.createAdditionalInteraction(
+				interaction1_requestToCargoCheck, "Engage Weapons and Forward Shields!");
+
+
+		ComplexInteraction battle = ComplexInteraction.createComplexInteraction(interaction_fightStarts, new ShipBattleRunnable());
 
 		double contrabandCargoRatio = playerShip.getContrabandCargoRatio();
 		double baseDetectionChance = 0;
@@ -66,4 +77,36 @@ public class CargoCheckEvent extends Event {
 	EventOutcome getOutcome() {
 		return new EmptyEventOutcome();
 	}
+
+	private class ShipBattleRunnable implements Runnable {
+		@Override
+		public void run() {
+			ShieldModule shieldModule = new ShieldModule(view, "ShieldsModule1", 4);
+			shieldModule.shields(new AdvancedShieldsMk8());
+
+			WeaponModule weaponModule = new WeaponModule(view, "WM1", 3);
+			HeavyRocket heavyRocket = new HeavyRocket("Heavy Rocket");
+			weaponModule.setWeapon(heavyRocket);
+
+
+			WeaponModule weaponModule2 = new WeaponModule(view, "WM2", 3);
+			HeavyRocket heavyRocket2 = new HeavyRocket("Heavy Rocket");
+			weaponModule.setWeapon(heavyRocket2);
+
+			ArrayList<WeaponModule> weaponModules = new ArrayList<>();
+			weaponModules.add(weaponModule);
+			weaponModules.add(weaponModule2);
+
+			AIShip s2 = new AIShip.AIShipBuilder(view, "Police Cruiser",15)
+					.shieldModule(shieldModule)
+					.weaponModules(weaponModules)
+					.maxHullIntegrity(1000)
+					.build();
+
+			ShipBattleSession sbs = new ShipBattleSession(view, playerShip, s2);
+			sbs.run();
+		}
+	}
+
+
 }

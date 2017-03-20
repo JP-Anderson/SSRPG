@@ -7,8 +7,13 @@ import arch.view.ConsoleIOHandler;
 import goods.Goods;
 import ship.AIShip;
 import ship.modules.ShieldModule;
+import ship.modules.WeaponModule;
 import ship.shields.BasicShieldsMk2;
+import ship.weapons.BurstLaserMk3;
+import ship.weapons.HeavyRocket;
 import util.rng.RNG;
+
+import java.util.ArrayList;
 
 public class BanditEvent extends Event {
 
@@ -58,8 +63,17 @@ public class BanditEvent extends Event {
 			ShieldModule shieldModule = new ShieldModule(view, "ShieldsModule1", 1);
 			shieldModule.shields(new BasicShieldsMk2());
 
+			WeaponModule weaponModule = new WeaponModule(view, "WM1", 3);
+			BurstLaserMk3 laser = new BurstLaserMk3();
+			weaponModule.setWeapon(laser);
+
+			ArrayList<WeaponModule> weaponModules = new ArrayList<>();
+			weaponModules.add(weaponModule);
+
+
 			AIShip s2 = new AIShip.AIShipBuilder(view, "Bandits",12)
 					.shieldModule(shieldModule)
+					.weaponModules(weaponModules)
 					.maxHullIntegrity(100)
 					.build();
 
