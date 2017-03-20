@@ -25,6 +25,10 @@ public class WeaponModule extends MannableShipModule {
 		return baseTurnsTilWeaponReady;
 	}
 
+	public boolean isReadyToFire() {
+		return baseTurnsTilWeaponReady == 0;
+	}
+
 	public void resetBaseTurnsTilWeaponReady() {
 		baseTurnsTilWeaponReady = loadedWeapon.cooldown;
 	}
