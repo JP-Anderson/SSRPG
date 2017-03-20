@@ -2,8 +2,8 @@ package ship.weapons;
 
 public class HeavyRocket extends ShipWeapon {
 
-	public HeavyRocket(String pName) {
-		super(pName);
+	public HeavyRocket() {
+		super("Heavy Rocket");
 		cost = 500;
 		cooldown = 5;
 		hullDamage = 190;

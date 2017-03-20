@@ -85,12 +85,12 @@ public class CargoCheckEvent extends Event {
 			shieldModule.shields(new AdvancedShieldsMk8());
 
 			WeaponModule weaponModule = new WeaponModule(view, "WM1", 3);
-			HeavyRocket heavyRocket = new HeavyRocket("Heavy Rocket");
+			HeavyRocket heavyRocket = new HeavyRocket();
 			weaponModule.setWeapon(heavyRocket);
 
 
 			WeaponModule weaponModule2 = new WeaponModule(view, "WM2", 3);
-			HeavyRocket heavyRocket2 = new HeavyRocket("Heavy Rocket");
+			HeavyRocket heavyRocket2 = new HeavyRocket();
 			weaponModule.setWeapon(heavyRocket2);
 
 			ArrayList<WeaponModule> weaponModules = new ArrayList<>();
