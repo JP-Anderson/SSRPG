@@ -23,6 +23,14 @@ public class MockRandomNumberGenerator implements RandomNumberGenerator {
 		randZeroToOneValues = doublesToLoad;
 	}
 
+	public void loadSingleInteger(int integer) {
+		randIntValues.add(integer);
+	}
+
+	public void loadSingleRandZeroToOneDouble(double zeroToOneDouble) {
+		randZeroToOneValues.add(zeroToOneDouble);
+	}
+
 	@Override
 	public int randInt(int min, int max) {
 		randIntValueIndex = randIntValueIndex >= randIntValues.size() ? 0 : randIntValueIndex;
