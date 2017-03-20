@@ -43,13 +43,16 @@ public abstract class ShieldSystem {
 
 	public Attack attemptToShieldAttack(Attack attack) {
 		if (attack.weaponType == ShipWeapon.WeaponType.ROCKET) {
+			remainingShields = remainingShields - attack.shieldDamage;
+			updateShieldStateAfterTakingDamage();
 			return attack;
 		} else if (remainingShields == 0) {
 			updateShieldStateAfterTakingDamage();
 			return attack;
 		}
+		Attack absorbedAttack = absorbAttack(attack);
 		updateShieldStateAfterTakingDamage();
-		return absorbAttack(attack);
+		return absorbedAttack;
 	}
 
 	private void updateShieldStateAfterTakingDamage() {
@@ -80,6 +83,10 @@ public abstract class ShieldSystem {
 		}
 	}
 
+	public ShieldState getShieldState() {
+		return shieldState;
+	}
+
     /* Getters and Setters */
 
 	public int getMaxShields() {
@@ -88,6 +95,22 @@ public abstract class ShieldSystem {
 
 	public int getRemainingShields() {
 		return remainingShields;
+	}
+
+	public int getMaxTurnsTilRecharge() {
+		return maxTurnsTilRecharge;
+	}
+
+	public int getActualTurnsTilRecharge() {
+		return actualTurnsTilRecharge;
+	}
+
+	public int getRechargePerTurn() {
+		return rechargePerTurn;
+	}
+
+	public double getHullDamageAbsorption() {
+		return hullDamageAbsorption;
 	}
 
 }
