@@ -13,8 +13,8 @@ public class AbilitiesConsoleTreePrinter extends ConsoleTreePrinter<Ability> {
 		stringBuilder.setLength(0);
 		currentAbility = object;
 
-		printNodeCount();
-		printChar(' ');
+		//printNodeCount();
+		//printChar(' ');
 		printAbilityName();
 		printChar(' ');
 		printChar('(');
