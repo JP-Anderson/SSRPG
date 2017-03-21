@@ -9,6 +9,11 @@ public class CockpitModule extends MannableShipModule {
 	}
 
 	@Override
+	public String moduleTypeString() {
+		return "CockpitModule";
+	}
+
+	@Override
 	public void printInformation() {
 		super.printInformation();
 	}

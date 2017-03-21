@@ -12,6 +12,11 @@ public class EngineModule extends MannableShipModule {
 	}
 
 	@Override
+	public String moduleTypeString() {
+		return "EngineModule";
+	}
+
+	@Override
 	public void printInformation() {
 		super.printInformation();
 		view.outputHandler.sendStringToView("  + FUEL EFFICIENCY [" + fuelEfficiency + "]");

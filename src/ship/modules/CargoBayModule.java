@@ -20,11 +20,9 @@ public class CargoBayModule extends MannableShipModule {
 		cargo = new ArrayList<PurchasedGoods>();
 	}
 
-	public CargoBayModule(View view, String moduleName, int powerRequirement, int newCapacity, List<PurchasedGoods> newCargo) {
-		super(view, moduleName, ShipModuleType.CARGO, powerRequirement);
-		capacity = newCapacity;
-		filledCapacity = newCargo.size();
-		cargo = newCargo;
+	@Override
+	public String moduleTypeString() {
+		return "CargoBayModule";
 	}
 
 	public List<PurchasedGoods> getCargo() {

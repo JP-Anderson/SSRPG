@@ -17,6 +17,11 @@ public class WeaponModule extends MannableShipModule {
 		loadedWeapon = null;
 	}
 
+	@Override
+	public String moduleTypeString() {
+		return "WeaponModule";
+	}
+
 	public void decrementTurnsTilWeaponReady() {
 		baseTurnsTilWeaponReady = baseTurnsTilWeaponReady > 0 ? baseTurnsTilWeaponReady - 1 : 0;
 	}

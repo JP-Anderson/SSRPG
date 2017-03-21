@@ -13,6 +13,11 @@ public class ShieldModule extends MannableShipModule {
 		shields = null;
 	}
 
+	@Override
+	public String moduleTypeString() {
+		return "ShieldModule";
+	}
+
 	public ShieldSystem shields() {
 		return shields;
 	}

@@ -5,6 +5,8 @@ import characters.Crewmember;
 
 public abstract class MannableShipModule extends ShipModule {
 
+	public abstract String moduleTypeString();
+
 	public MannableShipModule(View view, String name, ShipModuleType moduleType, int modulePower) {
 		super(view, name, moduleType, modulePower);
 	}
