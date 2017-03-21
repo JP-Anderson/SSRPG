@@ -31,11 +31,6 @@ public class PlayerShip extends Ship {
 		remainingFuel = fuelCapacity;
 		scannerStrength = builder.scannerStrength;
 		money = builder.money;
-		initialiseCrew();
-	}
-
-	private void initialiseCrew() {
-		crew = new ArrayList<>();
 	}
 
 	public void initialiseCrew(ArrayList<Crewmember> newCrew) {
