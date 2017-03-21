@@ -122,7 +122,7 @@ class ShieldSystemTest {
 		shieldModule.shieldAttack(attack);
 
 		int baseShieldDamage = weaponModule.getWeapon().shieldDamage;
-		int expectedShieldsRemaining = shields.getRemainingShields() - baseShieldDamage;
+		int expectedShieldsRemaining = shields.getMaxShields() - baseShieldDamage;
 
 		assertEquals(shields.getRemainingShields(), expectedShieldsRemaining);
 	}
