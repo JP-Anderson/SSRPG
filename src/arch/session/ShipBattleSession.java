@@ -7,6 +7,7 @@ import ship.Ship;
 import ship.PlayerShip;
 import ship.modules.*;
 import ship.weapons.*;
+import util.rng.RNG;
 
 import java.util.ArrayList;
 
@@ -14,6 +15,8 @@ public class ShipBattleSession extends Session {
 
 	private final Ship ship1;
 	private final Ship ship2;
+
+	private RNG rng = new RNG();
 
 	private Ship currentActiveShip;
 
@@ -115,7 +118,7 @@ public class ShipBattleSession extends Session {
 			if (a != null) {
 				view.outputHandler.sendStringToView(a.hullDamage + "," + a.shieldDamage + "," + a.accuracy);
 				Ship shipToAttack = currentActiveShip == ship1 ? ship2 : ship1;
-				shipToAttack.sustainFire(a);
+				shipToAttack.sustainFire(a, rng);
 			}
 			m.resetBaseTurnsTilWeaponReady();
 		}

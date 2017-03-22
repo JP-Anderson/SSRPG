@@ -12,9 +12,8 @@
 					 ValuePerLevel="1;2;3;4">
 			</Ability>
 			<Ability Name="Aerobatics Expert"
-			         Description="Increased chance of dodging attacks"
-					 Type="Float"
-					 ValuePerLevel="1.2;1.4;1.6;1.8;2">
+			         Description="Gets a second dodge roll when taking a hit"
+					 Type="Boolean">
 			</Ability>
 		</Ability>
 	</Skill>

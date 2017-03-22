@@ -14,6 +14,8 @@ import characters.skills.abilities.IntAbility;
 import ship.modules.*;
 import ship.weapons.ShipWeapon;
 import ship.weapons.Attack;
+import util.rng.RNG;
+import util.rng.RandomNumberGenerator;
 
 public abstract class Ship {
 
@@ -48,7 +50,9 @@ public abstract class Ship {
 		isDestroyed = false;
 	}
 
-	public void sustainFire(Attack attack) {
+	public void sustainFire(Attack attack, RandomNumberGenerator randomNumberGenerator) {
+		if (canDodgeAttack(randomNumberGenerator)) return;
+
 		ShieldModule shieldModule = (ShieldModule) modules.getShipModule(ShieldModule.class);
 		if (shieldModule == null) {
 			takeHullDamage(attack);
@@ -64,6 +68,27 @@ public abstract class Ship {
 		view.outputHandler.sendStringToView("Shielded Attack: sD " + shieldedAttack.shieldDamage + " hD " + shieldedAttack.hullDamage);
 		view.outputHandler.sendStringToView("Shields: " + originalShields + " => " + shieldModule.shields().getRemainingShields());
 		view.outputHandler.sendStringToView("Hull: " + originalHull + " => " + remainingHullIntegrity);
+	}
+
+	private boolean canDodgeAttack(RandomNumberGenerator randomNumberGenerator) {
+		CockpitModule cockpitModule = getCockpitModule();
+		if (cockpitModule.cockpit() != null)  {
+			Crewmember pilot = cockpitModule.getActiveCrewmember();
+			if (pilot != null) {
+				double baseDodgeChance = cockpitModule.cockpitDodgeChance();
+				if (dodge(randomNumberGenerator, baseDodgeChance)) return true;
+				else if (pilot.hasAbility("Aerobatics Expert")) {
+					//Second dodge roll with Aerobatics Expert
+					return dodge(randomNumberGenerator, baseDodgeChance);
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean dodge(RandomNumberGenerator randomNumberGenerator, double dodgeChance) {
+		if (randomNumberGenerator.randZeroToOne() <= dodgeChance) return true;
+		return false;
 	}
 
 	private void takeHullDamage(Attack shieldedAttack) {
@@ -179,6 +204,10 @@ public abstract class Ship {
 	public EngineModule getEngineModule() {
 		return (EngineModule) modules.getShipModule(EngineModule.class);
 	}
+
+	public int getRemainingHullIntegrity() { return remainingHullIntegrity; }
+
+	public int getMaxHullIntegrity() { return maxHullIntegrity; }
 
 	public boolean isDestroyed() {
 		return isDestroyed;
