@@ -10,6 +10,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class MockRandomNumberGeneratorTest {
 
 	@Test
+	public void verifyMockRNGConstructedWithDoubleWillRepeatDouble() {
+		MockRandomNumberGenerator mockRNG = new MockRandomNumberGenerator(0.2);
+
+		assertEquals(0.2, mockRNG.randZeroToOne());
+		assertEquals(0.2, mockRNG.randZeroToOne());
+		assertEquals(0.2, mockRNG.randZeroToOne());
+	}
+
+	@Test
 	public void verifySingleIntegerLoadedWillRepeat() {
 		MockRandomNumberGenerator mockRNG = new MockRandomNumberGenerator();
 		mockRNG.loadSequenceOfIntegers(new ArrayList<>(Arrays.asList(0)));

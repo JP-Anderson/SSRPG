@@ -15,6 +15,11 @@ public class MockRandomNumberGenerator implements RandomNumberGenerator {
 		randZeroToOneValues = new ArrayList<>();
 	}
 
+	public MockRandomNumberGenerator(double randomZeroToOne) {
+		this();
+		randZeroToOneValues.add(randomZeroToOne);
+	}
+
 	public void loadSequenceOfIntegers(ArrayList<Integer> intsToLoad) {
 		randIntValues = intsToLoad;
 	}
