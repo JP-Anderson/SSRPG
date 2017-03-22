@@ -50,13 +50,18 @@ public abstract class Ship {
 
 	public void sustainFire(Attack attack) {
 		ShieldModule shieldModule = (ShieldModule) modules.getShipModule(ShieldModule.class);
+		if (shieldModule == null) {
+			takeHullDamage(attack);
+			return;
+		}
 		int originalShields = shieldModule.shields().getRemainingShields();
 		int originalHull = remainingHullIntegrity;
 
-		view.outputHandler.sendStringToView("Attack: sD " + attack.shieldDamage + " hD " + attack.hullDamage);
 		Attack shieldedAttack = shieldModule.shieldAttack(attack);
-		view.outputHandler.sendStringToView("Shielded Attack: sD " + shieldedAttack.shieldDamage + " hD " + shieldedAttack.hullDamage);
 		takeHullDamage(shieldedAttack);
+
+		view.outputHandler.sendStringToView("Attack: sD " + attack.shieldDamage + " hD " + attack.hullDamage);
+		view.outputHandler.sendStringToView("Shielded Attack: sD " + shieldedAttack.shieldDamage + " hD " + shieldedAttack.hullDamage);
 		view.outputHandler.sendStringToView("Shields: " + originalShields + " => " + shieldModule.shields().getRemainingShields());
 		view.outputHandler.sendStringToView("Hull: " + originalHull + " => " + remainingHullIntegrity);
 	}
