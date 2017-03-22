@@ -127,6 +127,13 @@ public abstract class Ship {
 		return getCrewmembersMatchingPredicate(matchAbilityAndInModule);
 	}
 
+	public List<Crewmember> getCrewmembersOfClass(String crewmemberClass) {
+		Predicate<Crewmember> matchClass =
+				c ->
+						c.crewmemberClass._className.equals(crewmemberClass);
+		return getCrewmembersMatchingPredicate(matchClass);
+	}
+
 	private List<Crewmember> getCrewmembersMatchingPredicate(Predicate<Crewmember> predicate) {
 		ArrayList<Crewmember> matchingCrew = new ArrayList<>();
 		for (Crewmember crewmember : crew) {
