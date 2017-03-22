@@ -5,6 +5,8 @@ import characters.Crewmember;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 import characters.classes.PilotClass;
 import characters.skills.abilities.Ability;
@@ -116,6 +118,23 @@ public abstract class Ship {
 		return crew.get(crewIndex);
 	}
 
+	public List<Crewmember> getCrewmembersWithAbilityInSpecificModule(String ability, String desiredModule) {
+		Predicate<Crewmember> matchAbilityAndInModule =
+			c ->
+				c.tryAndGetAbility(ability) != null
+				&& this.getModuleMannedBy(c) != null
+				&& this.getModuleMannedBy(c).moduleTypeString() == desiredModule;
+		return getCrewmembersMatchingPredicate(matchAbilityAndInModule);
+	}
+
+	private List<Crewmember> getCrewmembersMatchingPredicate(Predicate<Crewmember> predicate) {
+		ArrayList<Crewmember> matchingCrew = new ArrayList<>();
+		for (Crewmember crewmember : crew) {
+			if (predicate.test(crewmember)) matchingCrew.add(crewmember);
+		}
+		return matchingCrew;
+	}
+
 	// TODO: remove crewmembers when they die. Could have a turn timer to get crewmembers to a hospital in X turns?
 	public void removeCrewmemberAtIndex(int crewIndex) {
 		crew.remove(crewIndex);
@@ -183,6 +202,7 @@ public abstract class Ship {
 			this.maxCombinedModulePower = maxCombinedModulePower;
 			if (cockpitModule == null) addDefaultCockpitModule();
 			if (engineModule == null) addDefaultEngineModule();
+			if (crew == null) crew = new ArrayList<>();
 		}
 
 		public B cockpitModule(CockpitModule cockpitModule) {

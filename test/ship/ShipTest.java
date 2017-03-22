@@ -4,8 +4,10 @@ import arch.view.ConsoleIOHandler;
 import characters.Crewmember;
 import characters.classes.PilotClass;
 import characters.classes.ScoundrelClass;
+import characters.skills.abilities.Ability;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import ship.modules.CargoBayModule;
 import ship.modules.MannableShipModule;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,7 +21,7 @@ class ShipTest {
 	}
 
 	@Test
-	void ensureNoParamBuiltShipHasCockpitAndEngineModules() {
+	public void ensureNoParamBuiltShipHasCockpitAndEngineModules() {
 		PlayerShip testShip = getTestShip();
 		MannableShipModule cockpit = testShip.getCockpitModule();
 		MannableShipModule engineModule = testShip.getEngineModule();
@@ -44,7 +46,7 @@ class ShipTest {
 	}
 
 	@Test
-	void checkAnyCrewmemberHasAbilityReturnsTrueIfCrewmemberHasAbilityUnlocked() {
+	public void checkAnyCrewmemberHasAbilityReturnsTrueIfCrewmemberHasAbilityUnlocked() {
 		PlayerShip testShip = getTestShip();
 		Crewmember pilot = createPilotWithEvasiveManeuversAbility();
 		testShip.crew.add(pilot);
@@ -53,7 +55,7 @@ class ShipTest {
 	}
 
 	@Test
-	void checkAnyCrewmemberHasAbilityReturnsFalseIfCrewmemberHasAbilityButLocked() {
+	public void checkAnyCrewmemberHasAbilityReturnsFalseIfCrewmemberHasAbilityButLocked() {
 		PlayerShip testShip = getTestShip();
 		Crewmember pilot = createPilotWithoutEvasiveManeuversAbility();
 		testShip.crew.add(pilot);
@@ -62,7 +64,7 @@ class ShipTest {
 	}
 
 	@Test
-	void checkAnyCrewmemberHasAbilityReturnsFalseIfNoCrewmemberHasAbility() {
+	public void checkAnyCrewmemberHasAbilityReturnsFalseIfNoCrewmemberHasAbility() {
 		PlayerShip testShip = getTestShip();
 		Crewmember scoundrel = createScoundrel();
 		testShip.crew.add(scoundrel);
@@ -71,7 +73,7 @@ class ShipTest {
 	}
 
 	@Test
-	void getAbilityIfUnlockedReturnsAbilityIfCrewmemberHasAbilityUnlocked() {
+	public void getAbilityIfUnlockedReturnsAbilityIfCrewmemberHasAbilityUnlocked() {
 		PlayerShip testShip = getTestShip();
 		Crewmember pilot = createPilotWithEvasiveManeuversAbility();
 		testShip.crew.add(pilot);
@@ -80,7 +82,7 @@ class ShipTest {
 	}
 
 	@Test
-	void getAbilityIfUnlockedReturnsNullIfCrewmemberHasAbilityButLocked() {
+	public void getAbilityIfUnlockedReturnsNullIfCrewmemberHasAbilityButLocked() {
 		PlayerShip testShip = getTestShip();
 		Crewmember pilot = createPilotWithoutEvasiveManeuversAbility();
 		testShip.crew.add(pilot);
@@ -89,12 +91,64 @@ class ShipTest {
 	}
 
 	@Test
-	void getAbilityIfUnlockedReturnsNullIfNoCrewmemberHasAbility() {
+	public void getAbilityIfUnlockedReturnsEmptyListIfNoCrewmemberHasAbility() {
 		PlayerShip testShip = getTestShip();
 		Crewmember scoundrel = createScoundrel();
 		testShip.crew.add(scoundrel);
 
 		assertNull(testShip.getAbilityIfUnlockedForAnyCrewmember("Evasive Maneuvers"));
+	}
+
+
+	@Test
+	public void getCrewmembersWithAbilityInSpecificModuleFailsWhenCrewmemberHasntUnlockedAbility() {
+		PlayerShip testShip = getTestShipWithCargoBay();
+		Crewmember scoundrel = createScoundrel();
+		testShip.crew.add(scoundrel);
+
+		CargoBayModule cargoBayModule = testShip.getCargoBay();
+		cargoBayModule.assignCrewmember(scoundrel);
+
+		String desiredSkillName = "Connected";
+		assertTrue(testShip.getCrewmembersWithAbilityInSpecificModule(desiredSkillName, "CargoBayModule").isEmpty());
+	}
+
+	@Test
+	public void getCrewmembersWithAbilityInSpecificModuleFailsWhenCrewmemberIsntInModule() {
+		PlayerShip testShip = getTestShipWithCargoBay();
+		Crewmember scoundrel = createScoundrel();
+		testShip.crew.add(scoundrel);
+
+		String desiredAbilityName = "Connected";
+
+		scoundrel.tryToLevelUpAbility(0);
+
+		assertTrue(scoundrel.tryAndGetAbility(desiredAbilityName).isUnlocked());
+		assertTrue(testShip.getCrewmembersWithAbilityInSpecificModule(desiredAbilityName, "CargoBayModule").isEmpty());
+	}
+
+
+	@Test
+	public void getCrewmembersWithAbilityInSpecificModulePassesWhenConditionsMet() {
+		PlayerShip testShip = getTestShipWithCargoBay();
+		Crewmember scoundrel = createScoundrel();
+		testShip.crew.add(scoundrel);
+
+
+		String desiredAbilityName = "Connected";
+		CargoBayModule cargoBayModule = testShip.getCargoBay();
+		cargoBayModule.assignCrewmember(scoundrel);
+
+		scoundrel.tryToLevelUpAbility(0);
+
+		assertTrue(scoundrel.tryAndGetAbility(desiredAbilityName).isUnlocked());
+		assertTrue(testShip.getCrewmembersWithAbilityInSpecificModule(desiredAbilityName, "CargoBayModule").size()>0);
+	}
+
+	private PlayerShip getTestShipWithCargoBay() {
+		return new PlayerShip.PlayerShipBuilder(consoleIOHandler, "TestShip",10)
+				.cargoBayModule(new CargoBayModule(consoleIOHandler, "TestCargo", 5, 20))
+				.build();
 	}
 
 }
