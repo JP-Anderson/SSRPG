@@ -13,6 +13,7 @@ import ship.modules.WeaponModule;
 import ship.weapons.Attack;
 import ship.weapons.HeavyRocket;
 import util.rng.MockRandomNumberGenerator;
+import util.tests.PlayerShipTestHelper;
 
 import java.util.ArrayList;
 
@@ -26,7 +27,9 @@ class BooleanAbilityTest {
 
 	@Test
 	public void aerobaticsExpertGivesSecondDodgeOnHit() {
-		PlayerShip testShip = populateShipWithCrew(makeCrewWithPilot());
+		PlayerShip testShip = PlayerShipTestHelper.populateShipWithCockpitModule(
+				PlayerShipTestHelper.makeCrewWithPilot()
+		);
 
 		Crewmember pilot = testShip.getCrewmembersOfClass("Pilot").get(0);
 		pilot.tryToLevelUpAbility(0);
@@ -57,24 +60,6 @@ class BooleanAbilityTest {
 		enemyModule.setWeapon(new HeavyRocket());
 		while (! enemyModule.isReadyToFire()) enemyModule.decrementTurnsTilWeaponReady();
 		return enemyModule.attack(new MockRandomNumberGenerator(0.2));
-	}
-
-	private PlayerShip populateShipWithCrew(ArrayList<Crewmember> crewmembers) {
-		return new PlayerShip.PlayerShipBuilder(consoleIOHandler, "TestShip",10)
-				.crew(crewmembers)
-				.cockpitModule(new CockpitModule(consoleIOHandler, "TestCockpitModule", 3))
-				.build();
-	}
-
-	private ArrayList<Crewmember> makeCrewWithPilot() {
-		ArrayList<Crewmember> crew = new ArrayList<>();
-		crew.add(newCrewmember(new PilotClass()));
-		crew.add(newCrewmember(new ScoundrelClass()));
-		return crew;
-	}
-
-	private Crewmember newCrewmember(CrewmemberClass crewmemberClass) {
-		 return new Crewmember("TestCrewmember", crewmemberClass, 5);
 	}
 
 }
