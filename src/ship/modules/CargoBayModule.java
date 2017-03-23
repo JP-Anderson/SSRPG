@@ -75,7 +75,7 @@ public class CargoBayModule extends MannableShipModule {
 			if (!good.legal) contrabandCount++;
 		}
 		if (cargo.size() == 0) return 0;
-		return contrabandCount/cargo.size();
+		return (double) contrabandCount/cargo.size();
 	}
 
 }
