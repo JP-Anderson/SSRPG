@@ -10,9 +10,7 @@ import ship.modules.CockpitModule;
 
 import java.util.ArrayList;
 
-public class PlayerShipTestHelper {
-
-	private static ConsoleIOHandler consoleIOHandler = new ConsoleIOHandler();
+public class PlayerShipTestHelper extends TestHelper {
 
 	public static PlayerShip populateShipWithCockpitModule(ArrayList<Crewmember> crewmembers) {
 		return new PlayerShip.PlayerShipBuilder(consoleIOHandler, "TestShip",10)

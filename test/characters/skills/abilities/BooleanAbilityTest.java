@@ -14,6 +14,7 @@ import ship.weapons.Attack;
 import ship.weapons.HeavyRocket;
 import util.rng.MockRandomNumberGenerator;
 import util.tests.PlayerShipTestHelper;
+import util.tests.ShipWeaponTestHelper;
 
 import java.util.ArrayList;
 
@@ -50,16 +51,9 @@ class BooleanAbilityTest {
 		mrng.loadSingleRandZeroToOneDouble(0.1);
 
 		int originalShipHullIntegrity = testShip.getRemainingHullIntegrity();
-		testShip.sustainFire(mockEnemyHeavyRocketAttack(), mrng);
+		testShip.sustainFire(ShipWeaponTestHelper.mockEnemyHeavyRocketAttack(), mrng);
 
 		assertTrue(originalShipHullIntegrity == testShip.getRemainingHullIntegrity());
-	}
-
-	private Attack mockEnemyHeavyRocketAttack() {
-		WeaponModule enemyModule = new WeaponModule(consoleIOHandler, "EnemyMockWeapon", 5);
-		enemyModule.setWeapon(new HeavyRocket());
-		while (! enemyModule.isReadyToFire()) enemyModule.decrementTurnsTilWeaponReady();
-		return enemyModule.attack(new MockRandomNumberGenerator(0.2));
 	}
 
 }
