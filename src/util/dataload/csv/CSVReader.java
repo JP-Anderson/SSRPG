@@ -17,7 +17,7 @@ public class CSVReader {
 		return new CSV(reader.readLineByLine(file));
 	}
 
-	private CSVReader(String file) {
+	protected CSVReader(String file) {
 		fileName = file;
 	}
 

@@ -30,6 +30,10 @@ public class GridMap {
 		return rows.get(searchPoint.y).get(searchPoint.x);
 	}
 
+	public GridSquare getSquareAt(int width, int height) {
+		return rows.get(height).get(width);
+	}
+
 	public void populateGridSquare(GridSquare gridSquare) {
 		int x = gridSquare.gridPoint.x;
 		int y = gridSquare.gridPoint.y;
