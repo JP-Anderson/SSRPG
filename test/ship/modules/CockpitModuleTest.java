@@ -14,7 +14,38 @@ import static org.junit.jupiter.api.Assertions.*;
 class CockpitModuleTest {
 
 	@Test
-	void canDodgeAttack() {
+	public void canDodgeAttackFailsWithoutCrewmemberInCockpit() {
+		PlayerShip playerShip = PlayerShipTestHelper.populateShipWithCockpitModule(
+				PlayerShipTestHelper.makeCrewWithPilot()
+		);
+
+		CockpitModule mod = playerShip.getCockpitModule();
+		mod.cockpit(new Cockpit(",",3,900,0.4));
+
+		MockRandomNumberGenerator rng = new MockRandomNumberGenerator();
+		rng.loadSingleRandZeroToOneDouble(0.2);
+
+		playerShip.sustainFire(ShipWeaponTestHelper.mockEnemyHeavyRocketAttack(), rng);
+
+		assertFalse(playerShip.getRemainingHullIntegrity() == playerShip.getMaxHullIntegrity());
+	}
+
+	@Test 
+	public void canDodgeAttackFailsWithoutCockpit() {
+		PlayerShip playerShip = PlayerShipTestHelper.populateShipWithCockpitModule(
+				PlayerShipTestHelper.makeCrewWithPilot()
+		);
+
+		MockRandomNumberGenerator rng = new MockRandomNumberGenerator();
+		rng.loadSingleRandZeroToOneDouble(0.2);
+
+		playerShip.sustainFire(ShipWeaponTestHelper.mockEnemyHeavyRocketAttack(), rng);
+
+		assertFalse(playerShip.getRemainingHullIntegrity() == playerShip.getMaxHullIntegrity());
+	}
+
+	@Test
+	public void canDodgeAttack() {
 		PlayerShip playerShip = PlayerShipTestHelper.populateShipWithCockpitModule(
 				PlayerShipTestHelper.makeCrewWithPilot()
 		);
@@ -34,7 +65,7 @@ class CockpitModuleTest {
 
 
 	@Test
-	void canDodgeAttackFailsIfRollIsAboveDodgeChance() {
+	public void canDodgeAttackFailsIfRollIsAboveDodgeChance() {
 		PlayerShip playerShip = PlayerShipTestHelper.populateShipWithCockpitModule(
 				PlayerShipTestHelper.makeCrewWithPilot()
 		);
