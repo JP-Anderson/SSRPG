@@ -106,7 +106,7 @@ public class Scanner {
 					if (indexIsInCentre(blockColIndex) && indexIsInCentre(blockRowIndex)) {
 						printBlockCentreRow(p.y, blockRowIndex, p.x);
 					} else {
-						printBlockOuterRow(blockColIndex, blockRowIndex);
+						printBlockOuterRow(blockColIndex, blockRowIndex, gridMap.getSquareAt(p));
 					}
 				} else {
 					System.out.print("   ");
@@ -135,16 +135,16 @@ public class Scanner {
 		} else {
 			if (!(currentSquare instanceof EmptyGridSquare)) {
 				System.out.print("-O-");
-			} else System.out.print("   ");
+			} else System.out.print("- -");
 		}
 	}
 
-	private void printBlockOuterRow(int blockColIndex, int blockRowIndex) {
+	private void printBlockOuterRow(int blockColIndex, int blockRowIndex, GridSquare blockSquare) {
 		if (indexIsInCentre(blockColIndex)) {
 			System.out.print(" | ");
 		} else if (indexIsInCentre(blockRowIndex)) {
 			System.out.print("---");
-		} else System.out.print("   ");
+		} else System.out.print(" "+blockSquare.zone.id+" ");
 	}
 
 	private boolean indexIsInCentre(int index) {
