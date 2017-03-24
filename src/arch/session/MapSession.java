@@ -30,7 +30,11 @@ public class MapSession extends Session {
 		p1 = crewedPlayerShip;
 
 		GridPoint start = new GridPoint(3, 6);
-		map = GridMap.generateGridMap(11, 7);
+
+		CSV mapCsv = MapCSVReader.readCSV("map");
+
+		map = MapCSVReader.getMap("map");
+		//map = GridMap.generateGridMap(11, 7);
 
 		p1.initialiseMap(start, map);
 		initMapAndGoodsList();
