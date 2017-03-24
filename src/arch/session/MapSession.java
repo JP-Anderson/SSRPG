@@ -400,7 +400,7 @@ public class MapSession extends Session {
 				}
 				if (decision2 == 'Y' || decision2 == 'y') {
 					ArrayList<Ability> availableUpgrades = crewmember.getUpgradeableAbilities();
-					Ability chosenAbility = view.inputHandler.getUserChoiceFromList(availableUpgrades, "_name");
+					Ability chosenAbility = view.inputHandler.getUserChoiceFromList(availableUpgrades, "name");
 					int indexOfAbility = availableUpgrades.indexOf(chosenAbility);
 					crewmember.tryToLevelUpAbility(indexOfAbility);
 				}

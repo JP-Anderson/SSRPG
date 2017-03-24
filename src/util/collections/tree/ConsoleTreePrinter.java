@@ -33,7 +33,7 @@ public class ConsoleTreePrinter<E> {
 		String stringToPrint = null;
 		Field[] fields = object.getClass().getFields();
 		for (Field f : fields) {
-			if (f.getName().equals("_name")) try {
+			if (f.getName().equals("name")) try {
 				stringToPrint = (String) f.get(object);
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
