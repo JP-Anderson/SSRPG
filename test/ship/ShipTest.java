@@ -4,11 +4,10 @@ import arch.view.ConsoleIOHandler;
 import characters.Crewmember;
 import characters.classes.PilotClass;
 import characters.classes.ScoundrelClass;
-import characters.skills.abilities.Ability;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import ship.modules.CargoBayModule;
-import ship.modules.MannableShipModule;
+import ship.modules.*;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -143,6 +142,59 @@ class ShipTest {
 
 		assertTrue(scoundrel.tryAndGetAbility(desiredAbilityName).isUnlocked());
 		assertTrue(testShip.getCrewmembersWithAbilityInSpecificModule(desiredAbilityName, "CargoBayModule").size()>0);
+	}
+
+	@Test
+	public void getModulesToBeSequencedInCombatGetsCorrectWeaponShieldCockpitCargoAndEngineModules() {
+		PlayerShip testShip = getTestShipWithWeaponShieldCockpitAndCargoModule();
+
+		ArrayList<ShipModule> modules = (ArrayList<ShipModule>) testShip.getModulesToBeSequencedInCombat();
+		assertEquals(3, modules.size());
+	}
+
+	@Test
+	public void getModulesToBeSequencedInCombatGetsCorrectMultipleWeaponCockpitCargoAndEngineModules() {
+		PlayerShip testShip = getTestShipWithTwoWeaponsCockpitAndCargoModule();
+
+		ArrayList<ShipModule> modules = (ArrayList<ShipModule>) testShip.getModulesToBeSequencedInCombat();
+		assertEquals(3, modules.size());
+	}
+
+	@Test
+	public void getModulesToBeSequencedInCombatGetsCorrectEngineModule() {
+		PlayerShip testShip = getTestShipWithCockpitCargoAndEngineModule();
+
+		ArrayList<ShipModule> modules = (ArrayList<ShipModule>) testShip.getModulesToBeSequencedInCombat();
+		assertEquals(1, modules.size());
+	}
+
+	private PlayerShip getTestShipWithWeaponShieldCockpitAndCargoModule() {
+		ArrayList<WeaponModule> weaponModules = new ArrayList<>();
+		weaponModules.add(new WeaponModule(consoleIOHandler, "TestWeaponModule",3));
+		return new PlayerShip.PlayerShipBuilder(consoleIOHandler, "TestShip",20)
+				.weaponModules(weaponModules)
+				.shieldModule(new ShieldModule(consoleIOHandler, "TestShieldModule", 7))
+				.cockpitModule(new CockpitModule(consoleIOHandler, "TestCockpitModule",3))
+				.cargoBayModule(new CargoBayModule(consoleIOHandler, "TestCargo", 5, 20))
+				.build();
+	}
+
+	private PlayerShip getTestShipWithTwoWeaponsCockpitAndCargoModule() {
+		ArrayList<WeaponModule> weaponModules = new ArrayList<>();
+		weaponModules.add(new WeaponModule(consoleIOHandler, "TestWeaponModule",3));
+		weaponModules.add(new WeaponModule(consoleIOHandler, "TestWeaponModule2", 4));
+		return new PlayerShip.PlayerShipBuilder(consoleIOHandler, "TestShip",25)
+				.weaponModules(weaponModules)
+				.cockpitModule(new CockpitModule(consoleIOHandler, "TestCockpitModule",3))
+				.cargoBayModule(new CargoBayModule(consoleIOHandler, "TestCargo", 5, 20))
+				.build();
+	}
+
+	private PlayerShip getTestShipWithCockpitCargoAndEngineModule() {
+		return new PlayerShip.PlayerShipBuilder(consoleIOHandler, "TestShip",25)
+				.cockpitModule(new CockpitModule(consoleIOHandler, "TestCockpitModule",3))
+				.cargoBayModule(new CargoBayModule(consoleIOHandler, "TestCargo", 5, 20))
+				.build();
 	}
 
 	private PlayerShip getTestShipWithCargoBay() {

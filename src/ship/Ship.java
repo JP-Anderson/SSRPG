@@ -5,8 +5,8 @@ import characters.Crewmember;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import characters.classes.PilotClass;
 import characters.skills.abilities.Ability;
@@ -14,7 +14,6 @@ import characters.skills.abilities.IntAbility;
 import ship.modules.*;
 import ship.weapons.ShipWeapon;
 import ship.weapons.Attack;
-import util.rng.RNG;
 import util.rng.RandomNumberGenerator;
 
 public abstract class Ship {
@@ -25,10 +24,8 @@ public abstract class Ship {
 	ShipModules modules;
 	int maxHullIntegrity;
 	int remainingHullIntegrity;
-	protected ArrayList<Crewmember> crew;
+	ArrayList<Crewmember> crew;
 	int crewCapacity;
-
-	CargoBayModule cargo;
 
 	private boolean isDestroyed;
 
@@ -105,6 +102,17 @@ public abstract class Ship {
 
 	public ArrayList<ShipModule> getModulesInList() {
 		return modules.getModulesAsArrayList();
+	}
+
+	public int getNumberOfModules() {
+		return getModulesInList().size();
+	}
+
+	public List<ShipModule> getModulesToBeSequencedInCombat() {
+		return modules.getModulesAsArrayList()
+				.stream()
+				.filter(ShipModule::needsToBeSequencedForCombat)
+				.collect(Collectors.toList());
 	}
 
 	public ArrayList<Crewmember> getCrew() {
