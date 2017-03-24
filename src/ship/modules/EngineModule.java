@@ -7,7 +7,7 @@ public class EngineModule extends MannableShipModule {
 	public final int fuelEfficiency;
 
 	public EngineModule(View view, String newName, int powerRequirement, int efficiency) {
-		super(view, newName, ShipModuleType.ENGINE, powerRequirement);
+		super(view, newName, ShipModuleType.ENGINE, powerRequirement, true);
 		fuelEfficiency = efficiency;
 	}
 

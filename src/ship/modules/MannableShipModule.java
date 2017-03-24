@@ -7,13 +7,13 @@ public abstract class MannableShipModule extends ShipModule {
 
 	public abstract String moduleTypeString();
 
-	public MannableShipModule(View view, String name, ShipModuleType moduleType, int modulePower) {
-		super(view, name, moduleType, modulePower);
+	public MannableShipModule(View view, String name, ShipModuleType moduleType, int modulePower, boolean needsToBeSequencedForCombat) {
+		super(view, name, moduleType, modulePower, needsToBeSequencedForCombat);
 	}
 
 	@Override
 	public void printInformation() {
-		view.outputHandler.sendStringToView(" - MODULE [" + _name + "]");
+		view.outputHandler.sendStringToView(" - MODULE [" + name + "]");
 		if (activeCrewmember == null) {
 			view.outputHandler.sendStringToView("  + Module unmanned");
 		} else {

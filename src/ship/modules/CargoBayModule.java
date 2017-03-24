@@ -14,7 +14,7 @@ public class CargoBayModule extends MannableShipModule {
 	private List<PurchasedGoods> cargo;
 
 	public CargoBayModule(View view, String moduleName, int powerRequirement, int newCapacity) {
-		super(view, moduleName, ShipModuleType.CARGO, powerRequirement);
+		super(view, moduleName, ShipModuleType.CARGO, powerRequirement, false);
 		capacity = newCapacity;
 		filledCapacity = 0;
 		cargo = new ArrayList<PurchasedGoods>();

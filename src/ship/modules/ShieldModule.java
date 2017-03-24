@@ -9,7 +9,7 @@ public class ShieldModule extends MannableShipModule {
 	private ShieldSystem shields;
 
 	public ShieldModule(View view, String newName, int powerRequirement) {
-		super(view, newName, ShipModuleType.SHIELD, powerRequirement);
+		super(view, newName, ShipModuleType.SHIELD, powerRequirement, true);
 		shields = null;
 	}
 
@@ -30,10 +30,10 @@ public class ShieldModule extends MannableShipModule {
 	public void printInformation() {
 		super.printInformation();
 		if (shields == null) {
-			view.outputHandler.sendStringToView("Empty Shield Module ... PWR = [" + _modulePower + "]");
+			view.outputHandler.sendStringToView("Empty Shield Module ... PWR = [" + modulePower + "]");
 			view.outputHandler.sendStringToView("No shields.");
 		} else {
-			view.outputHandler.sendStringToView("  + SHIELD POWER [" + _modulePower + "]");
+			view.outputHandler.sendStringToView("  + SHIELD POWER [" + modulePower + "]");
 			view.outputHandler.sendStringToView("  + RMNG SHIELDS [" + shields.getRemainingShields() + "]");
 			view.outputHandler.sendStringToView("  + MAXM SHIELDS [" + shields.getMaxShields() + "]");
 
