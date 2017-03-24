@@ -19,6 +19,22 @@ public class GridMap {
 		return map;
 	}
 
+	private GridMap(int w, int h) {
+		width = w;
+		height = h;
+		for (int i = 0; i < h; i++) {
+			rows.add(initializeRowWithEmptyGridSquares(i));
+		}
+	}
+
+	private ArrayList<GridSquare> initializeRowWithEmptyGridSquares(int height) {
+		ArrayList<GridSquare> newRow = new ArrayList<GridSquare>();
+		for (int i = 0; i < width; i++) {
+			newRow.add(EmptyGridSquare.generateEmptyGridSquare(new GridPoint(i, height)));
+		}
+		return newRow;
+	}
+
 	public void placePlayer(PlayerShip playerShip) {
 		RNG rand = new RNG();
 		int randomX = rand.randInt(0, width);
@@ -38,22 +54,6 @@ public class GridMap {
 		int x = gridSquare.gridPoint.x;
 		int y = gridSquare.gridPoint.y;
 		rows.get(y).set(x, gridSquare);
-	}
-
-	private GridMap(int w, int h) {
-		width = w;
-		height = h;
-		for (int i = 0; i < h; i++) {
-			rows.add(initializeRowWithEmptyGridSquares(i));
-		}
-	}
-
-	private ArrayList<GridSquare> initializeRowWithEmptyGridSquares(int height) {
-		ArrayList<GridSquare> newRow = new ArrayList<GridSquare>();
-		for (int i = 0; i < width; i++) {
-			newRow.add(EmptyGridSquare.generateEmptyGridSquare(new GridPoint(i, height)));
-		}
-		return newRow;
 	}
 
 	public int getWidth() {
