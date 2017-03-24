@@ -4,12 +4,14 @@ import arch.view.View;
 import ship.weapons.Attack;
 import ship.shields.ShieldSystem;
 
-public class ShieldModule extends MannableShipModule {
+public class ShieldModule extends MannableShipModule implements CombatSequenceModule {
 
 	private ShieldSystem shields;
 
+	private boolean enabledForCombat = false;
+
 	public ShieldModule(View view, String newName, int powerRequirement) {
-		super(view, newName, ShipModuleType.SHIELD, powerRequirement, true);
+		super(view, newName, ShipModuleType.SHIELD, powerRequirement);
 		shields = null;
 	}
 
@@ -46,6 +48,16 @@ public class ShieldModule extends MannableShipModule {
 
 	public void rechargeShields() {
 		shields.updateShieldStatusForNewRound();
+	}
+
+	@Override
+	public void setEnabledStatus(boolean status) {
+		enabledForCombat = status;
+	}
+
+	@Override
+	public boolean getStatus() {
+		return enabledForCombat;
 	}
 
 }

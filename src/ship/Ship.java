@@ -111,7 +111,7 @@ public abstract class Ship {
 	public List<ShipModule> getModulesToBeSequencedInCombat() {
 		return modules.getModulesAsArrayList()
 				.stream()
-				.filter(ShipModule::needsToBeSequencedForCombat)
+				.filter(m -> m instanceof CombatSequenceModule)
 				.collect(Collectors.toList());
 	}
 

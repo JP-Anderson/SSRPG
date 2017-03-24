@@ -13,15 +13,13 @@ public abstract class ShipModule {
 	protected final String name;
 	protected final ShipModuleType moduleType;
 	protected final int modulePower;
-	protected final boolean needsToBeSequencedForCombat;
 
 
-	public ShipModule(View view, String name, ShipModuleType moduleType, int modulePower, boolean needsToBeSequencedForCombat) {
+	public ShipModule(View view, String name, ShipModuleType moduleType, int modulePower) {
 		this.view = view;
 		this.name = name;
 		this.moduleType = moduleType;
 		this.modulePower = modulePower;
-		this.needsToBeSequencedForCombat = needsToBeSequencedForCombat;
 	}
 
 	abstract void printInformation();
@@ -42,7 +40,4 @@ public abstract class ShipModule {
 		return modulePower;
 	}
 
-	public boolean needsToBeSequencedForCombat() {
-		return needsToBeSequencedForCombat;
-	}
 }

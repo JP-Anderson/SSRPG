@@ -10,7 +10,7 @@ public class CockpitModule extends MannableShipModule {
 	private Cockpit cockpit = null;
 
 	public CockpitModule(View view, String name, int powerRequirement) {
-		super(view, name, ShipModuleType.COCKPIT, powerRequirement, false);
+		super(view, name, ShipModuleType.COCKPIT, powerRequirement);
 	}
 
 	@Override

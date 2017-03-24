@@ -5,14 +5,16 @@ import ship.weapons.*;
 import util.rng.RNG;
 import util.rng.RandomNumberGenerator;
 
-public class WeaponModule extends MannableShipModule {
+public class WeaponModule extends MannableShipModule implements CombatSequenceModule {
 
 	public final int maxWeaponPowerSupported;
 	private ShipWeapon loadedWeapon;
 	private int baseTurnsTilWeaponReady;
 
+	private boolean enabledForCombat = false;
+
 	public WeaponModule(View view, String newName, int maxWeaponPower) {
-		super(view, newName, ShipModuleType.WEAPON, maxWeaponPower, true);
+		super(view, newName, ShipModuleType.WEAPON, maxWeaponPower);
 		maxWeaponPowerSupported = maxWeaponPower;
 		loadedWeapon = null;
 	}
@@ -83,6 +85,16 @@ public class WeaponModule extends MannableShipModule {
 
 	public ShipWeapon getWeapon() {
 		return loadedWeapon;
+	}
+
+	@Override
+	public void setEnabledStatus(boolean status) {
+		enabledForCombat = status;
+	}
+
+	@Override
+	public boolean getStatus() {
+		return enabledForCombat;
 	}
 
 }
