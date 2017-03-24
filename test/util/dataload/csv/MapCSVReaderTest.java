@@ -5,9 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Created by Jp on 23/03/2017.
- */
 class MapCSVReaderTest {
 
 	private static final String MAP_FILE = "test\\test_map";

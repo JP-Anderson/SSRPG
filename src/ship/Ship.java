@@ -42,14 +42,6 @@ public abstract class Ship {
 		crewCapacity = builder.crewCapacity;
 	}
 
-	Ship(String shipName, ShipModules shipModules) {
-		name = shipName;
-		modules = shipModules;
-		maxHullIntegrity = 500;
-		remainingHullIntegrity = maxHullIntegrity;
-		isDestroyed = false;
-	}
-
 	public void sustainFire(Attack attack, RandomNumberGenerator randomNumberGenerator) {
 		if (getCockpitModule() != null && getCockpitModule().canDodgeAttack(randomNumberGenerator)) return;
 

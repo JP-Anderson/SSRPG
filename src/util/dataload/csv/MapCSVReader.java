@@ -2,7 +2,6 @@ package util.dataload.csv;
 
 import map.GridMap;
 import map.GridPoint;
-import map.gridsquares.EmptyGridSquare;
 import map.gridsquares.GridSquare;
 import map.zones.Zone;
 
