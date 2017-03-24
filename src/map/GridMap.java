@@ -53,6 +53,10 @@ public class GridMap {
 	public void populateGridSquare(GridSquare gridSquare) {
 		int x = gridSquare.gridPoint.x;
 		int y = gridSquare.gridPoint.y;
+
+		GridSquare squareToReplace = getSquareAt(gridSquare.gridPoint);
+		gridSquare.zone = squareToReplace.zone;
+
 		rows.get(y).set(x, gridSquare);
 	}
 
