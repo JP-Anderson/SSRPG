@@ -32,7 +32,8 @@ public abstract class ZoneEventMap {
 	}
 
 	private Event getEvent(int randomRoll) {
-		int probTally = 0;
+		// Start from -1 so the event count is zero indexed
+		int probTally = -1;
 		Set<Map.Entry<Event, Integer>> eventProbabilitiesSet = this.eventProbabilities.entrySet();
 		for (Map.Entry<Event,Integer> eventProbability : eventProbabilitiesSet) {
 			probTally = probTally + eventProbability.getValue();

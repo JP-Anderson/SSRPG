@@ -12,35 +12,35 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProtectedZoneEventsTest {
 
 	@Test
-	public void rollsOfZeroToFiveReturnCargoCheckEvent() {
+	public void rollsOfZeroToFourReturnCargoCheckEvent() {
 		ProtectedZoneEvents pze = new ProtectedZoneEvents();
 		MockRandomNumberGenerator mockRNG = new MockRandomNumberGenerator();
-		for (int i = 0; i <= 5; i++) {
+		for (int i = 0; i <= 4; i++) {
 			mockRNG.loadSingleInteger(i);
 		}
 
-		for (int i = 0; i <= 5; i++) {
+		for (int i = 0; i <= 4; i++) {
 			assertTrue(pze.getRandomEvent(mockRNG) instanceof CargoCheckEvent);
 		}
 	}
 
 	@Test
-	public void rollOfSixReturnsShipwreckEvent() {
+	public void rollOfFiveReturnsShipwreckEvent() {
 		ProtectedZoneEvents pze = new ProtectedZoneEvents();
-		MockRandomNumberGenerator mockRNG = new MockRandomNumberGenerator(6);
+		MockRandomNumberGenerator mockRNG = new MockRandomNumberGenerator(5);
 
 		assertTrue(pze.getRandomEvent(mockRNG) instanceof ShipwreckEvent);
 	}
 
 	@Test
-	public void rollsOfSevenToFifteenReturnNoEvent() {
+	public void rollsOfSixToThirteenReturnNoEvent() {
 		ProtectedZoneEvents pze = new ProtectedZoneEvents();
 		MockRandomNumberGenerator mockRNG = new MockRandomNumberGenerator();
-		for (int i = 7; i < 15; i++) {
+		for (int i = 6; i <= 13; i++) {
 			mockRNG.loadSingleInteger(i);
 		}
 
-		for (int i = 7; i < 15; i++) {
+		for (int i = 6; i <= 13; i++) {
 			assertTrue(pze.getRandomEvent(mockRNG) == null);
 		}
 	}
