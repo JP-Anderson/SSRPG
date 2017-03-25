@@ -42,40 +42,6 @@ public class MapSession extends Session {
 
 	private final String xLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-	@Override
-	public void run() {
-
-
-		while (true) {
-
-			printCurrentLocation();
-
-			String input = view.inputHandler.getStringFromUser("");
-
-			if (input.equalsIgnoreCase("scan")) {
-				p1.scan();
-			} else if (input.equalsIgnoreCase("trade")) {
-				tradeSequence();
-			} else if (input.equalsIgnoreCase("travel")) {
-				travelSequence();
-			} else if (input.equalsIgnoreCase("ship")) {
-				p1.shipStatus();
-			} else if (input.equalsIgnoreCase("cargo")) {
-				printCargo();
-			} else if (input.equalsIgnoreCase("fuel")) {
-				fuelSequence();
-			} else if (input.equalsIgnoreCase("station")) {
-				crewStationsSequence();
-			} else if (input.equalsIgnoreCase("crew")) {
-				crewSequence();
-			} else {
-				consoleInformation(input);
-			}
-			sleep(1);
-			view.outputHandler.sendStringToView("");
-		}
-	}
-
 	private void initMapAndGoodsList() {
 		CSV planets = CSVReader.readCSV("planets");
 		CSV goodsCSV = CSVReader.readCSV("goods");
@@ -105,6 +71,35 @@ public class MapSession extends Session {
 			//view.outputHandler.sendStringToView("added " + name);
 		}
 
+	}
+
+	@Override
+	public void run() {
+		while (true) {
+			printCurrentLocation();
+			String input = view.inputHandler.getStringFromUser("");
+			if (input.equalsIgnoreCase("scan")) {
+				p1.scan();
+			} else if (input.equalsIgnoreCase("trade")) {
+				tradeSequence();
+			} else if (input.equalsIgnoreCase("travel")) {
+				travelSequence();
+			} else if (input.equalsIgnoreCase("ship")) {
+				p1.shipStatus();
+			} else if (input.equalsIgnoreCase("cargo")) {
+				printCargo();
+			} else if (input.equalsIgnoreCase("fuel")) {
+				fuelSequence();
+			} else if (input.equalsIgnoreCase("station")) {
+				crewStationsSequence();
+			} else if (input.equalsIgnoreCase("crew")) {
+				crewSequence();
+			} else {
+				consoleInformation(input);
+			}
+			sleep(1);
+			view.outputHandler.sendStringToView("");
+		}
 	}
 
 	private void printCurrentLocation() {
