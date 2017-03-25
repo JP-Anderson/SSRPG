@@ -20,6 +20,11 @@ public class MockRandomNumberGenerator implements RandomNumberGenerator {
 		randZeroToOneValues.add(randomZeroToOne);
 	}
 
+	public MockRandomNumberGenerator(int integer) {
+		this();
+		randIntValues.add(integer);
+	}
+
 	public void loadSequenceOfIntegers(ArrayList<Integer> intsToLoad) {
 		randIntValues = intsToLoad;
 	}
