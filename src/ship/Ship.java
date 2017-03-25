@@ -105,14 +105,7 @@ public abstract class Ship {
 	}
 
 	public int getNumberOfModules() {
-		return getModulesInList().size();
-	}
-
-	public List<ShipModule> getModulesToBeSequencedInCombat() {
-		return modules.getModulesAsArrayList()
-				.stream()
-				.filter(m -> m instanceof CombatSequenceModule)
-				.collect(Collectors.toList());
+		return modules.getModulesAsArrayList().size();
 	}
 
 	public ArrayList<Crewmember> getCrew() {

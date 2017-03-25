@@ -190,6 +190,13 @@ public class ShipModules {
 		}
 		return mannableModules;
 	}
+
+	public List<ShipModule> getModulesToBeSequencedInCombat() {
+		return modulesAsArrayList
+				.stream()
+				.filter(m -> m instanceof CombatSequenceModule)
+				.collect(Collectors.toList());
+	}
 	//endregion
 
 	//addModuleFunction
