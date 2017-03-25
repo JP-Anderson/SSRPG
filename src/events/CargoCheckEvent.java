@@ -11,7 +11,7 @@ import ship.modules.ShieldModule;
 import ship.modules.WeaponModule;
 import ship.shields.AdvancedShieldsMk8;
 import ship.shields.BasicShieldsMk2;
-import ship.weapons.HeavyRocket;
+import ship.weapons.ShipWeaponsHolder;
 
 import java.util.ArrayList;
 
@@ -85,13 +85,11 @@ public class CargoCheckEvent extends Event {
 			shieldModule.shields(new AdvancedShieldsMk8());
 
 			WeaponModule weaponModule = new WeaponModule(view, "WM1", 3);
-			HeavyRocket heavyRocket = new HeavyRocket();
-			weaponModule.setWeapon(heavyRocket);
+			weaponModule.setWeapon(ShipWeaponsHolder.getWeapon("Heavy Rocket"));
 
 
 			WeaponModule weaponModule2 = new WeaponModule(view, "WM2", 3);
-			HeavyRocket heavyRocket2 = new HeavyRocket();
-			weaponModule.setWeapon(heavyRocket2);
+			weaponModule.setWeapon(ShipWeaponsHolder.getWeapon("Heavy Rocket"));
 
 			ArrayList<WeaponModule> weaponModules = new ArrayList<>();
 			weaponModules.add(weaponModule);

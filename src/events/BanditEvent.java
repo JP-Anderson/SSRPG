@@ -9,8 +9,8 @@ import ship.AIShip;
 import ship.modules.ShieldModule;
 import ship.modules.WeaponModule;
 import ship.shields.BasicShieldsMk2;
-import ship.weapons.BurstLaserMk3;
-import ship.weapons.HeavyRocket;
+import ship.weapons.ShipWeapon;
+import ship.weapons.ShipWeaponsHolder;
 import util.rng.RNG;
 
 import java.util.ArrayList;
@@ -64,8 +64,7 @@ public class BanditEvent extends Event {
 			shieldModule.shields(new BasicShieldsMk2());
 
 			WeaponModule weaponModule = new WeaponModule(view, "WM1", 3);
-			BurstLaserMk3 laser = new BurstLaserMk3();
-			weaponModule.setWeapon(laser);
+			weaponModule.setWeapon(ShipWeaponsHolder.getWeapon("BurstLaserMk3"));
 
 			ArrayList<WeaponModule> weaponModules = new ArrayList<>();
 			weaponModules.add(weaponModule);

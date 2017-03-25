@@ -11,7 +11,6 @@ import ship.cockpits.Cockpit;
 import ship.modules.CockpitModule;
 import ship.modules.WeaponModule;
 import ship.weapons.Attack;
-import ship.weapons.HeavyRocket;
 import util.rng.MockRandomNumberGenerator;
 import util.tests.PlayerShipTestHelper;
 import util.tests.ShipWeaponTestHelper;

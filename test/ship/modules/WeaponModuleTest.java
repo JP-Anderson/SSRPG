@@ -3,9 +3,8 @@ package ship.modules;
 import arch.view.ConsoleIOHandler;
 import org.junit.jupiter.api.Test;
 import ship.weapons.Attack;
-import ship.weapons.BurstLaserMk3;
-import ship.weapons.RailGun;
 import ship.weapons.ShipWeapon;
+import ship.weapons.ShipWeaponsHolder;
 import util.rng.MockRandomNumberGenerator;
 
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ class WeaponModuleTest {
 	public void cannotEquipWeaponExceedingModulePower() {
 		WeaponModule module = new WeaponModule(consoleIOHandler, "TestModule", 2);
 
-		ShipWeapon railgun = new RailGun();
+		ShipWeapon railgun = ShipWeaponsHolder.getWeapon("Rail Gun");
 
 		assertTrue(railgun.requiredWeaponModulePower > module.getModulePower());
 		assertFalse(module.setWeapon(railgun));
@@ -31,8 +30,8 @@ class WeaponModuleTest {
 	@Test
 	public void canReplaceWeapon() {
 		WeaponModule module = new WeaponModule(consoleIOHandler, "TestModule", 3);
-		ShipWeapon railgun = new RailGun();
-		ShipWeapon laser = new BurstLaserMk3();
+		ShipWeapon railgun = ShipWeaponsHolder.getWeapon("Rail Gun");
+		ShipWeapon laser = ShipWeaponsHolder.getWeapon("BurstLaserMk3");
 
 		assertTrue(module.setWeapon(railgun));
 		assertEquals(railgun, module.getWeapon());
@@ -44,7 +43,7 @@ class WeaponModuleTest {
 	@Test
 	public void removeWeapon() {
 		WeaponModule module = new WeaponModule(consoleIOHandler, "TestModule", 3);
-		ShipWeapon laser = new BurstLaserMk3();
+		ShipWeapon laser = ShipWeaponsHolder.getWeapon("BurstLaserMk3");
 
 		assertTrue(module.setWeapon(laser));
 		assertEquals(laser, module.getWeapon());
@@ -56,7 +55,7 @@ class WeaponModuleTest {
 
 	@Test
 	public void canAttackWithWeaponAfterCooldownPeriod() {
-		ShipWeapon burstLaserMk3 = new BurstLaserMk3();
+		ShipWeapon burstLaserMk3 = ShipWeaponsHolder.getWeapon("BurstLaserMk3");
 		WeaponModule module = loadAndChargeWeapon(burstLaserMk3);
 
 		MockRandomNumberGenerator mockRNG = new MockRandomNumberGenerator();
@@ -74,7 +73,7 @@ class WeaponModuleTest {
 
 	@Test
 	public void attackWithRNGLessThanWeaponAccuracyIsAMiss() {
-		ShipWeapon laser = new BurstLaserMk3();
+		ShipWeapon laser = ShipWeaponsHolder.getWeapon("BurstLaserMk3");
 		WeaponModule module = loadAndChargeWeapon(laser);
 
 		// Base hit chance is a double between 0 and 1
@@ -93,7 +92,7 @@ class WeaponModuleTest {
 
 	@Test
 	public void attackWithRNGOverWeaponAccuracyIsAMiss() {
-		ShipWeapon laser = new BurstLaserMk3();
+		ShipWeapon laser = ShipWeaponsHolder.getWeapon("BurstLaserMk3");
 		WeaponModule module = loadAndChargeWeapon(laser);
 
 		// Base hit chance is a double between 0 and 1

@@ -27,7 +27,7 @@ public class ShipBattleSession extends Session {
 		ship2 = newShip2;
 
 		for (WeaponModule m : ship1.getWeaponModules()) {
-			m.setWeapon(new RailGun());
+			m.setWeapon(ShipWeaponsHolder.getWeapon("Rail Gun"));
 		}
 
 		currentActiveShip = determineWhichShipGetsFirstTurn();

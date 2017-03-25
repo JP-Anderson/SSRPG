@@ -5,9 +5,8 @@ import org.junit.jupiter.api.Test;
 import ship.modules.ShieldModule;
 import ship.modules.WeaponModule;
 import ship.weapons.Attack;
-import ship.weapons.BurstLaserMk3;
-import ship.weapons.HeavyRocket;
 import ship.weapons.ShipWeapon;
+import ship.weapons.ShipWeaponsHolder;
 import util.rng.MockRandomNumberGenerator;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,7 +27,7 @@ class ShieldSystemTest {
 	@Test
 	public void shieldStateIsDamagedWhenRemainingShieldsNotEmptyOrFull() {
 		ShieldSystem shields = basicShieldSystem();
-		WeaponModule weaponModule = loadWeaponModule(new BurstLaserMk3());
+		WeaponModule weaponModule = loadWeaponModule(ShipWeaponsHolder.getWeapon("BurstLaserMk3"));
 		ShieldModule shieldModule = loadShieldModule(shields);
 
 		Attack attack = weaponModule.attack(getMockRNGWhichWillAlwaysRollSameDouble(0.1));
@@ -43,7 +42,7 @@ class ShieldSystemTest {
 	@Test
 	public void shieldStateIsDepletedWhenShieldsAreEmpty() {
 		ShieldSystem shields = basicShieldSystem();
-		WeaponModule weaponModule = loadWeaponModule(new BurstLaserMk3());
+		WeaponModule weaponModule = loadWeaponModule(ShipWeaponsHolder.getWeapon("BurstLaserMk3"));
 		ShieldModule shieldModule = loadShieldModule(shields);
 
 		MockRandomNumberGenerator rng = getMockRNGWhichWillAlwaysRollSameDouble(0.1);
@@ -61,7 +60,7 @@ class ShieldSystemTest {
 	@Test
 	public void shieldStateBecomesRechargingAfterXRounds() {
 		ShieldSystem shields = basicShieldSystem();
-		WeaponModule weaponModule = loadWeaponModule(new BurstLaserMk3());
+		WeaponModule weaponModule = loadWeaponModule(ShipWeaponsHolder.getWeapon("BurstLaserMk3"));
 		ShieldModule shieldModule = loadShieldModule(shields);
 
 		MockRandomNumberGenerator rng = getMockRNGWhichWillAlwaysRollSameDouble(0.1);
@@ -85,7 +84,7 @@ class ShieldSystemTest {
 	@Test
 	public void shieldRechargesBackToChargedStateWhenNotDamaged() {
 		ShieldSystem shields = basicShieldSystem();
-		WeaponModule weaponModule = loadWeaponModule(new BurstLaserMk3());
+		WeaponModule weaponModule = loadWeaponModule(ShipWeaponsHolder.getWeapon("BurstLaserMk3"));
 		ShieldModule shieldModule = loadShieldModule(shields);
 
 		MockRandomNumberGenerator rng = getMockRNGWhichWillAlwaysRollSameDouble(0.1);
@@ -115,7 +114,7 @@ class ShieldSystemTest {
 	@Test
 	public void shieldTakesCorrectShieldDamageFromLaserAttack() {
 		ShieldSystem shields = basicShieldSystem();
-		WeaponModule weaponModule = loadWeaponModule(new BurstLaserMk3());
+		WeaponModule weaponModule = loadWeaponModule(ShipWeaponsHolder.getWeapon("BurstLaserMk3"));
 		ShieldModule shieldModule = loadShieldModule(shields);
 
 		Attack attack = weaponModule.attack(getMockRNGWhichWillAlwaysRollSameDouble(0.1));
@@ -130,7 +129,7 @@ class ShieldSystemTest {
 	@Test
 	public void shieldTakesCorrectShieldDamageFromRocketAttack() {
 		ShieldSystem shields = basicShieldSystem();
-		WeaponModule weaponModule = loadWeaponModule(new HeavyRocket());
+		WeaponModule weaponModule = loadWeaponModule(ShipWeaponsHolder.getWeapon("Heavy Rocket"));
 		ShieldModule shieldModule = loadShieldModule(shields);
 
 		Attack attack = weaponModule.attack(getMockRNGWhichWillAlwaysRollSameDouble(0.1));
@@ -145,7 +144,7 @@ class ShieldSystemTest {
 	@Test
 	public void fullShieldReducesHullDamageOfLaserAttack() {
 		ShieldSystem shields = basicShieldSystem();
-		WeaponModule weaponModule = loadWeaponModule(new BurstLaserMk3());
+		WeaponModule weaponModule = loadWeaponModule(ShipWeaponsHolder.getWeapon("BurstLaserMk3"));
 		ShieldModule shieldModule = loadShieldModule(shields);
 
 		Attack attack = weaponModule.attack(getMockRNGWhichWillAlwaysRollSameDouble(0.1));
@@ -161,7 +160,7 @@ class ShieldSystemTest {
 	@Test
 	public void nearEmptyShieldReducesHullDamageOfLaserAttack() {
 		ShieldSystem shields = basicShieldSystem();
-		WeaponModule weaponModule = loadWeaponModule(new BurstLaserMk3());
+		WeaponModule weaponModule = loadWeaponModule(ShipWeaponsHolder.getWeapon("BurstLaserMk3"));
 		ShieldModule shieldModule = loadShieldModule(shields);
 
 		MockRandomNumberGenerator rng = getMockRNGWhichWillAlwaysRollSameDouble(0.1);
@@ -184,7 +183,7 @@ class ShieldSystemTest {
 	@Test
 	public void emptyShieldDoesntReduceHullDamageOfLaserAttack() {
 		ShieldSystem shields = basicShieldSystem();
-		WeaponModule weaponModule = loadWeaponModule(new BurstLaserMk3());
+		WeaponModule weaponModule = loadWeaponModule(ShipWeaponsHolder.getWeapon("BurstLaserMk3"));
 		ShieldModule shieldModule = loadShieldModule(shields);
 
 		MockRandomNumberGenerator rng = getMockRNGWhichWillAlwaysRollSameDouble(0.1);
@@ -205,7 +204,7 @@ class ShieldSystemTest {
 	@Test
 	public void shieldDoesntReduceRocketBasedHullDamage() {
 		ShieldSystem shields = basicShieldSystem();
-		WeaponModule weaponModule = loadWeaponModule(new HeavyRocket());
+		WeaponModule weaponModule = loadWeaponModule(ShipWeaponsHolder.getWeapon("Heavy Rocket"));
 		ShieldModule shieldModule = loadShieldModule(shields);
 
 		MockRandomNumberGenerator rng = getMockRNGWhichWillAlwaysRollSameDouble(0.1);
