@@ -1,6 +1,8 @@
-package events;
+package events.events;
 
 import arch.view.ConsoleIOHandler;
+import events.Event;
+import events.EventOutcome;
 import goods.*;
 import util.rng.RNG;
 
@@ -16,7 +18,7 @@ public class ShipwreckEvent extends Event {
 	}
 
 	@Override
-	void initializeOutcome() {
+	protected void initializeOutcome() {
 		int moneyReward = rand.randInt(20, 1500);
 		int xpReward = rand.randInt(1,8);
 		outcome = new EventOutcome(moneyReward, xpReward, generateCrewMembers(0.05), generateGoods(0.25));
@@ -24,12 +26,12 @@ public class ShipwreckEvent extends Event {
 	}
 
 	@Override
-	void initializeInteractionTree() {
+	protected void initializeInteractionTree() {
 		//todo
 	}
 
 	@Override
-	EventOutcome getOutcome() {
+	protected EventOutcome getOutcome() {
 		return outcome;
 	}
 

@@ -28,15 +28,15 @@ public abstract class Event {
 	protected abstract String getEventIntroductionMessage();
 
 	//region Template Methods
-	abstract void initializeOutcome();
+	protected abstract void initializeOutcome();
 
-	abstract void initializeInteractionTree();
+	protected abstract void initializeInteractionTree();
 
 	protected void displayEvent() {
 		rootInteraction.run();
 	};
 
-	abstract EventOutcome getOutcome();
+	protected abstract EventOutcome getOutcome();
 	//endregion
 
 	protected PlayerShip playerShip;

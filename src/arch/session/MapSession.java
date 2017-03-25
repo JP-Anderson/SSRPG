@@ -2,6 +2,8 @@ package arch.session;
 
 import arch.view.ConsoleIOHandler;
 import characters.skills.abilities.Ability;
+import events.events.BanditEvent;
+import events.events.CargoCheckEvent;
 import map.gridsquares.GridSquare;
 import map.gridsquares.Planet;
 import ship.*;

@@ -1,4 +1,4 @@
-package events;
+package events.events;
 
 import arch.session.ShipBattleSession;
 import arch.session.interaction.ComplexInteraction;
@@ -6,6 +6,9 @@ import arch.session.interaction.TextInteraction;
 import arch.session.interaction.TextInteractionDecision;
 import arch.view.ConsoleIOHandler;
 import characters.skills.abilities.ValueAbility;
+import events.EmptyEventOutcome;
+import events.Event;
+import events.EventOutcome;
 import ship.AIShip;
 import ship.modules.ShieldModule;
 import ship.modules.WeaponModule;
@@ -27,12 +30,12 @@ public class CargoCheckEvent extends Event {
 	}
 
 	@Override
-	void initializeOutcome() {
+	protected void initializeOutcome() {
 		outcome = new EmptyEventOutcome();
 	}
 
 	@Override
-	void initializeInteractionTree() {
+	protected void initializeInteractionTree() {
 
 		ArrayList<String> interaction1Options = new ArrayList<>();
 		interaction1Options.add("You may come aboard.");
@@ -74,7 +77,7 @@ public class CargoCheckEvent extends Event {
 	}
 
 	@Override
-	EventOutcome getOutcome() {
+	protected EventOutcome getOutcome() {
 		return new EmptyEventOutcome();
 	}
 

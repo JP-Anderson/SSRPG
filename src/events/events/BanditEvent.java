@@ -1,9 +1,11 @@
-package events;
+package events.events;
 
 import arch.session.interaction.ComplexInteraction;
 import arch.session.ShipBattleSession;
 import arch.session.interaction.TextInteraction;
 import arch.view.ConsoleIOHandler;
+import events.Event;
+import events.EventOutcome;
 import goods.Goods;
 import ship.AIShip;
 import ship.modules.ShieldModule;
@@ -27,7 +29,7 @@ public class BanditEvent extends Event {
 	}
 
 	@Override
-	void initializeOutcome() {
+	protected void initializeOutcome() {
 		int moneyReward = rand.randInt(200, 4400);
 		//Should we assign xp here, or should battles generate XP?
 		//Will we ever have a battle not related to an "Event"?
@@ -36,7 +38,7 @@ public class BanditEvent extends Event {
 	}
 
 	@Override
-	void initializeInteractionTree() {
+	protected void initializeInteractionTree() {
 		TextInteraction i1_2 = TextInteraction.createAdditionalInteraction(
 				rootInteraction,"The Bandit primes its weapons and moves in to attack!");
 		ComplexInteraction i1_3 = ComplexInteraction.createComplexInteraction(i1_2, new BanditEventRunnable());
@@ -82,7 +84,7 @@ public class BanditEvent extends Event {
 	}
 
 	@Override
-	EventOutcome getOutcome() {
+	protected EventOutcome getOutcome() {
 		return outcome;
 	}
 }
