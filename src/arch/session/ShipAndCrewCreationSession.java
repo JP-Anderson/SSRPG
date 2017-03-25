@@ -33,7 +33,7 @@ public class ShipAndCrewCreationSession extends Session {
 		for (int i = 0; i < numberOfStartingCrewmembers; i++) {
 			view.outputHandler.sendStringToView("You have " + (numberOfStartingCrewmembers - i) + " crewmembers left to pick");
 			view.outputHandler.sendStringToView("Which class do you pick for crewmember #" + crewCount + "?");
-			view.outputHandler.sendStringToView("Available crewList:");
+			view.outputHandler.sendStringToView("Available crew:");
 			CrewmemberClass chosenClass = view.inputHandler.getUserChoiceFromList(availableClasses, "_className");
 			availableClasses.remove(chosenClass);
 			String chosenName = view.inputHandler.getNonEmptyStringFromUser("What will you call this " + chosenClass._className + "?");

@@ -16,7 +16,10 @@ class PlayerShipTest {
 
 	@Test
 	public void initialiseMap() {
+		PlayerShip testShip = PlayerShipTestHelper.getPlayerShipWithScannerAndMap();
 
+		GridPoint startLocation = new GridPoint(3,1);
+		assertTrue(testShip.getLocation().comparePoints(startLocation) == 0);
 	}
 
 	@Test
@@ -61,11 +64,6 @@ class PlayerShipTest {
 
 		int remainingFuel = testShip.getRemainingFuel();
 		assertTrue(testShip.getRemainingFuel() == testShip.getFuelCapacity() - 20);
-	}
-
-	@Test
-	public void setRemainingFuel() {
-
 	}
 
 	@Test

@@ -24,7 +24,6 @@ public abstract class Ship {
 	ShipModules modules;
 	int maxHullIntegrity;
 	int remainingHullIntegrity;
-	//ArrayList<Crewmember> crew;
 	Crew crew;
 
 	private boolean isDestroyed;
