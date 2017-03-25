@@ -5,6 +5,7 @@ import characters.Crewmember;
 import characters.classes.CrewmemberClass;
 import characters.classes.PilotClass;
 import characters.classes.ScoundrelClass;
+import ship.Crew;
 import ship.PlayerShip;
 import ship.modules.CockpitModule;
 
@@ -13,8 +14,10 @@ import java.util.ArrayList;
 public class PlayerShipTestHelper extends TestHelper {
 
 	public static PlayerShip populateShipWithCockpitModule(ArrayList<Crewmember> crewmembers) {
+		Crew crew = new Crew();
+		crew.setCrew(crewmembers);
 		return new PlayerShip.PlayerShipBuilder(consoleIOHandler, "TestShip",10)
-				.crew(crewmembers)
+				.crew(crew)
 				.cockpitModule(new CockpitModule(consoleIOHandler, "TestCockpitModule", 3))
 				.build();
 	}
@@ -26,7 +29,7 @@ public class PlayerShipTestHelper extends TestHelper {
 		return crew;
 	}
 
-	private static Crewmember newCrewmember(CrewmemberClass crewmemberClass) {
+	public static Crewmember newCrewmember(CrewmemberClass crewmemberClass) {
 		return new Crewmember("TestCrewmember", crewmemberClass, 5);
 	}
 

@@ -34,7 +34,7 @@ public class PlayerShip extends Ship {
 	}
 
 	public void initialiseCrew(ArrayList<Crewmember> newCrew) {
-		crew = newCrew;
+		crew.setCrew(newCrew);
 	}
 
 	public void initialiseMap(GridPoint startLocation, GridMap map) {
@@ -54,7 +54,7 @@ public class PlayerShip extends Ship {
 	public void shipStatus() {
 		CargoBayModule cargo = (CargoBayModule) modules.getShipModule(CargoBayModule.class);
 		view.outputHandler.sendStringToView("PlayerShip status:");
-		view.outputHandler.sendStringToView(crew.size() + "/" + crewCapacity + " crew");
+		view.outputHandler.sendStringToView(crew.size() + "/" + crew().getCrewCapacity() + " crew");
 		view.outputHandler.sendStringToView(" CREDS total: " + money);
 		view.outputHandler.sendStringToView(" Remaining Fuel: " + remainingFuel + "/" + fuelCapacity);
 		// TODO: cargo bay is now a module, so need to put this in the module print information function
@@ -97,13 +97,13 @@ public class PlayerShip extends Ship {
 	}
 
 	public void giveExperienceToAllCrewmembers(int xpReward) {
-		for (Crewmember crewmember : crew) {
+		for (Crewmember crewmember : crew.getCrew()) {
 			crewmember.gainExperience(xpReward);
 		}
 	}
 
 	public boolean hasSpaceInCrew() {
-		return crew.size() < crewCapacity;
+		return crew.size() < crew().getCrewCapacity();
 	}
 
 	public double getContrabandCargoRatio() {

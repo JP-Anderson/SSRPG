@@ -1,9 +1,9 @@
 package arch.session;
 
 import arch.view.ConsoleIOHandler;
-import arch.view.InputHandler;
 import characters.Crewmember;
 import characters.classes.*;
+import ship.Crew;
 import ship.PlayerShip;
 import ship.modules.*;
 import ship.shields.BasicShieldsMk2;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class ShipAndCrewCreationSession extends Session {
 
-	ArrayList<Crewmember> crew = null;
+	ArrayList<Crewmember> crewList = null;
 	private ArrayList<CrewmemberClass> availableClasses;
 	private String newName;
 
@@ -27,17 +27,19 @@ public class ShipAndCrewCreationSession extends Session {
 	@Override
 	public void run() {
 		newName = view.inputHandler.getNonEmptyStringFromUser("What would you like to call your ship?");
-		crew = new ArrayList<>();
+		crewList = new ArrayList<>();
 		int crewCount = 1;
 		final int numberOfStartingCrewmembers = 2;
 		for (int i = 0; i < numberOfStartingCrewmembers; i++) {
 			view.outputHandler.sendStringToView("You have " + (numberOfStartingCrewmembers - i) + " crewmembers left to pick");
 			view.outputHandler.sendStringToView("Which class do you pick for crewmember #" + crewCount + "?");
-			view.outputHandler.sendStringToView("Available crew:");
+			view.outputHandler.sendStringToView("Available crewList:");
 			CrewmemberClass chosenClass = view.inputHandler.getUserChoiceFromList(availableClasses, "_className");
 			availableClasses.remove(chosenClass);
 			String chosenName = view.inputHandler.getNonEmptyStringFromUser("What will you call this " + chosenClass._className + "?");
-			crew.add(new Crewmember(chosenName, chosenClass, 1));
+			Crewmember crewmember = new Crewmember(chosenName, chosenClass, 1);
+			crewmember.gainExperience(10000);
+			crewList.add(crewmember);
 			crewCount++;
 			view.outputHandler.sendStringToView("");
 		}
@@ -49,6 +51,9 @@ public class ShipAndCrewCreationSession extends Session {
 		ShieldModule shieldModule = new ShieldModule(view, "ShieldsModule1", 1);
 		shieldModule.shields(new BasicShieldsMk2());
 		CargoBayModule cargoBayModule = new CargoBayModule(view, "CargoBayModule", 0, 20);
+
+		Crew crew = new Crew();
+		crew.setCrew(crewList);
 
 		PlayerShip p1 = new PlayerShip.PlayerShipBuilder(view, newName,10)
 				.cockpitModule(cockpitModule)

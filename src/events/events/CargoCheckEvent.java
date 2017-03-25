@@ -61,7 +61,7 @@ public class CargoCheckEvent extends Event {
 			baseDetectionChance = contrabandCargoRatio - 0.1;
 		}
 
-		ValueAbility smuggler = (ValueAbility) playerShip.getAbilityIfUnlockedForAnyCrewmember("Smuggler");
+		ValueAbility smuggler = (ValueAbility) playerShip.crew().getAbilityIfUnlockedForAnyCrewmember("Smuggler");
 		if (smuggler != null) {
 			baseDetectionChance = baseDetectionChance * (double) smuggler.getAbilityValue();
 		}

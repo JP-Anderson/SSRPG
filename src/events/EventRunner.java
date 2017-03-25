@@ -30,7 +30,7 @@ public class EventRunner {
 			view.outputHandler.sendStringToView("Everyone got " + outcome.getXpReward() + " xp!");
 		}
 		for (Crewmember c : outcome.getCrewReward()) {
-			player.getCrew().add(c);
+			player.crew().getCrew().add(c);
 		}
 		sleep(1);
 

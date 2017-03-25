@@ -334,7 +334,7 @@ public class MapSession extends Session {
 		if (decision == 'Y' || decision == 'y') {
 			view.outputHandler.sendStringToView("Which crewmember would you like to move?");
 			printCrewAndMannedModule();
-			ArrayList<Crewmember> crewmembers = p1.getCrew();
+			ArrayList<Crewmember> crewmembers = p1.crew().getCrew();
 			int crewIndex = view.inputHandler.getIntInRangeFromUser(crewmembers.size());
 			Crewmember crewmemberToMove = crewmembers.get(crewIndex);
 			ArrayList<MannableShipModule> mannableModules = p1.getMannableShipModulesAsList();
@@ -351,7 +351,7 @@ public class MapSession extends Session {
 	}
 
 	private void printCrewAndMannedModule() {
-		ArrayList<Crewmember> playerCrew = p1.getCrew();
+		ArrayList<Crewmember> playerCrew = p1.crew().getCrew();
 		int i = 0;
 		for (Crewmember member : playerCrew) {
 			MannableShipModule mannedModule = p1.getModuleMannedBy(member);
@@ -369,7 +369,7 @@ public class MapSession extends Session {
 			// TODO write a function to take a range of acceptable chars to make these checks shorter
 			if (decision == 'Y' || decision == 'y' || decision == 'N' || decision == 'n') break;
 		}
-		ArrayList<Crewmember> playerCrew = p1.getCrew();
+		ArrayList<Crewmember> playerCrew = p1.crew().getCrew();
 		int i = 0;
 		for (Crewmember member : playerCrew) {
 			String upgradeAvailable = member.availableAbilityUpgrades() > 0 ? " (Upgrades available!)" : "";

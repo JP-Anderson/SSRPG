@@ -31,7 +31,7 @@ class BooleanAbilityTest {
 				PlayerShipTestHelper.makeCrewWithPilot()
 		);
 
-		Crewmember pilot = testShip.getCrewmembersOfClass("Pilot").get(0);
+		Crewmember pilot = testShip.crew().getCrewmembersOfClass("Pilot").get(0);
 		pilot.tryToLevelUpAbility(0);
 		pilot.tryToLevelUpAbility(1);
 		pilot.tryToLevelUpAbility(2);

@@ -48,54 +48,54 @@ class ShipTest {
 	public void checkAnyCrewmemberHasAbilityReturnsTrueIfCrewmemberHasAbilityUnlocked() {
 		PlayerShip testShip = getTestShip();
 		Crewmember pilot = createPilotWithEvasiveManeuversAbility();
-		testShip.crew.add(pilot);
+		testShip.crew().addCrewmember(pilot);
 
-		assertTrue(testShip.checkAnyCrewmemberHasAbility("Evasive Maneuvers"));
+		assertTrue(testShip.crew().checkAnyCrewmemberHasAbility("Evasive Maneuvers"));
 	}
 
 	@Test
 	public void checkAnyCrewmemberHasAbilityReturnsFalseIfCrewmemberHasAbilityButLocked() {
 		PlayerShip testShip = getTestShip();
 		Crewmember pilot = createPilotWithoutEvasiveManeuversAbility();
-		testShip.crew.add(pilot);
+		testShip.crew().addCrewmember(pilot);
 
-		assertFalse(testShip.checkAnyCrewmemberHasAbility("Evasive Maneuvers"));
+		assertFalse(testShip.crew().checkAnyCrewmemberHasAbility("Evasive Maneuvers"));
 	}
 
 	@Test
 	public void checkAnyCrewmemberHasAbilityReturnsFalseIfNoCrewmemberHasAbility() {
 		PlayerShip testShip = getTestShip();
 		Crewmember scoundrel = createScoundrel();
-		testShip.crew.add(scoundrel);
+		testShip.crew().addCrewmember(scoundrel);
 
-		assertFalse(testShip.checkAnyCrewmemberHasAbility("Evasive Maneuvers"));
+		assertFalse(testShip.crew().checkAnyCrewmemberHasAbility("Evasive Maneuvers"));
 	}
 
 	@Test
 	public void getAbilityIfUnlockedReturnsAbilityIfCrewmemberHasAbilityUnlocked() {
 		PlayerShip testShip = getTestShip();
 		Crewmember pilot = createPilotWithEvasiveManeuversAbility();
-		testShip.crew.add(pilot);
+		testShip.crew().addCrewmember(pilot);
 
-		assertNotNull(testShip.getAbilityIfUnlockedForAnyCrewmember("Evasive Maneuvers"));
+		assertNotNull(testShip.crew().getAbilityIfUnlockedForAnyCrewmember("Evasive Maneuvers"));
 	}
 
 	@Test
 	public void getAbilityIfUnlockedReturnsNullIfCrewmemberHasAbilityButLocked() {
 		PlayerShip testShip = getTestShip();
 		Crewmember pilot = createPilotWithoutEvasiveManeuversAbility();
-		testShip.crew.add(pilot);
+		testShip.crew().addCrewmember(pilot);
 
-		assertNull(testShip.getAbilityIfUnlockedForAnyCrewmember("Evasive Maneuvers"));
+		assertNull(testShip.crew().getAbilityIfUnlockedForAnyCrewmember("Evasive Maneuvers"));
 	}
 
 	@Test
 	public void getAbilityIfUnlockedReturnsEmptyListIfNoCrewmemberHasAbility() {
 		PlayerShip testShip = getTestShip();
 		Crewmember scoundrel = createScoundrel();
-		testShip.crew.add(scoundrel);
+		testShip.crew().addCrewmember(scoundrel);
 
-		assertNull(testShip.getAbilityIfUnlockedForAnyCrewmember("Evasive Maneuvers"));
+		assertNull(testShip.crew().getAbilityIfUnlockedForAnyCrewmember("Evasive Maneuvers"));
 	}
 
 
@@ -103,7 +103,7 @@ class ShipTest {
 	public void getCrewmembersWithAbilityInSpecificModuleFailsWhenCrewmemberHasntUnlockedAbility() {
 		PlayerShip testShip = getTestShipWithCargoBay();
 		Crewmember scoundrel = createScoundrel();
-		testShip.crew.add(scoundrel);
+		testShip.crew().addCrewmember(scoundrel);
 
 		CargoBayModule cargoBayModule = testShip.getCargoBay();
 		cargoBayModule.assignCrewmember(scoundrel);
@@ -116,7 +116,7 @@ class ShipTest {
 	public void getCrewmembersWithAbilityInSpecificModuleFailsWhenCrewmemberIsntInModule() {
 		PlayerShip testShip = getTestShipWithCargoBay();
 		Crewmember scoundrel = createScoundrel();
-		testShip.crew.add(scoundrel);
+		testShip.crew().addCrewmember(scoundrel);
 
 		String desiredAbilityName = "Connected";
 
@@ -131,7 +131,7 @@ class ShipTest {
 	public void getCrewmembersWithAbilityInSpecificModulePassesWhenConditionsMet() {
 		PlayerShip testShip = getTestShipWithCargoBay();
 		Crewmember scoundrel = createScoundrel();
-		testShip.crew.add(scoundrel);
+		testShip.crew().addCrewmember(scoundrel);
 
 
 		String desiredAbilityName = "Connected";

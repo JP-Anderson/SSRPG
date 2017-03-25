@@ -24,8 +24,8 @@ public abstract class Ship {
 	ShipModules modules;
 	int maxHullIntegrity;
 	int remainingHullIntegrity;
-	ArrayList<Crewmember> crew;
-	int crewCapacity;
+	//ArrayList<Crewmember> crew;
+	Crew crew;
 
 	private boolean isDestroyed;
 
@@ -36,7 +36,11 @@ public abstract class Ship {
 		maxHullIntegrity = builder.maxHullIntegrity;
 		remainingHullIntegrity = maxHullIntegrity;
 		crew = builder.crew;
-		crewCapacity = builder.crewCapacity;
+		crew.setCrewCapacity(builder.crewCapacity);
+	}
+
+	public Crew crew() {
+		return crew;
 	}
 
 	public void sustainFire(Attack attack, RandomNumberGenerator randomNumberGenerator) {
@@ -82,24 +86,6 @@ public abstract class Ship {
 		return modules.getModuleCrewmemberIsManning(crewmember);
 	}
 
-	public boolean checkAnyCrewmemberHasAbility(String abilityName) {
-		for (Crewmember crewmember : crew) {
-			if (crewmember.hasAbility(abilityName)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public Ability getAbilityIfUnlockedForAnyCrewmember(String abilityName) {
-		Ability ability = null;
-		for (Crewmember crewmember : crew) {
-			ability = crewmember.tryAndGetAbility(abilityName);
-			if (ability != null) return ability;
-		}
-		return null;
-	}
-
 	public ArrayList<ShipModule> getModulesInList() {
 		return modules.getModulesAsArrayList();
 	}
@@ -108,45 +94,13 @@ public abstract class Ship {
 		return modules.getModulesAsArrayList().size();
 	}
 
-	public ArrayList<Crewmember> getCrew() {
-		return crew;
-	}
-
-	public void setCrew(ArrayList<Crewmember> newCrew) {
-		crew = newCrew;
-	}
-
-	public Crewmember getCrewmemberAtIndex(int crewIndex) {
-		return crew.get(crewIndex);
-	}
-
 	public List<Crewmember> getCrewmembersWithAbilityInSpecificModule(String ability, String desiredModule) {
 		Predicate<Crewmember> matchAbilityAndInModule =
-			c ->
-				c.tryAndGetAbility(ability) != null
-				&& this.getModuleMannedBy(c) != null
-				&& this.getModuleMannedBy(c).moduleTypeString() == desiredModule;
-		return getCrewmembersMatchingPredicate(matchAbilityAndInModule);
-	}
-
-	public List<Crewmember> getCrewmembersOfClass(String crewmemberClass) {
-		Predicate<Crewmember> matchClass =
 				c ->
-						c.crewmemberClass._className.equals(crewmemberClass);
-		return getCrewmembersMatchingPredicate(matchClass);
-	}
-
-	private List<Crewmember> getCrewmembersMatchingPredicate(Predicate<Crewmember> predicate) {
-		ArrayList<Crewmember> matchingCrew = new ArrayList<>();
-		for (Crewmember crewmember : crew) {
-			if (predicate.test(crewmember)) matchingCrew.add(crewmember);
-		}
-		return matchingCrew;
-	}
-
-	// TODO: remove crewmembers when they die. Could have a turn timer to get crewmembers to a hospital in X turns?
-	public void removeCrewmemberAtIndex(int crewIndex) {
-		crew.remove(crewIndex);
+						c.tryAndGetAbility(ability) != null
+								&& this.getModuleMannedBy(c) != null
+								&& this.getModuleMannedBy(c).moduleTypeString() == desiredModule;
+		return crew.getCrewmembersMatchingPredicate(matchAbilityAndInModule);
 	}
 
 	public void placeCrewmemberInModule(Crewmember crewmember, int shipModuleIndex) {
@@ -200,7 +154,7 @@ public abstract class Ship {
 		protected CargoBayModule cargoBayModule = null;
 		protected ArrayList<WeaponModule> weaponModules = null;
 		protected int maxHullIntegrity = 100;
-		protected ArrayList<Crewmember> crew = null;
+		protected Crew crew = null;
 		protected int crewCapacity = 3;
 
 		// ShipModules class is not passed into the builder but is constructed from the modules
@@ -215,7 +169,7 @@ public abstract class Ship {
 			this.maxCombinedModulePower = maxCombinedModulePower;
 			if (cockpitModule == null) addDefaultCockpitModule();
 			if (engineModule == null) addDefaultEngineModule();
-			if (crew == null) crew = new ArrayList<>();
+			if (crew == null) crew = new Crew();
 		}
 
 		public B cockpitModule(CockpitModule cockpitModule) {
@@ -252,7 +206,7 @@ public abstract class Ship {
 			return (B) this;
 		}
 
-		public B crew(ArrayList<Crewmember> crew) {
+		public B crew(Crew crew) {
 			this.crew = crew;
 			return (B) this;
 		}
@@ -273,5 +227,7 @@ public abstract class Ship {
 		private void addDefaultEngineModule() {
 			engineModule = new EngineModule(view, "EnginesModule1", 1, 5);
 		}
+
 	}
+
 }

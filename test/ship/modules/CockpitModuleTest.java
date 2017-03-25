@@ -52,7 +52,7 @@ class CockpitModuleTest {
 
 		CockpitModule mod = playerShip.getCockpitModule();
 		mod.cockpit(new Cockpit(",",3,900,0.4));
-		Crewmember pilot = playerShip.getCrewmembersOfClass("Pilot").get(0);
+		Crewmember pilot = playerShip.crew().getCrewmembersOfClass("Pilot").get(0);
 		mod.assignCrewmember(pilot);
 
 		MockRandomNumberGenerator rng = new MockRandomNumberGenerator();
@@ -72,7 +72,7 @@ class CockpitModuleTest {
 
 		CockpitModule mod = playerShip.getCockpitModule();
 		mod.cockpit(new Cockpit(",",3,900,0.4));
-		Crewmember pilot = playerShip.getCrewmembersOfClass("Pilot").get(0);
+		Crewmember pilot = playerShip.crew().getCrewmembersOfClass("Pilot").get(0);
 		mod.assignCrewmember(pilot);
 
 		MockRandomNumberGenerator rng = new MockRandomNumberGenerator();
