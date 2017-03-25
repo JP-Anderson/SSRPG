@@ -5,6 +5,8 @@ import characters.Crewmember;
 import characters.classes.CrewmemberClass;
 import characters.classes.PilotClass;
 import characters.classes.ScoundrelClass;
+import map.GridMap;
+import map.GridPoint;
 import ship.Crew;
 import ship.PlayerShip;
 import ship.modules.CockpitModule;
@@ -31,6 +33,24 @@ public class PlayerShipTestHelper extends TestHelper {
 
 	public static Crewmember newCrewmember(CrewmemberClass crewmemberClass) {
 		return new Crewmember("TestCrewmember", crewmemberClass, 5);
+	}
+
+	public static PlayerShip getPlayerShipWithScannerAndMap() {
+		PlayerShip initialisedShip = generatePlayerShip();
+		initialisedShip.initialiseMap(
+				new GridPoint(3,1),
+				generateMap(5,6)
+		);
+		return initialisedShip;
+	}
+
+	private static PlayerShip generatePlayerShip() {
+		return PlayerShipTestHelper.populateShipWithCockpitModule(
+				PlayerShipTestHelper.makeCrewWithPilot());
+	}
+
+	private static GridMap generateMap(int width, int height) {
+		return GridMap.generateGridMap(width, height);
 	}
 
 }
