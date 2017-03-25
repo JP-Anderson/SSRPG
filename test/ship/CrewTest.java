@@ -41,4 +41,36 @@ class CrewTest {
 		assertEquals(testShip.crew().getCrewCapacity(), testShip.crew().size());
 	}
 
+	@Test
+	public void getCrewmemberAtIndexConsistentlyReturnsCrewmembers() {
+		PlayerShip testShip = PlayerShipTestHelper.getPlayerShipWithScannerAndMap();
+
+		Crewmember crewmemberOne = testShip.crew.getCrewmemberAtIndex(0);
+		Crewmember crewmemberTwo = testShip.crew.getCrewmemberAtIndex(1);
+
+		assertFalse(testShip.crew.getCrewmemberAtIndex(0) == crewmemberTwo);
+		assertFalse(testShip.crew.getCrewmemberAtIndex(1) == crewmemberOne);
+
+		assertTrue(testShip.crew.getCrewmemberAtIndex(0) == crewmemberOne);
+		assertTrue(testShip.crew.getCrewmemberAtIndex(1) == crewmemberTwo);
+	}
+
+	@Test
+	public void removeCrewmemberAtIndexCorrectlyUpdatesSecondCrewmembersIndex() {
+		PlayerShip testShip = PlayerShipTestHelper.getPlayerShipWithScannerAndMap();
+
+		Crewmember crewmemberOne = testShip.crew.getCrewmemberAtIndex(0);
+		Crewmember crewmemberTwo = testShip.crew.getCrewmemberAtIndex(1);
+
+		int crewmemberTwosIndex = 1;
+
+		assertTrue(testShip.crew.getCrewmemberAtIndex(crewmemberTwosIndex) == crewmemberTwo);
+
+		testShip.crew.removeCrewmemberAtIndex(0);
+
+		assertTrue(testShip.crew.getCrewmemberAtIndex(0) == crewmemberTwo);
+		assertTrue(testShip.crew.getCrewmemberAtIndex(1) == null);
+	}
+
+
 }

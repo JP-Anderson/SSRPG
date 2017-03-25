@@ -35,7 +35,11 @@ public class Crew {
 	}
 
 	public Crewmember getCrewmemberAtIndex(int crewIndex) {
-		return crew.get(crewIndex);
+		try {
+			return crew.get(crewIndex);
+		} catch (IndexOutOfBoundsException indexException) {
+			return null;
+		}
 	}
 
 	public List<Crewmember> getCrewmembersOfClass(String crewmemberClass) {
