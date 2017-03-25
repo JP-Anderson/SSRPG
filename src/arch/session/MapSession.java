@@ -15,6 +15,7 @@ import util.collections.tree.AbilitiesConsoleTreePrinter;
 import util.dataload.csv.*;
 import events.*;
 import characters.*;
+import util.dataload.csv.loaders.Planets;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,6 @@ public class MapSession extends Session {
 	private final String xLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 	private void initMapAndGoodsList() {
-		CSV planets = CSVReader.readCSV("planets");
 		CSV goodsCSV = CSVReader.readCSV("goods");
 		goods = new ArrayList<GoodsForSale>();
 
@@ -59,18 +59,8 @@ public class MapSession extends Session {
 			//view.outputHandler.sendStringToView("goods:" + values.toString());
 		}
 
-		for (int i = 1; i < planets.rows; i++) {
-			ArrayList<String> planet = planets.getZeroIndexedRow(i);
-			int id = Integer.parseInt(planet.get(0));
-			String name = planet.get(1);
-			int gridX = Integer.parseInt(planet.get(2));
-			int gridY = Integer.parseInt(planet.get(3));
-			int marketSize = Integer.parseInt(planet.get(4));
-			map.populateGridSquare(new Planet(id,
-					name,
-					new GridPoint(gridX, gridY),
-					marketSize));
-			//view.outputHandler.sendStringToView("added " + name);
+		for (Planet planet : Planets.planets()) {
+			map.populateGridSquare(planet);
 		}
 
 	}
