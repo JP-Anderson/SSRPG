@@ -59,7 +59,7 @@ public class MapSession extends Session {
 			//view.outputHandler.sendStringToView("goods:" + values.toString());
 		}
 
-		for (Planet planet : Planets.planets()) {
+		for (Planet planet : Planets.loadPlanetsAsList("planets")) {
 			map.populateGridSquare(planet);
 		}
 

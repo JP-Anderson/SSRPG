@@ -5,20 +5,18 @@ import util.dataload.csv.CSV;
 import util.dataload.csv.CSVReader;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static util.dataload.csv.loaders.Planets.getPlanet;
-import static util.dataload.csv.loaders.Planets.planets;
 
 class PlanetsTest {
 
 	@Test
 	void getPlanetReturnsCorrectPlanetAtIndexZero() {
-		assertTrue(getPlanet(0).name.equals("Earth"));
+		assertTrue(Planets.instance.getPlanet(0).name.equals("Earth"));
 	}
 
 	@Test
 	void planetsReturnsCorrectCount() {
 		CSV planetsCSV = CSVReader.readCSV("planets");
-		assertTrue(planets().size() == planetsCSV.rows-1);
+		assertTrue(Planets.loadPlanetsAsList("planets").size() == planetsCSV.rows-1);
 	}
 
 }

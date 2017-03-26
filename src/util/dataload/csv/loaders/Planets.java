@@ -10,21 +10,34 @@ import java.util.List;
 
 public class Planets {
 
-	private static List<Planet> planets;
+	public static Planets instance;
+	private List<Planet> planets;
+	private String csvInUse;
 
-	public static Planet getPlanet(int index) {
-		if (planets == null) readPlanets();
+	private Planets(String csv) {
+		instance = this;
+		readPlanets(csv);
+		csvInUse = csv;
+	}
+
+	public static Planets loadPlanets(String csv) {
+		if (instance == null) return new Planets(csv);
+		return instance;
+	}
+
+	public static List<Planet> loadPlanetsAsList(String csv) {
+		if (instance == null) return new Planets(csv).planets;
+		return instance.planets;
+	}
+
+	public Planet getPlanet(int index) {
+		if (instance == null) return null;
 		return planets.get(index);
 	}
 
-	public static List<Planet> planets() {
-		if (planets == null) readPlanets();
-		return planets;
-	}
-
-	private static void readPlanets() {
+	private void readPlanets(String csv) {
 		planets = new ArrayList<>();
-		CSV planetsCSV = CSVReader.readCSV("planets");
+		CSV planetsCSV = CSVReader.readCSV(csv);
 		for (int i = 1; i < planetsCSV.rows; i++) {
 			ArrayList<String> planet = planetsCSV.getZeroIndexedRow(i);
 			int id = Integer.parseInt(planet.get(0));

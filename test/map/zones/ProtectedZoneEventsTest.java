@@ -1,7 +1,5 @@
 package map.zones;
 
-import events.EmptyEventOutcome;
-import events.Event;
 import events.events.CargoCheckEvent;
 import events.events.ShipwreckEvent;
 import org.junit.jupiter.api.Test;
