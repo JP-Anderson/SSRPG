@@ -71,11 +71,11 @@ public class Market {
 	}
 
 	private int getGood(int random, int totalProb) {
-		int total = 0;
+		int total = -1;
 		for (int i = 0; i < probabilities.size(); i++) {
 			total = total + probabilities.get(i);
 			//System.out.println("Current total: " + total + ". We're at " + GoodsList.GOODS[i].name);
-			if (random < total) {
+			if (random <= total) {
 				return i;
 			}
 		}
