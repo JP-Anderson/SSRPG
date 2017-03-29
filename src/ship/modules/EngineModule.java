@@ -30,7 +30,7 @@ public class EngineModule extends MannableShipModule implements CombatSequenceMo
 	}
 
 	@Override
-	public boolean getStatus() {
+	public boolean moduleIsCharged() {
 		return enabledForCombat;
 	}
 

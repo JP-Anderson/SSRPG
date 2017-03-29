@@ -176,7 +176,7 @@ class ShipModulesTest {
 	public void getModulesToBeSequencedInCombatGetsCorrectWeaponShieldCockpitCargoAndEngineModules() {
 		PlayerShip testShip = getTestShipWithWeaponShieldCockpitAndCargoModule();
 
-		ArrayList<ShipModule> modules = (ArrayList<ShipModule>) testShip.modules.getModulesToBeSequencedInCombat();
+		ArrayList<CombatSequenceModule> modules = (ArrayList<CombatSequenceModule>) testShip.modules.getModulesToBeSequencedInCombat();
 		assertEquals(3, modules.size());
 	}
 
@@ -184,7 +184,7 @@ class ShipModulesTest {
 	public void getModulesToBeSequencedInCombatGetsCorrectMultipleWeaponCockpitCargoAndEngineModules() {
 		PlayerShip testShip = getTestShipWithTwoWeaponsCockpitAndCargoModule();
 
-		ArrayList<ShipModule> modules = (ArrayList<ShipModule>) testShip.modules.getModulesToBeSequencedInCombat();
+		ArrayList<CombatSequenceModule> modules = (ArrayList<CombatSequenceModule>) testShip.modules.getModulesToBeSequencedInCombat();
 		assertEquals(3, modules.size());
 	}
 
@@ -192,7 +192,7 @@ class ShipModulesTest {
 	public void getModulesToBeSequencedInCombatGetsCorrectEngineModule() {
 		PlayerShip testShip = getTestShipWithCockpitCargoAndEngineModule();
 
-		ArrayList<ShipModule> modules = (ArrayList<ShipModule>) testShip.modules.getModulesToBeSequencedInCombat();
+		ArrayList<CombatSequenceModule> modules = (ArrayList<CombatSequenceModule>) testShip.modules.getModulesToBeSequencedInCombat();
 		assertEquals(1, modules.size());
 	}
 

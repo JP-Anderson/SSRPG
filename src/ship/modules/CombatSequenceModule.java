@@ -4,6 +4,6 @@ public interface CombatSequenceModule {
 
 	void setEnabledStatus(boolean status);
 
-	boolean getStatus();
+	boolean moduleIsCharged();
 
 }

@@ -15,6 +15,7 @@ public class ShipModules {
 	private View view;
 	private int _maxCombinedModulePower;
 	private ArrayList<ShipModule> modulesAsArrayList = new ArrayList<>();
+	private ArrayList<CombatSequenceModule> modulesToBeSequencedInCombat = new ArrayList<>();
 
 	private ShipModules(View view,
 						int maxCombinedModulePower,
@@ -22,9 +23,18 @@ public class ShipModules {
 						EngineModule engineModule) {
 		this.view = view;
 		_maxCombinedModulePower = maxCombinedModulePower;
-		modulesAsArrayList.add(cockpitModule);
-		modulesAsArrayList.add(engineModule);
+		addShipModule(cockpitModule);
+		addShipModule(engineModule);
 	}
+
+//	private void initialiseModulesToBeSequencedInCombat() {
+//		modulesToBeSequencedInCombat = (ArrayList<ShipModule>)
+//				modulesAsArrayList
+//				.stream()
+//				.filter(m -> m instanceof CombatSequenceModule)
+//				.collect(Collectors.toList());
+//
+//	}
 
 	public static ShipModules createInstance(View view,
 											 int maxCombinedModulePower,
@@ -33,7 +43,7 @@ public class ShipModules {
 		if (cockpitModule == null) throw new IllegalArgumentException("Need a cockpit module");
 		if (engineModule == null) throw new IllegalArgumentException("Need an engine module");
 		if (maxCombinedModulePower < cockpitModule.getModulePower() + engineModule.getModulePower())
-			throw new IllegalStateException("Max supported module power is not high enough for selected cockpit and engine modules");
+			throw new IllegalStateException("Max supported module power is not high enough for selected cockpit and engine combatSequencer");
 		return new ShipModules(view, maxCombinedModulePower, cockpitModule, engineModule);
 	}
 
@@ -57,7 +67,23 @@ public class ShipModules {
 			if (combinedModulePower > _maxCombinedModulePower)
 				throw new IllegalStateException("Optional module " + module.getName() + " has exceeded max module power in Ship.");
 		}
-		modulesAsArrayList.addAll(optionalModules);
+		addShipModules(optionalModules);
+	}
+
+	public void addShipModule(ShipModule newModule) {
+		modulesAsArrayList.add(newModule);
+		if (newModule instanceof CombatSequenceModule) modulesToBeSequencedInCombat.add((CombatSequenceModule)newModule);
+	}
+
+	public void addShipModules(List<ShipModule> modules) {
+		for (ShipModule module : modules) {
+			modulesAsArrayList.add(module);
+			if (module instanceof CombatSequenceModule) modulesToBeSequencedInCombat.add((CombatSequenceModule)module);
+		}
+	}
+
+	public void removeShipModule(ShipModule module) {
+		modulesAsArrayList.remove(module);
 	}
 
 	public int getCombinedModulePower() {
@@ -106,14 +132,14 @@ public class ShipModules {
 	private void replaceOldModule(ShipModule newModule, ShipModule oldModule) {
 		int powerAfterReplacement = getCombinedModulePower() - oldModule.getModulePower() + newModule.getModulePower();
 		if (powerAfterReplacement <= _maxCombinedModulePower) {
-			modulesAsArrayList.remove(oldModule);
-			modulesAsArrayList.add(newModule);
+			removeShipModule(oldModule);
+			addShipModule(newModule);
 		}
 	}
 
 	private void addNewModule(ShipModule module) {
 		if (getCombinedModulePower() + module.getModulePower() <= _maxCombinedModulePower) {
-			modulesAsArrayList.add(module);
+			addShipModule(module);
 		}
 	}
 
@@ -126,13 +152,13 @@ public class ShipModules {
 				.filter(module.getClass() :: isInstance)
 				.findAny()
 				.orElse(null);
-		if (moduleToRemove != null) modulesAsArrayList.remove(moduleToRemove);
+		if (moduleToRemove != null) removeShipModule(moduleToRemove);
 	}
 
 
 	public void addWeaponModule(int weaponModulePower) {
 		if (getCombinedModulePower() + weaponModulePower <= _maxCombinedModulePower) {
-			modulesAsArrayList.add(new WeaponModule(view, "WeaponModule", weaponModulePower));
+			addShipModule(new WeaponModule(view, "WeaponModule", weaponModulePower));
 		}
 	}
 
@@ -191,12 +217,17 @@ public class ShipModules {
 		return mannableModules;
 	}
 
-	public List<ShipModule> getModulesToBeSequencedInCombat() {
-		return modulesAsArrayList
-				.stream()
-				.filter(m -> m instanceof CombatSequenceModule)
-				.collect(Collectors.toList());
+	public List<CombatSequenceModule> getModulesToBeSequencedInCombat() {
+		return modulesToBeSequencedInCombat;
 	}
+
+	public CombatSequencer getModulesForCombat() {
+		if (combatSequencer == null) combatSequencer = new CombatSequencer(getModulesToBeSequencedInCombat());
+		return combatSequencer;
+	}
+
+	private CombatSequencer combatSequencer = null;
+
 	//endregion
 
 	//addModuleFunction

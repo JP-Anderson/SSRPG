@@ -6,10 +6,8 @@ import characters.Crewmember;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import characters.classes.PilotClass;
-import characters.skills.abilities.Ability;
 import characters.skills.abilities.IntAbility;
 import ship.modules.*;
 import ship.weapons.ShipWeapon;
@@ -83,6 +81,10 @@ public abstract class Ship {
 
 	public MannableShipModule getModuleMannedBy(Crewmember crewmember) {
 		return modules.getModuleCrewmemberIsManning(crewmember);
+	}
+
+	public CombatSequencer getModulesForCombat() {
+		return modules.getModulesForCombat();
 	}
 
 	public ArrayList<ShipModule> getModulesInList() {

@@ -56,7 +56,7 @@ public class ShieldModule extends MannableShipModule implements CombatSequenceMo
 	}
 
 	@Override
-	public boolean getStatus() {
+	public boolean moduleIsCharged() {
 		return enabledForCombat;
 	}
 
