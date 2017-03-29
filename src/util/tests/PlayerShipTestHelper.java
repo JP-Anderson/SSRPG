@@ -1,6 +1,5 @@
 package util.tests;
 
-import arch.view.ConsoleIOHandler;
 import characters.Crewmember;
 import characters.classes.CrewmemberClass;
 import characters.classes.PilotClass;
@@ -10,17 +9,41 @@ import map.GridPoint;
 import ship.Crew;
 import ship.PlayerShip;
 import ship.modules.CockpitModule;
+import ship.modules.WeaponModule;
 
 import java.util.ArrayList;
 
 public class PlayerShipTestHelper extends TestHelper {
 
+	public static PlayerShip populateBasicShip(ArrayList<Crewmember> crewmembers) {
+		Crew crew = new Crew();
+		crew.setCrew(crewmembers);
+		return new PlayerShip.PlayerShipBuilder(view, "TestShip",10)
+				.crew(crew)
+				.build();
+	}
+
+	public static PlayerShip populateShipWithTwoWeaponModules(ArrayList<Crewmember> crewmembers) {
+		Crew crew = new Crew();
+		crew.setCrew(crewmembers);
+
+		ArrayList<WeaponModule> weaponModules = new ArrayList<>();
+		weaponModules.add(new WeaponModule(view, "TestWeaponModule", 5));
+		weaponModules.add(new WeaponModule(view, "TestWeaponModule2", 3));
+
+		return new PlayerShip.PlayerShipBuilder(view, "TestShip",16)
+				.crew(crew)
+				.weaponModules(weaponModules)
+				.cockpitModule(new CockpitModule(view, "TestCockpitModule", 3))
+				.build();
+	}
+
 	public static PlayerShip populateShipWithCockpitModule(ArrayList<Crewmember> crewmembers) {
 		Crew crew = new Crew();
 		crew.setCrew(crewmembers);
-		return new PlayerShip.PlayerShipBuilder(consoleIOHandler, "TestShip",10)
+		return new PlayerShip.PlayerShipBuilder(view, "TestShip",10)
 				.crew(crew)
-				.cockpitModule(new CockpitModule(consoleIOHandler, "TestCockpitModule", 3))
+				.cockpitModule(new CockpitModule(view, "TestCockpitModule", 3))
 				.build();
 	}
 

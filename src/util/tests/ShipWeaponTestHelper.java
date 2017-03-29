@@ -11,7 +11,7 @@ public class ShipWeaponTestHelper extends TestHelper {
 	public static Attack mockEnemyHeavyRocketAttack() {
 		ShipWeapon weapon = ShipWeaponsHolder.getWeapon("Heavy Rocket");
 
-		WeaponModule enemyModule = new WeaponModule(consoleIOHandler, "EnemyMockWeapon", 5);
+		WeaponModule enemyModule = new WeaponModule(view, "EnemyMockWeapon", 5);
 		enemyModule.setWeapon(weapon);
 		while (! enemyModule.isReadyToFire()) enemyModule.decrementTurnsTilWeaponReady();
 		return enemyModule.attack(new MockRandomNumberGenerator(0.2));
