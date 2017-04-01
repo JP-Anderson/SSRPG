@@ -1,8 +1,8 @@
 package arch.session;
 
 import arch.view.ConsoleIOHandler;
-import arch.view.InputHandler;
 import ship.AIShip;
+import ship.CombatSequencer;
 import ship.Ship;
 import ship.PlayerShip;
 import ship.modules.*;
@@ -68,11 +68,18 @@ public class ShipBattleSession extends Session {
 
 	abstract class Turn {
 
+		CombatSequencer combatSequencer;
+
 		void runTurn() {
+			moduleSequencePhase();
 			defencePhase();
 			if (weaponCheckPhase()) {
 				attackPhase();
 			}
+		}
+
+		void moduleSequencePhase(){
+			currentActiveShip.getModulesForCombat().chargeNextModule();
 		}
 
 		void defencePhase() {
@@ -83,7 +90,7 @@ public class ShipBattleSession extends Session {
 		boolean weaponCheckPhase() {
 			for (WeaponModule m : currentActiveShip.getWeaponModules()) {
 				if (m.getWeapon() != null) {
-					if (m.getBaseTurnsTilWeaponReady() == 0) {
+					if (m.isReadyToFire() && m.moduleIsCharged()) {
 						return true;
 					} else {
 						view.outputHandler.sendStringToView(m.getWeapon().name + " will be ready to fire in "
