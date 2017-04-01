@@ -1,21 +1,23 @@
 package characters;
 
 import characters.classes.ScoundrelClass;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+
+import base.SsrpgTest;
 import util.dataload.csv.CSV;
 import util.dataload.csv.CSVReader;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class CrewmemberTest {
+public class CrewmemberTest extends SsrpgTest {
 
-	static ArrayList<Integer> xpForLevels;
+	ArrayList<Integer> xpForLevels;
 
-	@BeforeAll
-	public static void loadXpForLevels() {
+	@Before
+	public void loadXpForLevels() {
 		CSV levelsCSV = CSVReader.readCSV("levels");
 		xpForLevels = (ArrayList<Integer>) levelsCSV.getZeroIndexedRowAsInts(0);
 	}

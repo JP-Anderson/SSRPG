@@ -1,14 +1,15 @@
 package ship.modules;
 
 import arch.view.ConsoleIOHandler;
+import base.SsrpgTest;
 import characters.Crewmember;
 import characters.classes.ScoundrelClass;
 import characters.classes.WeaponsExpertClass;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class MannableShipModuleTest {
+public class MannableShipModuleTest extends SsrpgTest {
 
 	private ConsoleIOHandler consoleIOHandler = new ConsoleIOHandler();
 

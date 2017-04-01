@@ -1,22 +1,24 @@
 package characters;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+
+import base.SsrpgTest;
 import util.rng.RNG;
 import util.dataload.csv.CSV;
 import util.dataload.csv.CSVReader;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class LevelTest {
+public class LevelTest extends SsrpgTest {
 
-	static ArrayList<Integer> xpForLevels;
+	ArrayList<Integer> xpForLevels;
 	RNG rand = new RNG();
 
-	@BeforeAll
-	public static void loadXpForLevels() {
+	@Before
+	public void loadXpForLevels() {
 		CSV levelsCSV = CSVReader.readCSV("levels");
 		xpForLevels = (ArrayList<Integer>) levelsCSV.getZeroIndexedRowAsInts(0);
 	}

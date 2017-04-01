@@ -3,16 +3,20 @@ package characters.skills.abilities;
 import characters.exceptions.AbilityAtMaxLevelException;
 import characters.exceptions.AbilityNotUnlockedException;
 import characters.skills.Skill;
-import org.junit.jupiter.api.Test;
+import ship.ShipModules;
+
+import org.junit.Test;
+
+import base.SsrpgTest;
 import util.collections.tree.PreOrderTreeMatcher;
 import util.dataload.xml.SkillAndAbilityLoader;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class AbilityTest {
-
+public class AbilityTest extends SsrpgTest {
+	
 	String testXmlFilePath = "C:\\Workspaces\\SSRPG\\dat\\test\\test_abilities.xml";
 
 	@Test
@@ -31,9 +35,14 @@ class AbilityTest {
 
 		assertTrue(booleanAbility.isUnlocked());
 		assertTrue(booleanAbility.isFullyUnlocked());
-
-		assertThrows(AbilityAtMaxLevelException.class,
-				() -> booleanAbility.levelUp());
+		
+		boolean exceptionThrown = false;
+		try {
+			booleanAbility.levelUp();
+		} catch (AbilityAtMaxLevelException e) {
+			exceptionThrown = true;
+		}
+		assertTrue(exceptionThrown);
 	}
 
 	@Test
@@ -49,9 +58,14 @@ class AbilityTest {
 
 		intAbility.levelUp();
 		assertTrue(intAbility.isFullyUnlocked());
-
-		assertThrows(AbilityAtMaxLevelException.class,
-				() -> intAbility.levelUp());
+		
+		boolean exceptionThrown = false;
+		try {
+			intAbility.levelUp();
+		} catch (AbilityAtMaxLevelException e) {
+			exceptionThrown = true;
+		}
+		assertTrue(exceptionThrown);
 	}
 
 	@Test
@@ -66,16 +80,27 @@ class AbilityTest {
 		doubleAbility.levelUp();
 		assertTrue(doubleAbility.isFullyUnlocked());
 
-		assertThrows(AbilityAtMaxLevelException.class,
-				() -> doubleAbility.levelUp());
+		boolean exceptionThrown = false;
+		try {
+			doubleAbility.levelUp();
+		} catch (AbilityAtMaxLevelException e) {
+			exceptionThrown = true;
+		}
+		assertTrue(exceptionThrown);
 	}
 
 	@Test
 	public void intAbilityReturnsCorrectIntValue() {
 		IntAbility intAbility = getIntAbility();
+		
 
-		assertThrows(AbilityNotUnlockedException.class,
-				() -> intAbility.getAbilityValue());
+		boolean exceptionThrown = false;
+		try {
+			intAbility.getAbilityValue();
+		} catch (AbilityNotUnlockedException e) {
+			exceptionThrown = true;
+		}
+		assertTrue(exceptionThrown);
 
 		intAbility.levelUp();
 		assertEquals(1, (int) intAbility.getAbilityValue());
@@ -94,14 +119,19 @@ class AbilityTest {
 	public void doubleAbilityReturnsCorrectDoubleValue() {
 		DoubleAbility doubleAbility = getDoubleAbility();
 
-		assertThrows(AbilityNotUnlockedException.class,
-				() -> doubleAbility.getAbilityValue());
+		boolean exceptionThrown = false;
+		try {
+			doubleAbility.getAbilityValue();
+		} catch (AbilityNotUnlockedException e) {
+			exceptionThrown = true;
+		}
+		assertTrue(exceptionThrown);
+		
+		doubleAbility.levelUp();
+		assertEquals(0.25, (double) doubleAbility.getAbilityValue(), 0D);
 
 		doubleAbility.levelUp();
-		assertEquals(0.25, (double) doubleAbility.getAbilityValue());
-
-		doubleAbility.levelUp();
-		assertEquals(0.5, (double) doubleAbility.getAbilityValue());
+		assertEquals(0.5, (double) doubleAbility.getAbilityValue(), 0D);
 	}
 
 

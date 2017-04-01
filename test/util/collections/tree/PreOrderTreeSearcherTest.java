@@ -1,17 +1,19 @@
 package util.collections.tree;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import base.SsrpgTest;
 
-class PreOrderTreeSearcherTest {
+import static org.junit.Assert.*;
 
-	static PreOrderTreeSearcher<Integer> searcher;
-	private static Tree<Integer> searchTree;
+public class PreOrderTreeSearcherTest extends SsrpgTest {
 
-	@BeforeAll
-	static void setUp() {
+	PreOrderTreeSearcher<Integer> searcher;
+	private Tree<Integer> searchTree;
+
+	@Before
+	public void setUp() {
 		searcher = new PreOrderTreeSearcher<>();
 		TreeNode<Integer> root = new TreeNode<>(null, 1);
 		TreeNode<Integer> two = new TreeNode<>(root,2);
@@ -22,37 +24,37 @@ class PreOrderTreeSearcherTest {
 	}
 
 	@Test
-	void getElementWorksForRootElementInTree() {
+	public void getElementWorksForRootElementInTree() {
 		assertNotNull(searcher.getElement(searchTree, i -> i == 1));
 	}
 
 	@Test
-	void getElementWorksForBranchElementInTree() {
+	public void getElementWorksForBranchElementInTree() {
 		assertNotNull(searcher.getElement(searchTree, i -> i == 3));
 	}
 
 	@Test
-	void getElementWorksForLeafElementInTree() {
+	public void getElementWorksForLeafElementInTree() {
 		assertNotNull(searcher.getElement(searchTree, i -> i == 4));
 	}
 
 	@Test
-	void getElementReturnsNullForElementNotInTree() {
+	public void getElementReturnsNullForElementNotInTree() {
 		assertNull(searcher.getElement(searchTree, i -> i == 6));
 	}
 
 	@Test
-	void doesTreeContainReturnsTrueForRootElementInTree() {
+	public void doesTreeContainReturnsTrueForRootElementInTree() {
 		assertTrue(searcher.doesTreeContain(searchTree, i -> i == 1));
 	}
 
 	@Test
-	void doesTreeContainReturnsTrueForElementInTree() {
+	public void doesTreeContainReturnsTrueForElementInTree() {
 		assertTrue(searcher.doesTreeContain(searchTree, i -> i == 4));
 	}
 
 	@Test
-	void doesTreeContainReturnsFalseForElementNotInTree() {
+	public void doesTreeContainReturnsFalseForElementNotInTree() {
 		assertFalse(searcher.doesTreeContain(searchTree, i -> i == 9));
 	}
 

@@ -1,19 +1,21 @@
 package util.collections.tree;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+
+import base.SsrpgTest;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class PreOrderTreeMatcherTest {
+public class PreOrderTreeMatcherTest extends SsrpgTest {
 
-	static PreOrderTreeMatcher<Integer> searcher;
-	private static Tree<Integer> searchTree;
+	PreOrderTreeMatcher<Integer> searcher;
+	private Tree<Integer> searchTree;
 
-	@BeforeAll
-	static void setUp() {
+	@Before
+	public void setUp() {
 		searcher = new PreOrderTreeMatcher<>();
 		TreeNode<Integer> root = new TreeNode<>(null, 1);
 		TreeNode<Integer> two = new TreeNode<>(root,2);

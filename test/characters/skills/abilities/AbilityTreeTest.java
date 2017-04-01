@@ -1,16 +1,19 @@
 package characters.skills.abilities;
 
 import characters.exceptions.AbilityAtMaxLevelException;
+import characters.exceptions.AbilityNotUnlockedException;
 import characters.exceptions.NotEnoughSkillPointsException;
 import characters.skills.Skill;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
+import base.SsrpgTest;
 import util.dataload.xml.SkillAndAbilityLoader;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class AbilityTreeTest {
+public class AbilityTreeTest extends SsrpgTest {
 
 	String testXmlFilePath = "C:\\Workspaces\\SSRPG\\dat\\test\\test_abilities.xml";
 
@@ -70,8 +73,14 @@ class AbilityTreeTest {
 		tree.upgradeAbility(0);
 		assertEquals(4, abilityOne.abilityLevel);
 		tree.levelUp();
-		assertThrows(AbilityAtMaxLevelException.class,
-				() -> tree.upgradeAbility(0));
+		
+		boolean exceptionThrown = false;
+		try {
+			tree.upgradeAbility(0);
+		} catch (AbilityAtMaxLevelException e) {
+			exceptionThrown = true;
+		}
+		assertTrue(exceptionThrown);
 	}
 	//endregion
 
@@ -90,8 +99,15 @@ class AbilityTreeTest {
 		AbilityTree tree = loadTestSkillTree();
 		ValueAbility abilityOne = (ValueAbility) tree.getUpgradeableAbilities().get(0);
 		assertEquals(0, abilityOne.abilityLevel);
-		assertThrows(NotEnoughSkillPointsException.class,
-				() -> tree.upgradeAbility(0));
+		
+		boolean exceptionThrown = false;
+		try {
+			tree.upgradeAbility(0);
+		} catch (NotEnoughSkillPointsException e) {
+			exceptionThrown = true;
+		}
+		assertTrue(exceptionThrown);
+
 		assertEquals(0, abilityOne.abilityLevel);
 	}
 

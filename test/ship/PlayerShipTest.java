@@ -5,14 +5,16 @@ import characters.classes.PilotClass;
 import characters.classes.ScoundrelClass;
 import map.GridMap;
 import map.GridPoint;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
+import base.SsrpgTest;
 import util.tests.PlayerShipTestHelper;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class PlayerShipTest {
+public class PlayerShipTest extends SsrpgTest {
 
 	@Test
 	public void initialiseMap() {

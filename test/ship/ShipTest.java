@@ -1,22 +1,18 @@
 package ship;
 
-import arch.view.ConsoleIOHandler;
+import base.SsrpgTest;
 import characters.Crewmember;
 import characters.classes.PilotClass;
 import characters.classes.ScoundrelClass;
-import org.junit.jupiter.api.Test;
 import ship.modules.*;
 
-import java.util.ArrayList;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class ShipTest {
-
-	private static ConsoleIOHandler consoleIOHandler = new ConsoleIOHandler();
+public class ShipTest extends SsrpgTest {
 
 	private PlayerShip getTestShip() {
-		return new PlayerShip.PlayerShipBuilder(consoleIOHandler, "TestShip",10).build();
+		return new PlayerShip.PlayerShipBuilder(view, "TestShip",10).build();
 	}
 
 	@Test
@@ -145,8 +141,8 @@ class ShipTest {
 	}
 
 	private PlayerShip getTestShipWithCargoBay() {
-		return new PlayerShip.PlayerShipBuilder(consoleIOHandler, "TestShip",10)
-				.cargoBayModule(new CargoBayModule(consoleIOHandler, "TestCargo", 5, 20))
+		return new PlayerShip.PlayerShipBuilder(view, "TestShip",10)
+				.cargoBayModule(new CargoBayModule(view, "TestCargo", 5, 20))
 				.build();
 	}
 

@@ -2,12 +2,14 @@ package map.zones;
 
 import events.events.BanditEvent;
 import events.events.ShipwreckEvent;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
+import base.SsrpgTest;
 import util.rng.MockRandomNumberGenerator;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class LawlessZoneEventsTest {
+public class LawlessZoneEventsTest extends SsrpgTest {
 
 	@Test
 	public void rollsOfZeroToThreeReturnShipwreckEvent() {

@@ -1,15 +1,18 @@
 package util.collections.tree;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Before;
+import org.junit.Test;
 
-class TreeTest {
+import base.SsrpgTest;
 
-	private static Tree<Integer> searchTree;
+import static org.junit.Assert.*;
 
-	@BeforeAll
-	static void setUp() {
+public class TreeTest extends SsrpgTest {
+
+	private Tree<Integer> searchTree;
+
+	@Before
+	public void setUp() {
 		TreeNode<Integer> root = new TreeNode<>(null, 1);
 		TreeNode<Integer> two = new TreeNode<>(root,2);
 		TreeNode<Integer> three = new TreeNode<>(root,3);

@@ -22,10 +22,10 @@ public class ConsoleTreePrinter<E> {
 		nodeCount++;
 		List<TreeNode<E>> children = node.getChildren();
 		for (int i = 0; i < children.size() - 1; i++) {
-			print(children.get(i),prefix + (isTail ? "    " : "│   "), false);
+			print(children.get(i),prefix + (isTail ? "    " : "|   "), false);
 		}
 		if (children.size() > 0) {
-			print(children.get(children.size() - 1),prefix + (isTail ?"    " : "│   "), true);
+			print(children.get(children.size() - 1),prefix + (isTail ?"    " : "|   "), true);
 		}
 	}
 
@@ -44,7 +44,7 @@ public class ConsoleTreePrinter<E> {
 	}
 
 	protected void printNodeInformation(String prefix, boolean isTail, String information) {
-		System.out.println(prefix + (isTail ? "└── " : "├── ") + information);
+		System.out.println(prefix + (isTail ? "^-> " : "|-> ") + information);
 	}
 
 }

@@ -1,13 +1,15 @@
 package ship;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
+import base.SsrpgTest;
 import ship.modules.EngineModule;
 import ship.modules.WeaponModule;
 import util.tests.PlayerShipTestHelper;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class CombatSequencerTest {
+public class CombatSequencerTest extends SsrpgTest {
 
 	@Test
 	public void combatSequencerForBasicShipReturnsJustEngines() {

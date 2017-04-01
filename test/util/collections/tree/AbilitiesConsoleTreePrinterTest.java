@@ -2,14 +2,16 @@ package util.collections.tree;
 
 import characters.skills.Skill;
 import characters.skills.abilities.Ability;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
+import base.SsrpgTest;
 import util.dataload.xml.SkillAndAbilityLoader;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class AbilitiesConsoleTreePrinterTest {
+public class AbilitiesConsoleTreePrinterTest extends SsrpgTest {
 
 	private ArrayList<Skill> skills = SkillAndAbilityLoader.loadSkills("C:\\Workspaces\\SSRPG\\dat\\test\\test_abilities.xml");
 

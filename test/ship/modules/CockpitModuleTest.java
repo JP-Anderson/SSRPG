@@ -1,17 +1,19 @@
 package ship.modules;
 
 import characters.Crewmember;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+
+import base.SsrpgTest;
 import ship.PlayerShip;
 import ship.cockpits.Cockpit;
 import util.rng.MockRandomNumberGenerator;
 import util.tests.PlayerShipTestHelper;
 import util.tests.ShipWeaponTestHelper;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class CockpitModuleTest {
+public class CockpitModuleTest extends SsrpgTest {
 
 	@Test
 	public void canDodgeAttackFailsWithoutCrewmemberInCockpit() {

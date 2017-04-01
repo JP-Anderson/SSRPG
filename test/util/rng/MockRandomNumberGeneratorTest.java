@@ -1,21 +1,23 @@
 package util.rng;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
+import base.SsrpgTest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class MockRandomNumberGeneratorTest {
+public class MockRandomNumberGeneratorTest extends SsrpgTest {
 
 	@Test
 	public void verifyMockRNGConstructedWithDoubleWillRepeatDouble() {
 		MockRandomNumberGenerator mockRNG = new MockRandomNumberGenerator(0.2);
 
-		assertEquals(0.2, mockRNG.randZeroToOne());
-		assertEquals(0.2, mockRNG.randZeroToOne());
-		assertEquals(0.2, mockRNG.randZeroToOne());
+		assertEquals(0.2, mockRNG.randZeroToOne(), 0D);
+		assertEquals(0.2, mockRNG.randZeroToOne(), 0D);
+		assertEquals(0.2, mockRNG.randZeroToOne(), 0D);
 	}
 
 	@Test
@@ -56,12 +58,12 @@ class MockRandomNumberGeneratorTest {
 				Arrays.asList(0.1,2.0,0.5432)
 		));
 
-		assertEquals(0.1, mockRNG.randZeroToOne());
-		assertEquals(2.0, mockRNG.randZeroToOne());
-		assertEquals(0.5432, mockRNG.randZeroToOne());
-		assertEquals(0.1, mockRNG.randZeroToOne());
-		assertEquals(2.0, mockRNG.randZeroToOne());
-		assertEquals(0.5432, mockRNG.randZeroToOne());
+		assertEquals(0.1, mockRNG.randZeroToOne(), 0D);
+		assertEquals(2.0, mockRNG.randZeroToOne(), 0D);
+		assertEquals(0.5432, mockRNG.randZeroToOne(), 0D);
+		assertEquals(0.1, mockRNG.randZeroToOne(), 0D);
+		assertEquals(2.0, mockRNG.randZeroToOne(), 0D);
+		assertEquals(0.5432, mockRNG.randZeroToOne(), 0D);
 	}
 
 }

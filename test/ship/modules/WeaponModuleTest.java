@@ -1,7 +1,9 @@
 package ship.modules;
 
 import arch.view.ConsoleIOHandler;
-import org.junit.jupiter.api.Test;
+import base.SsrpgTest;
+
+import org.junit.Test;
 import ship.weapons.Attack;
 import ship.weapons.ShipWeapon;
 import ship.weapons.ShipWeaponsHolder;
@@ -10,9 +12,9 @@ import util.rng.MockRandomNumberGenerator;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class WeaponModuleTest {
+public class WeaponModuleTest extends SsrpgTest {
 
 	private ConsoleIOHandler consoleIOHandler = new ConsoleIOHandler();
 
@@ -67,7 +69,7 @@ class WeaponModuleTest {
 		Attack attack = module.attack(mockRNG);
 		assertEquals(burstLaserMk3.hullDamage, attack.hullDamage);
 		assertEquals(burstLaserMk3.shieldDamage, attack.shieldDamage);
-		assertEquals(burstLaserMk3.baseHitChance, attack.accuracy);
+		assertEquals(burstLaserMk3.baseHitChance, attack.accuracy, 0D);
 		assertEquals(burstLaserMk3.weaponType, attack.weaponType);
 	}
 

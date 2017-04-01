@@ -1,16 +1,20 @@
 package ship;
 
 import arch.view.ConsoleIOHandler;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import base.SsrpgTest;
+
+import org.junit.Test;
+
+import static org.junit.Assert.*;
 import ship.modules.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 
-class ShipModulesTest {
+public class ShipModulesTest extends SsrpgTest {
+	
+	public ShipModulesTest(){}
 	
 	private static ConsoleIOHandler consoleIOHandler = new ConsoleIOHandler();
 
@@ -18,8 +22,13 @@ class ShipModulesTest {
 	public void exceptionThrownForMandatoryModulesExceedingPowerRequirement() {
 		CockpitModule cockpitModule = cockpitModule(4);
 		EngineModule engineModule = engineModule(7);
-		assertThrows(IllegalStateException.class,
-				() -> ShipModules.createInstance(consoleIOHandler, 10, cockpitModule, engineModule));
+		boolean exceptionThrown = false;
+		try {
+			ShipModules.createInstance(consoleIOHandler, 10, cockpitModule, engineModule);
+		} catch (IllegalStateException exception) {
+			exceptionThrown = true;
+		}
+		assertTrue(exceptionThrown);
 	}
 
 	@Test
@@ -36,8 +45,14 @@ class ShipModulesTest {
 		WeaponModule weaponModule = weaponModule(3);
 		ArrayList<ShipModule> optionalModules = new ArrayList<>();
 		optionalModules.add(weaponModule);
-		assertThrows(IllegalStateException.class,
-				() -> ShipModules.createInstance(consoleIOHandler, 10, cockpitModule, engineModule, optionalModules));
+		
+		boolean exceptionThrown = false;
+		try {
+			ShipModules.createInstance(consoleIOHandler, 10, cockpitModule, engineModule, optionalModules);
+		} catch (IllegalStateException exception) {
+			exceptionThrown = true;
+		}
+		assertTrue(exceptionThrown);
 	}
 
 	@Test
@@ -61,8 +76,15 @@ class ShipModulesTest {
 		optionalModules.add(weaponModule);
 		optionalModules.add(weaponModule2);
 		optionalModules.add(shieldModule);
-		assertThrows(IllegalStateException.class,
-				() -> ShipModules.createInstance(consoleIOHandler, 20, cockpitModule, engineModule, optionalModules));
+		
+		boolean exceptionThrown = false;
+		try {
+			ShipModules.createInstance(consoleIOHandler, 10, cockpitModule, engineModule, optionalModules);
+		} catch (IllegalStateException exception) {
+			exceptionThrown = true;
+		}
+		assertTrue(exceptionThrown);
+		
 	}
 
 	@Test

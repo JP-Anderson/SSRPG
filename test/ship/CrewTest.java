@@ -5,12 +5,14 @@ import characters.classes.PilotClass;
 import characters.classes.ScoundrelClass;
 import map.GridMap;
 import map.GridPoint;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
+import base.SsrpgTest;
 import util.tests.PlayerShipTestHelper;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class CrewTest {
+public class CrewTest extends SsrpgTest {
 
 	@Test
 	public void hasSpaceInCrewReturnsFalseWithNoSpace() {

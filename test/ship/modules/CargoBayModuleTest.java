@@ -1,17 +1,18 @@
 package ship.modules;
 
 import arch.view.ConsoleIOHandler;
+import base.SsrpgTest;
 import goods.GoodsForSale;
 import goods.GoodsList;
 import goods.PurchasedGoods;
 import map.GridPoint;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class CargoBayModuleTest {
+public class CargoBayModuleTest extends SsrpgTest {
 
 	private static ConsoleIOHandler consoleIOHandler = new ConsoleIOHandler();
 	private static GoodsForSale[] goodsList = GoodsList.GOODS;
@@ -150,7 +151,7 @@ class CargoBayModuleTest {
 		// Four Legal goods
 		cargoBayModule.addCargo(purchaseGoods(0,4));
 
-		assertEquals(0.6666666666666666, cargoBayModule.contrabandCargoRatio());
+		assertEquals(0.6666666666666666, cargoBayModule.contrabandCargoRatio(), 0D);
 	}
 
 	@Test
@@ -160,14 +161,14 @@ class CargoBayModuleTest {
 		// Four Legal goods
 		cargoBayModule.addCargo(purchaseGoods(0,4));
 
-		assertEquals(0.0, cargoBayModule.contrabandCargoRatio());
+		assertEquals(0.0, cargoBayModule.contrabandCargoRatio(), 0D);
 	}
 
 	@Test
 	public void contrabandCargoRatioReturnsZeroWithNoCargo() {
 		CargoBayModule cargoBayModule = getCargoBayModule();
 
-		assertEquals(0.0, cargoBayModule.contrabandCargoRatio());
+		assertEquals(0.0, cargoBayModule.contrabandCargoRatio(), 0D);
 	}
 
 }

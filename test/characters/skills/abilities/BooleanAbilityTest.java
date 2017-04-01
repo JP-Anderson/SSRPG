@@ -1,11 +1,12 @@
 package characters.skills.abilities;
 
 import arch.view.ConsoleIOHandler;
+import base.SsrpgTest;
 import characters.Crewmember;
 import characters.classes.CrewmemberClass;
 import characters.classes.PilotClass;
 import characters.classes.ScoundrelClass;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import ship.PlayerShip;
 import ship.cockpits.Cockpit;
 import ship.modules.CockpitModule;
@@ -17,11 +18,9 @@ import util.tests.ShipWeaponTestHelper;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class BooleanAbilityTest {
-
-	private ConsoleIOHandler consoleIOHandler = new ConsoleIOHandler();
+public class BooleanAbilityTest extends SsrpgTest {
 
 	final String AEROBATICS_EXPERT = "Aerobatics Expert";
 

@@ -1,7 +1,9 @@
 package ship.shields;
 
 import arch.view.ConsoleIOHandler;
-import org.junit.jupiter.api.Test;
+import base.SsrpgTest;
+
+import org.junit.Test;
 import ship.modules.ShieldModule;
 import ship.modules.WeaponModule;
 import ship.weapons.Attack;
@@ -9,9 +11,9 @@ import ship.weapons.ShipWeapon;
 import ship.weapons.ShipWeaponsHolder;
 import util.rng.MockRandomNumberGenerator;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class ShieldSystemTest {
+public class ShieldSystemTest extends SsrpgTest {
 
 	private ConsoleIOHandler consoleIOHandler = new ConsoleIOHandler();
 

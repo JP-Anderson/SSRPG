@@ -1,11 +1,13 @@
 package util.dataload.csv;
 
 import map.GridMap;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import base.SsrpgTest;
 
-class MapCSVReaderTest {
+import static org.junit.Assert.*;
+
+public class MapCSVReaderTest extends SsrpgTest {
 
 	private static final String MAP_FILE = "test\\test_map";
 

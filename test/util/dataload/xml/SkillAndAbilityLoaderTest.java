@@ -3,19 +3,21 @@ package util.dataload.xml;
 import characters.skills.Skill;
 import characters.skills.abilities.Ability;
 import characters.skills.abilities.AbilityTree;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
+import base.SsrpgTest;
 import util.collections.tree.TreeNode;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class SkillAndAbilityLoaderTest {
+public class SkillAndAbilityLoaderTest extends SsrpgTest {
 
 	String testXmlFilePath = "C:\\Workspaces\\SSRPG\\dat\\test\\test_abilities.xml";
 
 	@Test
-	void loaderLoadsCorrectNumberOfSkillsAndAbilities() {
+	public void loaderLoadsCorrectNumberOfSkillsAndAbilities() {
 		ArrayList<Skill> skills = SkillAndAbilityLoader.loadSkills(testXmlFilePath);
 
 		Skill skill1 = skills.get(0);

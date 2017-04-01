@@ -3,8 +3,10 @@ package characters.skills;
 import characters.skills.abilities.Ability;
 import characters.skills.abilities.DoubleAbility;
 import characters.skills.abilities.IntAbility;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+
+import base.SsrpgTest;
 import util.collections.tree.PreOrderTreeMatcher;
 import util.collections.tree.strategies.PreOrderTreeTraversal;
 import util.collections.tree.visitors.CounterVisitor;
@@ -12,9 +14,9 @@ import util.dataload.xml.SkillAndAbilityLoader;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class SkillCopierTest {
+public class SkillCopierTest extends SsrpgTest {
 
 	private ArrayList<Skill> skills = SkillAndAbilityLoader.loadSkills("C:\\Workspaces\\SSRPG\\dat\\test\\test_abilities.xml");
 

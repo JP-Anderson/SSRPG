@@ -4,7 +4,9 @@ import characters.skills.Skill;
 import characters.skills.abilities.Ability;
 import characters.skills.abilities.BooleanAbility;
 import characters.skills.abilities.DoubleAbility;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
+import base.SsrpgTest;
 import util.collections.tree.Tree;
 import util.collections.tree.TreeNode;
 import util.collections.tree.strategies.PreOrderTreeTraversal;
@@ -13,9 +15,9 @@ import util.dataload.xml.SkillAndAbilityLoader;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class CounterVisitorTest {
+public class CounterVisitorTest extends SsrpgTest {
 
 	private ArrayList<Skill> skills = SkillAndAbilityLoader.loadSkills("C:\\Workspaces\\SSRPG\\dat\\test\\test_abilities.xml");
 

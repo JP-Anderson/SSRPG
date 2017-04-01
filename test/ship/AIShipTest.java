@@ -1,16 +1,18 @@
 package ship;
 
 import arch.view.ConsoleIOHandler;
-import org.junit.jupiter.api.Test;
+import base.SsrpgTest;
+
+import org.junit.Test;
 import ship.modules.*;
 import ship.shields.BasicShieldsMk2;
 import ship.weapons.ShipWeaponsHolder;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class AIShipTest {
+public class AIShipTest extends SsrpgTest {
 
 	@Test
 	public void defaultAiShipHasCompulsoryModules() {
@@ -36,9 +38,6 @@ class AIShipTest {
 		assertNull(testShip.modules.getShipModule(CargoBayModule.class));
 
 	}
-
-
-	private ConsoleIOHandler view = new ConsoleIOHandler();
 
 	private AIShip buildAIShipWithWeaponAndShields() {
 		ShieldModule shieldModule = new ShieldModule(view, "ShieldsModule1", 1);
