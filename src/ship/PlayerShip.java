@@ -79,6 +79,10 @@ public class PlayerShip extends Ship {
 	public void scan() {
 		scanner.scan();
 	}
+	
+	public Scanner getScanner() {
+		return scanner;
+	}
 
 	public int getFuelCapacity() {
 		return fuelCapacity;

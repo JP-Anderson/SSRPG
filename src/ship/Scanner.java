@@ -38,6 +38,11 @@ public class Scanner {
 		shipLocation = shipGridPoint;
 		getGridIndexesInScannerRange();
 	}
+	
+	public ArrayList<ArrayList<GridPoint>> getGridIndexesAsArrayLists() {
+		getGridIndexesInScannerRange();
+		return gridPointsInRange;
+	}
 
 	private void getGridIndexesInScannerRange() {
 		int scannerRadius = (scannerGridSize - 1) / 2;
