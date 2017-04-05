@@ -30,7 +30,7 @@ public class GridMap {
 	private ArrayList<GridSquare> initializeRowWithEmptyGridSquares(int height) {
 		ArrayList<GridSquare> newRow = new ArrayList<GridSquare>();
 		for (int i = 0; i < width; i++) {
-			newRow.add(EmptyGridSquare.generateEmptyGridSquare(new GridPoint(i, height)));
+			newRow.add(new EmptyGridSquare(new GridPoint(i, height)));
 		}
 		return newRow;
 	}

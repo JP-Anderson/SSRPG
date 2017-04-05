@@ -4,12 +4,8 @@ import map.GridPoint;
 
 public class EmptyGridSquare extends GridSquare {
 
-	public static EmptyGridSquare generateEmptyGridSquare(GridPoint gridPoint) {
-		return new EmptyGridSquare(gridPoint, ' ');
+	public EmptyGridSquare (GridPoint gridPoint) {
+		super(gridPoint, ' ');
 	}
-
-	private EmptyGridSquare(GridPoint gridPoint, char mapSymbol) {
-		super(gridPoint, mapSymbol);
-	}
-
+	
 }
