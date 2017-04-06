@@ -65,10 +65,9 @@ public class PlayerShip extends Ship {
 	}
 
 	public boolean travel(GridPoint gridPoint, int distance) {
-		location = gridPoint;
-		scanner.setShipLocation(gridPoint);
 		int fuelCost = distance * ((EngineModule) modules.getShipModule(EngineModule.class)).fuelEfficiency;
 		if (fuelCost <= remainingFuel) {
+			setLocation(gridPoint);
 			view.outputHandler.sendStringToView("Used " + fuelCost + " fuel.");
 			remainingFuel = remainingFuel - fuelCost;
 			return true;
