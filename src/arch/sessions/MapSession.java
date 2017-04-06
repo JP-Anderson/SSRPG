@@ -23,6 +23,7 @@ public class MapSession implements MapSessionInterface {
 	private GridMap map;
 	private PlayerShip p1;
 	private ArrayList<GoodsForSale> goods;
+	private boolean changes = false;
 
 	@Override
 	public void start(PlayerShip player) {
@@ -59,6 +60,7 @@ public class MapSession implements MapSessionInterface {
 	
 	@Override
 	public ArrayList<ArrayList<GridSquare>> gridMap() {
+		changes = false;
 		ArrayList<ArrayList<GridPoint>> points = p1.getScanner().getGridIndexesAsArrayLists();
 		ArrayList<ArrayList<GridSquare>> mapSegment = new ArrayList<>();
 		
@@ -97,6 +99,7 @@ public class MapSession implements MapSessionInterface {
 
 			boolean canTravel = p1.travel(destination, distance);
 			if (canTravel) {
+				changes = true;
 				return true;
 			} else {
 //				not enough fuel
@@ -106,6 +109,11 @@ public class MapSession implements MapSessionInterface {
 			
 		}
 		return false;
+	}
+
+	@Override
+	public boolean changes() {
+		return changes;
 	}
 
 }

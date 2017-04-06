@@ -13,5 +13,7 @@ public interface MapSessionInterface {
 	public ArrayList<ArrayList<GridSquare>> gridMap();
 	
 	public boolean tryToTravel(GridPoint destination);
+	
+	public boolean changes();
 
 }
