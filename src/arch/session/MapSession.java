@@ -20,6 +20,10 @@ import util.dataload.csv.loaders.Planets;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * THIS SESSION PACKAGE IS OUTDATED
+ * SEE SESSIONS PACKAGE FOR INTERFACES AND CLASSES NEEDED FOR USE IN GDX VERSION OF GAME
+ */
 
 public class MapSession extends Session {
 

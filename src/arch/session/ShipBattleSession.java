@@ -11,6 +11,11 @@ import util.rng.RNG;
 
 import java.util.ArrayList;
 
+/*
+ * THIS SESSION PACKAGE IS OUTDATED
+ * SEE SESSIONS PACKAGE FOR INTERFACES AND CLASSES NEEDED FOR USE IN GDX VERSION OF GAME
+ */
+
 public class ShipBattleSession extends Session {
 
 	private final Ship ship1;

@@ -10,6 +10,11 @@ import ship.shields.BasicShieldsMk2;
 
 import java.util.ArrayList;
 
+/*
+ * THIS SESSION PACKAGE IS OUTDATED
+ * SEE SESSIONS PACKAGE FOR INTERFACES AND CLASSES NEEDED FOR USE IN GDX VERSION OF GAME
+ */
+
 public class ShipAndCrewCreationSession extends Session {
 
 	ArrayList<Crewmember> crewList = null;

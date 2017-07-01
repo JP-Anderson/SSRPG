@@ -4,6 +4,11 @@ import arch.view.ConsoleIOHandler;
 import arch.view.InputHandler;
 import util.rng.RNG;
 
+/*
+ * THIS SESSION PACKAGE IS OUTDATED
+ * SEE SESSIONS PACKAGE FOR INTERFACES AND CLASSES NEEDED FOR USE IN GDX VERSION OF GAME
+ */
+
 public abstract class Session {
 
 	public final String name;
