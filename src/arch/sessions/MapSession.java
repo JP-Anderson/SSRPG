@@ -18,6 +18,11 @@ import util.dataload.csv.CSVReader;
 import util.dataload.csv.MapCSVReader;
 import util.dataload.csv.loaders.Planets;
 
+/*
+ * THIS SESSIONS PACKAGE IS OUTDATED
+ * SEE SESSION PACKAGE FOR INTERFACES AND CLASSES NEEDED FOR USE IN GDX VERSION OF GAME
+ */
+
 public class MapSession implements MapSessionInterface {
 	
 	private GridMap map;

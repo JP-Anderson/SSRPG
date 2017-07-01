@@ -9,6 +9,11 @@ import map.gridsquares.Planet;
 import ship.PlayerShip;
 import ship.modules.CargoBayModule;
 
+/*
+ * THIS SESSIONS PACKAGE IS OUTDATED
+ * SEE SESSION PACKAGE FOR INTERFACES AND CLASSES NEEDED FOR USE IN GDX VERSION OF GAME
+ */
+
 public class TradeSession implements TradeSessionInterface {
 	
 	PlayerShip player;
