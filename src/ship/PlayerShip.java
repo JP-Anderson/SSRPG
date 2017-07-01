@@ -37,7 +37,7 @@ public class PlayerShip extends Ship {
 		crew.setCrew(newCrew);
 	}
 
-	public void initialiseMap(GridPoint startLocation, GridMap map) {
+	public void initialiseMapLocation(GridPoint startLocation, GridMap map) {
 		location = startLocation;
 		scanner = Scanner.getScanner(scannerStrength, map, startLocation);
 	}

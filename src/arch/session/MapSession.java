@@ -43,7 +43,7 @@ public class MapSession extends Session {
 		map = MapCSVReader.getMap("map");
 		//map = GridMap.generateGridMap(11, 7);
 
-		p1.initialiseMap(start, map);
+		p1.initialiseMapLocation(start, map);
 		initMapAndGoodsList();
 	}
 
