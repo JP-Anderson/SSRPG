@@ -12,12 +12,10 @@ public class Planets {
 
 	public static Planets instance;
 	private List<Planet> planets;
-	private String csvInUse;
 
-	private Planets(String csv) {
+	private Planets(String csvPath) {
 		instance = this;
-		readPlanets(csv);
-		csvInUse = csv;
+		readPlanets(csvPath);
 	}
 
 	public static Planets loadPlanets(String csv) {
@@ -35,9 +33,9 @@ public class Planets {
 		return planets.get(index);
 	}
 
-	private void readPlanets(String csv) {
+	private void readPlanets(String csvPath) {
 		planets = new ArrayList<>();
-		CSV planetsCSV = CSVReader.readCSV(csv);
+		CSV planetsCSV = CSVReader.readCSV(csvPath);
 		for (int i = 1; i < planetsCSV.rows; i++) {
 			ArrayList<String> planet = planetsCSV.getZeroIndexedRow(i);
 			int id = Integer.parseInt(planet.get(0));
@@ -51,6 +49,5 @@ public class Planets {
 					marketSize));
 		}
 	}
-
 
 }
