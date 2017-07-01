@@ -26,14 +26,13 @@ public class MapSession implements MapSessionInterface {
 	private boolean changes = false;
 
 	@Override
-	public void start(PlayerShip player) {
+	public void start(PlayerShip player, GridMap gridMap) {
 		p1 = player;
-		CSV mapCsv = MapCSVReader.readCSV("map");
-		GridPoint start = new GridPoint(3, 6);
-		map = MapCSVReader.getMap("map");
-		//map = GridMap.generateGridMap(11, 7);
-
-		p1.initialiseMap(start, map);
+		map = gridMap;
+		if (p1.getLocation() == null) {
+			GridPoint start = new GridPoint(3, 6);
+			p1.initialiseMapLocation(start, map);
+		}
 		initMapAndGoodsList();
 	}
 

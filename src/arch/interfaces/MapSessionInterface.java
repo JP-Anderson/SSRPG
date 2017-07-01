@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public interface MapSessionInterface {
 	
-	public void start(PlayerShip player);
+	public void start(PlayerShip player, GridMap gridMap);
 	
 	public ArrayList<ArrayList<GridSquare>> gridMap();
 	
