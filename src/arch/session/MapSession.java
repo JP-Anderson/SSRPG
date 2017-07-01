@@ -43,8 +43,8 @@ public class MapSession extends Session {
 		map = MapCSVReader.getMap("map");
 		//map = GridMap.generateGridMap(11, 7);
 
-		p1.initialiseMapLocation(start, map);
 		initMapAndGoodsList();
+		p1.initialiseMapLocation(map.getSquareAt(start), map);
 	}
 
 	private final String xLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -99,7 +99,7 @@ public class MapSession extends Session {
 	}
 
 	private void printCurrentLocation() {
-		GridPoint l = p1.getLocation();
+		GridPoint l = p1.getLocationGridPoint();
 		GridSquare locationSquare = map.getSquareAt(l);
 		if (locationSquare instanceof Planet) {
 			Planet locationPlanet = (Planet) locationSquare;
@@ -111,7 +111,7 @@ public class MapSession extends Session {
 	}
 
 	private void tradeSequence() {
-		GridSquare location = map.getSquareAt(p1.getLocation());
+		GridSquare location = map.getSquareAt(p1.getLocationGridPoint());
 
 		if (location instanceof Planet) {
 
@@ -232,7 +232,7 @@ public class MapSession extends Session {
 			GridPoint destination = new GridPoint(x, y);
 			try {
 				GridSquare destinationSquare = map.getSquareAt(destination);
-				int distance = p1.getLocation().comparePoints(destination);
+				int distance = p1.getLocationGridPoint().comparePoints(destination);
 
 				boolean destinationIsAPlanet = destinationSquare instanceof Planet;
 
@@ -244,7 +244,7 @@ public class MapSession extends Session {
 					destinationString = "nowhere";
 				}
 
-				boolean canTravel = p1.travel(destination, distance);
+				boolean canTravel = p1.travel(destinationSquare, distance);
 				if (canTravel) {
 					for (int jumps = 0; jumps < distance; jumps++) {
 						double eventRoll = rand.randZeroToOne();
@@ -287,7 +287,7 @@ public class MapSession extends Session {
 	}
 
 	private void fuelSequence() {
-		GridSquare location = map.getSquareAt(p1.getLocation());
+		GridSquare location = p1.getLocation();
 
 		if (location instanceof Planet) {
 			Planet planet = (Planet) location;

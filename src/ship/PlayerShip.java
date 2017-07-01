@@ -3,6 +3,8 @@ package ship;
 import arch.view.View;
 import map.GridMap;
 import map.GridPoint;
+import map.gridsquares.GridSquare;
+import map.gridsquares.Planet;
 import characters.Crewmember;
 import ship.modules.*;
 
@@ -14,7 +16,7 @@ public class PlayerShip extends Ship {
 	private int remainingFuel;
 	private int scannerStrength;
 	private Scanner scanner;
-	private GridPoint location;
+	private GridSquare location;
 	private int money;
 
 	public void setMoney(int m) {
@@ -37,18 +39,30 @@ public class PlayerShip extends Ship {
 		crew.setCrew(newCrew);
 	}
 
-	public void initialiseMapLocation(GridPoint startLocation, GridMap map) {
+	public void initialiseMapLocation(GridSquare startLocation, GridMap map) {
 		location = startLocation;
-		scanner = Scanner.getScanner(scannerStrength, map, startLocation);
+		scanner = Scanner.getScanner(scannerStrength, map, startLocation.gridPoint);
 	}
 
-	public GridPoint getLocation() {
+	public GridPoint getLocationGridPoint() {
+		return location != null ? location.gridPoint : null;
+	}
+	
+	public GridSquare getLocation() {
 		return location;
 	}
 
-	public void setLocation(GridPoint gridPoint) {
-		location = gridPoint;
-		scanner.setShipLocation(gridPoint);
+	public void setLocation(GridSquare gridSquare) {
+		location = gridSquare;
+		scanner.setShipLocation(gridSquare.gridPoint);
+	}
+	
+	public boolean currentLocationIsLandable() {
+		if (location != null) {
+			if (location instanceof Planet) return true;
+			// TODO: Add more landable locations here as they come e.g. space station
+		}
+		return false;
 	}
 
 	public void shipStatus() {
@@ -64,10 +78,10 @@ public class PlayerShip extends Ship {
 		((ShieldModule) modules.getShipModule(ShieldModule.class)).printInformation();
 	}
 
-	public boolean travel(GridPoint gridPoint, int distance) {
+	public boolean travel(GridSquare gridSquare, int distance) {
 		int fuelCost = distance * ((EngineModule) modules.getShipModule(EngineModule.class)).fuelEfficiency;
 		if (fuelCost <= remainingFuel) {
-			setLocation(gridPoint);
+			setLocation(gridSquare);
 			view.outputHandler.sendStringToView("Used " + fuelCost + " fuel.");
 			remainingFuel = remainingFuel - fuelCost;
 			return true;

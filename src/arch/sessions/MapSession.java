@@ -29,11 +29,12 @@ public class MapSession implements MapSessionInterface {
 	public void start(PlayerShip player, GridMap gridMap) {
 		p1 = player;
 		map = gridMap;
-		if (p1.getLocation() == null) {
-			GridPoint start = new GridPoint(3, 6);
-			p1.initialiseMapLocation(start, map);
-		}
 		initMapAndGoodsList();
+		if (p1.getLocationGridPoint() == null) {
+			GridPoint start = new GridPoint(3, 6);
+			p1.initialiseMapLocation(map.getSquareAt(start), map);
+		}
+		
 	}
 
 	private final String xLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -84,7 +85,7 @@ public class MapSession implements MapSessionInterface {
 	public boolean tryToTravel(GridPoint destination) {
 		try {
 			GridSquare destinationSquare = map.getSquareAt(destination);
-			int distance = p1.getLocation().comparePoints(destination);
+			int distance = p1.getLocationGridPoint().comparePoints(destination);
 
 			boolean destinationIsAPlanet = destinationSquare instanceof Planet;
 
@@ -96,7 +97,7 @@ public class MapSession implements MapSessionInterface {
 				destinationString = "nowhere";
 			}
 
-			boolean canTravel = p1.travel(destination, distance);
+			boolean canTravel = p1.travel(destinationSquare, distance);
 			if (canTravel) {
 				changes = true;
 				return true;

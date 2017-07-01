@@ -35,13 +35,6 @@ public class GridMap {
 		return newRow;
 	}
 
-	public void placePlayer(PlayerShip playerShip) {
-		RNG rand = new RNG();
-		int randomX = rand.randInt(0, width);
-		int randomY = rand.randInt(0, height);
-		playerShip.setLocation(new GridPoint(randomX, randomY));
-	}
-
 	public GridSquare getSquareAt(GridPoint searchPoint) {
 		return rows.get(searchPoint.y).get(searchPoint.x);
 	}

@@ -5,6 +5,8 @@ import characters.classes.PilotClass;
 import characters.classes.ScoundrelClass;
 import map.GridMap;
 import map.GridPoint;
+import map.gridsquares.EmptyGridSquare;
+
 import org.junit.Test;
 
 import base.SsrpgTest;
@@ -21,7 +23,7 @@ public class PlayerShipTest extends SsrpgTest {
 		PlayerShip testShip = PlayerShipTestHelper.getPlayerShipWithScannerAndMap();
 
 		GridPoint startLocation = new GridPoint(3,1);
-		assertTrue(testShip.getLocation().comparePoints(startLocation) == 0);
+		assertTrue(testShip.getLocationGridPoint().comparePoints(startLocation) == 0);
 	}
 
 	@Test
@@ -29,14 +31,15 @@ public class PlayerShipTest extends SsrpgTest {
 		PlayerShip testShip = PlayerShipTestHelper.getPlayerShipWithScannerAndMap();
 
 		GridPoint startLocation = new GridPoint(3,1);
-		assertTrue(testShip.getLocation().comparePoints(startLocation) == 0);
+		assertTrue(testShip.getLocationGridPoint().comparePoints(startLocation) == 0);
 
 		GridPoint newLocation = new GridPoint(2,4);
+		EmptyGridSquare newSquare = new EmptyGridSquare(newLocation);
+		
+		testShip.setLocation(newSquare);
 
-		testShip.setLocation(newLocation);
-
-		assertTrue(testShip.getLocation().comparePoints(newLocation) == 0);
-		assertFalse(testShip.getLocation().comparePoints(startLocation) == 0);
+		assertTrue(testShip.getLocationGridPoint().comparePoints(newLocation) == 0);
+		assertFalse(testShip.getLocationGridPoint().comparePoints(startLocation) == 0);
 	}
 
 	@Test
@@ -44,13 +47,14 @@ public class PlayerShipTest extends SsrpgTest {
 		PlayerShip testShip = PlayerShipTestHelper.getPlayerShipWithScannerAndMap();
 
 		GridPoint startLocation = new GridPoint(3,1);
-		assertTrue(testShip.getLocation().comparePoints(startLocation) == 0);
+		assertTrue(testShip.getLocationGridPoint().comparePoints(startLocation) == 0);
 
 		GridPoint destination = new GridPoint(4,5);
+		EmptyGridSquare destinationSquare = new EmptyGridSquare(destination);
 
-		testShip.travel(destination, startLocation.comparePoints(destination));
+		testShip.travel(destinationSquare, startLocation.comparePoints(destination));
 
-		assertTrue(testShip.getLocation().comparePoints(destination) == 0);
+		assertTrue(testShip.getLocationGridPoint().comparePoints(destination) == 0);
 	}
 
 	@Test
@@ -61,10 +65,10 @@ public class PlayerShipTest extends SsrpgTest {
 		assertTrue(testShip.getRemainingFuel() == testShip.getFuelCapacity());
 
 		GridPoint destination = new GridPoint(4,5);
+		EmptyGridSquare destinationSquare = new EmptyGridSquare(destination);
 
-		testShip.travel(destination, startLocation.comparePoints(destination));
+		testShip.travel(destinationSquare, startLocation.comparePoints(destination));
 
-		int remainingFuel = testShip.getRemainingFuel();
 		assertTrue(testShip.getRemainingFuel() == testShip.getFuelCapacity() - 20);
 	}
 

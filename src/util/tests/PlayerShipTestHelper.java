@@ -60,9 +60,11 @@ public class PlayerShipTestHelper extends TestHelper {
 
 	public static PlayerShip getPlayerShipWithScannerAndMap() {
 		PlayerShip initialisedShip = generatePlayerShip();
+		GridMap map = generateMap(5,6);
+		
 		initialisedShip.initialiseMapLocation(
-				new GridPoint(3,1),
-				generateMap(5,6)
+				map.getSquareAt(new GridPoint(3,1)),
+				map
 		);
 		return initialisedShip;
 	}
