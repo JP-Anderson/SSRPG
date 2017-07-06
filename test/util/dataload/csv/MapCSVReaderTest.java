@@ -22,10 +22,10 @@ public class MapCSVReaderTest extends SsrpgTest {
 //	3|	1,1,1,0,0
 //	4|	0,0,2,2,2
 
-		assertTrue(map.getSquareAt(1,3).zone.id == 1);
-		assertTrue(map.getSquareAt(2,4).zone.id == 2);
-		assertTrue(map.getSquareAt(3,0).zone.id == 1);
-		assertTrue(map.getSquareAt(4,0).zone.id == 0);
+		assertTrue(map.getSquareAt(1,3).getZone().id == 1);
+		assertTrue(map.getSquareAt(2,4).getZone().id == 2);
+		assertTrue(map.getSquareAt(3,0).getZone().id == 1);
+		assertTrue(map.getSquareAt(4,0).getZone().id == 0);
 	}
 
 	private GridMap getMap() {

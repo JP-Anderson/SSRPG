@@ -48,7 +48,7 @@ public class GridMap {
 		int y = gridSquare.gridPoint.y;
 
 		GridSquare squareToReplace = getSquareAt(gridSquare.gridPoint);
-		gridSquare.zone = squareToReplace.zone;
+		gridSquare.setZone(squareToReplace.getZone());
 
 		rows.get(y).set(x, gridSquare);
 	}

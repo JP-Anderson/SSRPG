@@ -16,6 +16,11 @@ public class Planet extends GridSquare {
 		name = pName;
 		marketSize = pMarketSize;
 		market = Market.getMarket(marketSize, pId);
+		//TODO: Should this be a parameter?
+		// Might be redundant param as most planets will be either tradeable or landable.
+		// Possibly need to introduce XML for storing planets and make this optional and set on instantation
+		isLandable = true;
+		isTradeable = true;
 	}
 
 }

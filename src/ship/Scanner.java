@@ -149,7 +149,7 @@ public class Scanner {
 			System.out.print(" | ");
 		} else if (indexIsInCentre(blockRowIndex)) {
 			System.out.print("---");
-		} else System.out.print(" "+blockSquare.zone.id+" ");
+		} else System.out.print(" "+blockSquare.getZone().id+" ");
 	}
 
 	private boolean indexIsInCentre(int index) {

@@ -56,14 +56,6 @@ public class PlayerShip extends Ship {
 		location = gridSquare;
 		scanner.setShipLocation(gridSquare.gridPoint);
 	}
-	
-	public boolean currentLocationIsLandable() {
-		if (location != null) {
-			if (location instanceof Planet) return true;
-			// TODO: Add more landable locations here as they come e.g. space station
-		}
-		return false;
-	}
 
 	public void shipStatus() {
 		CargoBayModule cargo = (CargoBayModule) modules.getShipModule(CargoBayModule.class);

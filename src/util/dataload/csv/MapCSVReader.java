@@ -24,7 +24,7 @@ public class MapCSVReader extends CSVReader {
 				int zoneInt = mapCsv.getZeroIndexedRowAsInts(i).get(j);
 				GridSquare square = gridMap.getSquareAt(new GridPoint(j,i));
 
-				square.zone = new Zone(zoneInt,zones.getZeroIndexedRow(zoneInt+1).get(1));
+				square.setZone(new Zone(zoneInt,zones.getZeroIndexedRow(zoneInt+1).get(1)));
 			}
 		}
 
