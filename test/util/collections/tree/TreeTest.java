@@ -30,5 +30,28 @@ public class TreeTest extends SsrpgTest {
 	public void assertRootHasCorrectChildren() {
 		assertEquals(2, searchTree.getRoot().getChildren().size());
 	}
+	
+	@Test
+	public void cantAddTreeNodeToParentTwice() {
+		// Creating parent and child node
+		TreeNode<Integer> parent = new TreeNode<>(null, 1);
+		TreeNode<Integer> child = new TreeNode<>(parent, 2);
+		// Adding child to parent again
+		parent.addChild(child);
+		assertEquals(1, parent.getNumberOfChildren());		
+	}
+	
+	@Test
+	public void changingNodesParentRemovesItFromOldParentsChildren() {
+		// Creating parent and child node
+		TreeNode<Integer> firstParent = new TreeNode<>(null, 0);
+		TreeNode<Integer> child = new TreeNode<>(firstParent, 2);
+		TreeNode<Integer> newParent = new TreeNode<>(null, 1);
+		// Adding child to new parent
+		newParent.addChild(child);
+		assertEquals(0, firstParent.getNumberOfChildren());
+		assertEquals(1, newParent.getNumberOfChildren());
+		assertEquals(newParent, child.getParent());
+	}
 
 }

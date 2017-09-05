@@ -25,11 +25,17 @@ public class TreeNode<E> {
 	}
 
 	public void addChildren(ArrayList<TreeNode<E>> newChildren) {
-		children.addAll(newChildren);
+		for (TreeNode<E> child : newChildren) {
+			addChild(child);
+		}
 	}
 
 	public void addChild(TreeNode<E> newChild) {
+		if (newChild.parent != null) {
+			newChild.parent.getChildren().remove(newChild);
+		}
 		children.add(newChild);
+		newChild.parent = this;
 	}
 
 	public List<TreeNode<E>> getChildren() {
