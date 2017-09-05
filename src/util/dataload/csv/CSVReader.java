@@ -7,25 +7,18 @@ import java.util.ArrayList;
 
 public class CSVReader {
 
-	public static String fileName;
 	public static CSV output;
 	public final static String datDirectory = "C:\\Workspaces\\SSRPG\\dat\\";
 
-	public static CSV readCSV(String filename) {
-		CSVReader reader = new CSVReader(filename);
-		File file = reader.findFile(datDirectory + fileName + ".csv");
-		return new CSV(reader.readLineByLine(file));
+	public static CSV readCSV(String filename) {		
+		return new CSV(readLineByLine(findFile(datDirectory + filename + ".csv")));
 	}
 
-	protected CSVReader(String file) {
-		fileName = file;
-	}
-
-	private File findFile(String filePath) {
+	private static File findFile(String filePath) {
 		return new File(filePath);
 	}
 
-	private ArrayList<ArrayList<String>> readLineByLine(File f) {
+	private static ArrayList<ArrayList<String>> readLineByLine(File f) {
 		ArrayList<ArrayList<String>> rows = new ArrayList<ArrayList<String>>();
 		try (BufferedReader br = new BufferedReader(new FileReader(f))) {
 			String line;
@@ -40,7 +33,7 @@ public class CSVReader {
 		return rows;
 	}
 
-	private ArrayList<String> parseLine(String line) {
+	private static ArrayList<String> parseLine(String line) {
 		ArrayList<String> newRow = new ArrayList<String>();
 		String[] commaSeperatedValues = line.split(",");
 		for (String v : commaSeperatedValues) {
