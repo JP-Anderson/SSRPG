@@ -3,13 +3,15 @@ package util.collections.tree;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TreeNode<E> {
+import util.collections.tree.visitors.TreeNodeVisitor;
+
+public class TreeNode<E> implements VisitableElement<E> {
 
 	private TreeNode<E> parent;
 	private List<TreeNode<E>> children;
 	private E item;
 
-	public TreeNode(TreeNode pParent, E pItem) {
+	public TreeNode(TreeNode<E> pParent, E pItem) {
 		parent = pParent;
 		if (parent != null) parent.addChild(this);
 		item = pItem;
@@ -48,6 +50,11 @@ public class TreeNode<E> {
 
 	public TreeNode<E> getParent() {
 		return parent;
+	}
+
+	@Override
+	public void accept(TreeNodeVisitor<E> visitor) {
+		visitor.visit(this);		
 	}
 
 }

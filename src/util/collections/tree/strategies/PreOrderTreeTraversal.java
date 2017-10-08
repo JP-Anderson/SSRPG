@@ -18,7 +18,7 @@ public class PreOrderTreeTraversal<E> extends TreeTraversalStrategy<E> {
 
 	@Override
 	protected void traverse(TreeNode<E> node) {
-		visitorAction.visit(node);
+		node.accept(visitorAction);
 		ArrayList<TreeNode<E>> children = (ArrayList<TreeNode<E>>) node.getChildren();
 		for (TreeNode<E> childNode : children) traverse(childNode);
 	}
