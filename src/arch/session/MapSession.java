@@ -25,6 +25,7 @@ import java.util.List;
  * SEE SESSIONS PACKAGE FOR INTERFACES AND CLASSES NEEDED FOR USE IN GDX VERSION OF GAME
  */
 
+@Deprecated
 public class MapSession extends Session {
 
 	private final static int FUEL_COST = 180;

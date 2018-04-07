@@ -16,6 +16,7 @@ import java.util.ArrayList;
  * SEE SESSIONS PACKAGE FOR INTERFACES AND CLASSES NEEDED FOR USE IN GDX VERSION OF GAME
  */
 
+@Deprecated
 public class ShipBattleSession extends Session {
 
 	private final Ship ship1;
